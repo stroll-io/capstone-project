@@ -1,8 +1,11 @@
-import React, { Link } from "react";
+import React, { Link, useEffect } from "react";
 import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 import MapView, { Polyline } from "react-native-maps";
 
-export default function App() {
+export default function Map() {
+  useEffect(() => {
+    console.log('the map mounted')
+  })
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
       <MapView

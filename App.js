@@ -3,14 +3,17 @@
 import React from "react";
 import { View, Text } from "react-native";
 import { createStackNavigator, createAppContainer } from "react-navigation";
-import HomeScreen from './Home'
-import Map from './Map'
-
+import HomeScreen from './views/Home';
+import Map from './views/Map';
+import Camera from './views/Camera';
+import Location from './views/Location';
 
 const AppNavigator = createStackNavigator(
   {
     Home: HomeScreen,
-    Map: Map
+    Map: Map,
+    Camera: Camera,
+    Location: Location
   },
   {
     initialRouteName: "Home"
