@@ -75,7 +75,7 @@ export default class CameraExample extends React.Component {
             </View>
           </Camera>
           <MapView
-            style={{ flex: 1 }}
+            style={{ flex: 1}}
             initialRegion={{
               latitude: 41.895442,
               longitude: -87.638957,

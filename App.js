@@ -7,13 +7,15 @@ import HomeScreen from './views/Home';
 import Map from './views/Map';
 import Camera from './views/Camera';
 import Location from './views/Location';
+import LiveView from './views/LiveView';
 
 const AppNavigator = createStackNavigator(
   {
     Home: HomeScreen,
     Map: Map,
     Camera: Camera,
-    Location: Location
+    Location: Location,
+    LiveView: LiveView
   },
   {
     initialRouteName: "Home"

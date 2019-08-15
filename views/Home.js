@@ -21,6 +21,10 @@ class HomeScreen extends React.Component {
           title="Location"
           onPress={() => this.props.navigation.navigate("Location")}
         />
+        <Button
+          title="LiveView"
+          onPress={() => this.props.navigation.navigate("LiveView")}
+        />
       </View>
     );
   }
