@@ -2,7 +2,7 @@ const navPointRouter = require('express').Router();
 const NavPoint = require('../db/models/navPoint');
 
 //POST /api/navPoints
-navPointRouter.post('/', async (req, res, next) => {
+navPointRouter.post(`/`, async (req, res, next) => {
   try {
     await NavPoint.create(req.body);
     res.send(req.body);
@@ -12,7 +12,7 @@ navPointRouter.post('/', async (req, res, next) => {
 });
 
 //GET /api/navPoints
-navPointRouter.get('/', async (req, res, next) => {
+navPointRouter.get(`/`, async (req, res, next) => {
   try {
     const allnavPoints = await NavPoint.findAll();
     res.send(allnavPoints);
