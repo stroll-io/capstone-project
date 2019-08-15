@@ -1,11 +1,9 @@
-import React, { Link, useEffect } from "react";
+import React, { Link, useState } from "react";
 import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 import MapView, { Polyline } from "react-native-maps";
 
 export default function Map() {
-  useEffect(() => {
-    console.log('the map mounted')
-  })
+  const [coords, setCoords] = useState([])
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
       <MapView
@@ -17,18 +15,17 @@ export default function Map() {
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421
         }}
-        onPress={e => console.log(e.nativeEvent)}
+        onPress={e => {
+          const newCord = {
+            latitude: e.nativeEvent.coordinate.latitude,
+            longitude: e.nativeEvent.coordinate.longitude
+          };
+          setCoords([...coords, newCord ])
+          console.log(e.nativeEvent)}}
         //use onPress to gather the coordinates for creating walks, dropping pins, etc..
       >
         <Polyline
-          coordinates={[
-            { latitude: 41.895546, longitude: -87.639462 },
-            { latitude: 41.895498, longitude: -87.641509 },
-            { latitude: 41.893483, longitude: -87.641477 },
-            { latitude: 41.889138, longitude: -87.638076 },
-            { latitude: 41.889074, longitude: -87.640007 },
-            { latitude: 41.88394, longitude: -87.639782 }
-          ]}
+          coordinates={coords}
           strokeColor="#EE6A22"
           strokeWidth={3}
         />
