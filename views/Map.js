@@ -17,6 +17,8 @@ export default function Map() {
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421
         }}
+        onPress={e => console.log(e.nativeEvent)}
+        //use onPress to gather the coordinates for creating walks, dropping pins, etc..
       >
         <Polyline
           coordinates={[
@@ -27,7 +29,7 @@ export default function Map() {
             { latitude: 41.889074, longitude: -87.640007 },
             { latitude: 41.88394, longitude: -87.639782 }
           ]}
-          strokeColor="#5c69ed" // fallback for when `strokeColors` is not supported by the map-provider
+          strokeColor="#EE6A22"
           strokeWidth={3}
         />
       </MapView>
@@ -35,11 +37,4 @@ export default function Map() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center"
-  }
-});
+
