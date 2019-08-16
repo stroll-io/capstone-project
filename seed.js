@@ -1,9 +1,9 @@
 const { db } = require("./server/db");
 const User = require("./server/db/user");
-const Navpoints = require("./server/db/navpoints");
+const Navpoints = require("./server/db/navPoints");
 const Walk = require('./server/db/walk');
-const Favorite = require('./server/db/favorite');
-const Pin = require('./server/db/pin')
+// const Favorite = require('./server/db/favorite');
+const Pin = require('./server/db/userPin')
 
 
 const users = [
@@ -22,7 +22,6 @@ const walks = [
   imageUrl: null,
 
 },
-
 ]
 
 const navpoints = [
