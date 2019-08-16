@@ -16,6 +16,7 @@
     "start-server": "nodemon server -e html,js,scss --ignore public --ignore client"
   },
   "dependencies": {
+    "axios": "^0.19.0",
     "compression": "^1.7.4",
     "connect-session-sequelize": "^6.0.0",
     "crypto": "^1.0.1",
@@ -24,10 +25,10 @@
     "expo-font": "^6.0.1",
     "expo-location": "^6.0.0",
     "expo-permissions": "^6.0.0",
-    "native-base": "^2.13.4",
     "express": "^4.17.1",
     "express-session": "^1.16.2",
     "morgan": "^1.9.1",
+    "native-base": "^2.13.4",
     "passport": "^0.4.0",
     "pg": "^7.12.1",
     "pg-hstore": "^2.3.3",
