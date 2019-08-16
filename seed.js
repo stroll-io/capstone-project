@@ -2,7 +2,7 @@ const { green, red } = require('chalk');
 const db = require('./server/db');
 const Walk = require('./server/db/models/walk');
 const User = require('./server/db/models/user');
-// const Navpoints = require('./server/db/navPoints');
+const NavPoint = require('./server/db/models/navPoint');
 
 // // const Favorite = require('./server/db/favorite');
 // const Pin = require('./server/db/userPin');
@@ -156,6 +156,65 @@ const seed = async () => {
       }),
     ]);
 
+    const architectureWalk = await Promise.all([
+      NavPoint.create({
+        id: 1,
+        location: { type: 'Point', coordinates: [41.879353, -87.636712] },
+        prev: null,
+        next: 2,
+        walkId: 8,
+        start: true,
+      }),
+      NavPoint.create({
+        id: 2,
+        location: { type: 'Point', coordinates: [41.879345, -87.632367] },
+        prev: 1,
+        next: 3,
+        walkId: 8,
+        start: false,
+      }),
+      NavPoint.create({
+        id: 3,
+        location: { type: 'Point', coordinates: [41.878131, -87.632356] },
+        prev: 2,
+        next: 4,
+        walkId: 8,
+        start: false,
+      }),
+      NavPoint.create({
+        id: 4,
+        location: { type: 'Point', coordinates: [41.878147, -87.632774] },
+        prev: 3,
+        next: 5,
+        walkId: 8,
+        start: false,
+      }),
+      NavPoint.create({
+        id: 5,
+        location: { type: 'Point', coordinates: [41.876861, -87.632753] },
+        prev: 4,
+        next: 6,
+        walkId: 8,
+        start: false,
+      }),
+      NavPoint.create({
+        id: 6,
+        location: { type: 'Point', coordinates: [41.876941, -87.629298] },
+        prev: 5,
+        next: 7,
+        walkId: 8,
+        start: false,
+      }),
+      NavPoint.create({
+        id: 7,
+        location: { type: 'Point', coordinates: [41.878994, -87.629394] },
+        prev: 6,
+        next: null,
+        walkId: 8,
+        start: false,
+      }),
+    ]);
+
     return [
       ben,
       madi,
@@ -168,6 +227,7 @@ const seed = async () => {
       art,
       museum,
       loop,
+      architectureWalk,
     ];
   } catch (err) {
     console.log(red(err));
