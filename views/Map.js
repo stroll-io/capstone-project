@@ -1,11 +1,10 @@
-import React, { Link, useState } from "react";
-import {  View, SafeAreaView } from "react-native";
-import { Button, Text} from 'native-base'
-import MapView, { Polyline } from "react-native-maps";
-import axios from "axios";
+import React, { useState } from 'react';
+import { View, SafeAreaView } from 'react-native';
+import { Button, Text } from 'native-base';
+import MapView, { Polyline } from 'react-native-maps';
+import axios from 'axios';
 
 export default function Map() {
-
   const [coords, setCoords] = useState([]);
 
   const handleUndo = () => {
@@ -14,13 +13,12 @@ export default function Map() {
     setCoords(coordsCopy);
   };
 
-  const handleSubmit = async() => {
-    console.log('in handle submit');
-    await axios.post("http://f579603d.ngrok.io/api/navPoints", coords);
-  }
+  const handleSubmit = async () => {
+    await axios.post('http://f579603d.ngrok.io/api/navPoints', { coords });
+  };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
       <MapView
         //initial region should be stateful based on users current location
         style={{ flex: 1 }}
@@ -28,32 +26,28 @@ export default function Map() {
           latitude: 41.895442,
           longitude: -87.638957,
           latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421
+          longitudeDelta: 0.0421,
         }}
         onPress={e => {
           const newCord = {
             latitude: e.nativeEvent.coordinate.latitude,
-            longitude: e.nativeEvent.coordinate.longitude
+            longitude: e.nativeEvent.coordinate.longitude,
           };
           setCoords([...coords, newCord]);
           console.log(e.nativeEvent);
         }}
         //use onPress to gather the coordinates for creating walks, dropping pins, etc..
       >
-        <Polyline
-          coordinates={coords}
-          strokeColor="#EE6A22"
-          strokeWidth={3}
-        />
+        <Polyline coordinates={coords} strokeColor="#EE6A22" strokeWidth={3} />
       </MapView>
       <View
         style={{
-          display: "flex",
-          position: "absolute",
+          display: 'flex',
+          position: 'absolute',
           bottom: 40,
           left: 50,
-          flexDirection: "row",
-          justifyContent: "center"
+          flexDirection: 'row',
+          justifyContent: 'center',
         }}
       >
         <Button large warning onPress={handleUndo} style={{ margin: 20 }}>
@@ -66,5 +60,3 @@ export default function Map() {
     </SafeAreaView>
   );
 }
-
-
