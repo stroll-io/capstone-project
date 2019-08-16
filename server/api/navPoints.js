@@ -3,9 +3,8 @@ const NavPoint = require('../db/models/navPoint');
 
 //POST /api/navPoints
 navPointRouter.post('/', async (req, res, next) => {
-  console.log("req.body :", req.body);
+  console.log('req.body :', req.body);
   try {
-
     await NavPoint.bulkCreate(req.body);
     res.send(req.body);
   } catch (err) {
