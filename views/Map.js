@@ -1,9 +1,24 @@
 import React, { Link, useState } from "react";
-import { StyleSheet, Text, View, SafeAreaView } from "react-native";
+import {  View, SafeAreaView } from "react-native";
+import { Button, Text} from 'native-base'
 import MapView, { Polyline } from "react-native-maps";
+import axios from "axios";
 
 export default function Map() {
-  const [coords, setCoords] = useState([])
+
+  const [coords, setCoords] = useState([]);
+
+  const handleUndo = () => {
+    const coordsCopy = coords.slice();
+    coordsCopy.pop();
+    setCoords(coordsCopy);
+  };
+
+  const handleSubmit = async() => {
+    console.log('in handle submit');
+    await axios.post("http://f579603d.ngrok.io/api/navPoints'", coords);
+  }
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
       <MapView
@@ -20,8 +35,9 @@ export default function Map() {
             latitude: e.nativeEvent.coordinate.latitude,
             longitude: e.nativeEvent.coordinate.longitude
           };
-          setCoords([...coords, newCord ])
-          console.log(e.nativeEvent)}}
+          setCoords([...coords, newCord]);
+          console.log(e.nativeEvent);
+        }}
         //use onPress to gather the coordinates for creating walks, dropping pins, etc..
       >
         <Polyline
@@ -30,6 +46,23 @@ export default function Map() {
           strokeWidth={3}
         />
       </MapView>
+      <View
+        style={{
+          display: "flex",
+          position: "absolute",
+          bottom: 40,
+          left: 50,
+          flexDirection: "row",
+          justifyContent: "center"
+        }}
+      >
+        <Button large warning onPress={handleUndo} style={{ margin: 20 }}>
+          <Text>Undo</Text>
+        </Button>
+        <Button large primary onPress={handleSubmit} style={{ margin: 20 }}>
+          <Text>Submit</Text>
+        </Button>
+      </View>
     </SafeAreaView>
   );
 }
