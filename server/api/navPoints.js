@@ -43,20 +43,6 @@ navPointRouter.post('/', async (req, res, next) => {
       }
       previous = newPoint;
     }
-
-    // req.body.forEach(async coord => {
-    //   console.log("coord :", coord);
-    //   const navPoint = {
-    //     location: {
-    //       type: 'Point',
-    //       coordinates: [coord.latitude, coord.longitude]
-    //     },
-    //     walkId: walk.dataValues.id
-    //   }
-
-    //   await NavPoint.create(navPoint)
-    // })
-
     res.send(req.body);
   } catch (err) {
     next(err);
@@ -64,7 +50,7 @@ navPointRouter.post('/', async (req, res, next) => {
 });
 
 //GET /api/navPoints
-navPointRouter.get('/', async (req, res, next) => {
+navPointRouter.get(`/`, async (req, res, next) => {
   try {
     const allnavPoints = await NavPoint.findAll();
     res.send(allnavPoints);
