@@ -6,7 +6,7 @@ navPointRouter.post('/', async (req, res, next) => {
   console.log("req.body :", req.body);
   try {
 
-    await NavPoint.create(req.body);
+    await NavPoint.bulkCreate(req.body);
     res.send(req.body);
   } catch (err) {
     next(err);
