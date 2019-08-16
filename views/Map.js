@@ -7,6 +7,7 @@ import axios from "axios";
 export default function Map() {
 
   const [coords, setCoords] = useState([]);
+  const [isModalVisible, setIsModalVisible] = useState([]);
 
   const handleUndo = () => {
     const coordsCopy = coords.slice();
@@ -16,7 +17,7 @@ export default function Map() {
 
   const handleSubmit = async() => {
     await axios.post("http://f579603d.ngrok.io/api/navPoints", {coords});
-  }
+  };
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
@@ -35,7 +36,6 @@ export default function Map() {
             longitude: e.nativeEvent.coordinate.longitude
           };
           setCoords([...coords, newCord]);
-          console.log(e.nativeEvent);
         }}
         //use onPress to gather the coordinates for creating walks, dropping pins, etc..
       >
