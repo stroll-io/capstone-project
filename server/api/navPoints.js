@@ -5,7 +5,7 @@ const NavPoint = require('../db/models/navPoint');
 navPointRouter.post('/', async (req, res, next) => {
   console.log('req.body :', req.body);
   try {
-    await NavPoint.bulkCreate(req.body);
+    await NavPoint.create(req.body);
     res.send(req.body);
   } catch (err) {
     next(err);
