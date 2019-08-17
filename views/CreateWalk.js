@@ -1,17 +1,15 @@
 import React, { useState } from "react";
-import { View, SafeAreaView, Modal  } from "react-native";
+import { View, SafeAreaView, Modal } from "react-native";
 import { Button, Text, Form, Item, Input, Picker, Icon } from "native-base";
 import MapView, { Polyline } from "react-native-maps";
 import axios from "axios";
 
-
 export default function Map() {
-
   const [coords, setCoords] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [walkTitle, setWalkTitle] = useState('');
-  const [walkDescription, setWalkDescription] = useState('')
-  const [walkTag, setWalkTag] = useState('')
+  const [walkTitle, setWalkTitle] = useState("");
+  const [walkDescription, setWalkDescription] = useState("");
+  const [walkTag, setWalkTag] = useState("");
 
   const handleUndo = () => {
     const coordsCopy = coords.slice();
@@ -21,13 +19,15 @@ export default function Map() {
 
   const handleCreate = () => {
     setIsModalVisible(true);
-  }
+  };
 
-
-
-  const handleSubmit = async() => {
-
-    await axios.post("http://576e347c.ngrok.io/api/navPoints", { coords, walkTitle, walkDescription, walkTag });
+  const handleSubmit = async () => {
+    await axios.post("http://576e347c.ngrok.io/api/navPoints", {
+      coords,
+      walkTitle,
+      walkDescription,
+      walkTag
+    });
   };
 
   return (
@@ -51,11 +51,7 @@ export default function Map() {
         }}
         //use onPress to gather the coordinates for creating walks, dropping pins, etc..
       >
-        <Polyline
-          coordinates={coords}
-          strokeColor="#EE6A22"
-          strokeWidth={3}
-        />
+        <Polyline coordinates={coords} strokeColor="#EE6A22" strokeWidth={3} />
       </MapView>
       <View
         style={{
@@ -84,9 +80,11 @@ export default function Map() {
       >
         <View style={{ marginTop: 22 }}>
           <View>
-          <Text style={{marginTop:100, marginBottom:40, textAlign: 'center'}}>
-            Add some information about your stroll.
-          </Text>
+            <Text
+              style={{ marginTop: 100, marginBottom: 40, textAlign: "center" }}
+            >
+              Add some information about your stroll.
+            </Text>
             <Form>
               <Item>
                 <Input
@@ -152,5 +150,3 @@ export default function Map() {
     </SafeAreaView>
   );
 }
-
-

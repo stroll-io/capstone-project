@@ -7,9 +7,9 @@ navPointRouter.post('/', async (req, res, next) => {
 
   try {
     const walkInfo = {
-      name: "Ben's test walk",
-      description: "a pretty cool walk",
-      category: "dog"
+      name: req.body.walkTitle,
+      description: req.body.walkDescription,
+      category: req.body.walkTag
     }
     const walk = await Walk.create(walkInfo);
 
