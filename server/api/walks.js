@@ -5,22 +5,23 @@ const NavPoint = require('../db/models/navPoint');
 //GET /api/walks/:walkId
 walksRouter.get('/:walkId', async (req, res, next) => {
   try {
-    const navPointsForWalk = await Walk.findByPk(req.params.walkId, {
+    const walkInstance = await Walk.findByPk(req.params.walkId, {
       include: [{ model: NavPoint }],
     });
-    let corrdArray = navPointsForWalk.navPoints.filter(point => point.start);
-    console.log('TCL: corrdArray', corrdArray);
-    console.log('TCL: corrdArray length', corrdArray.length);
+    walkCopy = walkInstance.get({
+      plain: true,
+    });
 
-    while (corrdArray[corrdArray.length - 1].next) {
-      let navPointToAdd = navPointsForWalk.navPoints.filter(
-        point => point.id === corrdArray[corrdArray.length - 1].next
+    let navPointsArray = walkInstance.navPoints;
+    let orderedPoints = navPointsArray.filter(point => point.start === true);
+    while (orderedPoints[orderedPoints.length - 1].next !== null) {
+      const nextPoint = navPointsArray.filter(
+        point => point.id === orderedPoints[orderedPoints.length - 1].next
       );
-      corrdArray.push(navPointToAdd);
-      console.log('TCL: corrdArray from inside loop', corrdArray);
+      orderedPoints = [...orderedPoints, ...nextPoint];
     }
-    navPointsForWalk.navPoints = corrdArray;
-    res.send(navPointsForWalk);
+    walkCopy.navPoints = orderedPoints;
+    res.json(walkCopy);
   } catch (err) {
     next(err);
   }
