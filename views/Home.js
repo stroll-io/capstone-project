@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Text, Button } from 'react-native';
-import { createStackNavigator, createAppContainer } from 'react-navigation';
 
 class HomeScreen extends React.Component {
   render() {
@@ -13,6 +12,11 @@ class HomeScreen extends React.Component {
           title="CreateWalk"
           onPress={() => this.props.navigation.navigate("CreateWalk")}
         />
+        <Button
+          title="Map"
+          onPress={() => this.props.navigation.navigate("Map")}
+        />
+
         <Button
           title="Camera"
           onPress={() => this.props.navigation.navigate("Camera")}
@@ -48,6 +52,10 @@ class HomeScreen extends React.Component {
         <Button
           title="Past Walks"
           onPress={() => this.props.navigation.navigate("PastWalks")}
+        />
+        <Button
+          title="DiscoverMap"
+          onPress={() => this.props.navigation.navigate("DiscoverMap")}
         />
       </View>
     );

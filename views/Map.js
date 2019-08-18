@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, SafeAreaView, Modal  } from "react-native";
 import { Button, Text, Form, Item, Input, Picker, Icon } from "native-base";
-import MapView, { Polyline } from "react-native-maps";
+import MapView, { Polyline, Marker } from "react-native-maps";
 import axios from "axios";
 
 
@@ -32,6 +32,8 @@ export default function Map() {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
+
+
       <MapView
         // showsPointsOfInterest={true}
         //initial region should be stateful based on users current location
@@ -51,10 +53,10 @@ export default function Map() {
         }}
         //use onPress to gather the coordinates for creating walks, dropping pins, etc..
       >
-        <Polyline
-          coordinates={coords}
-          strokeColor="#EE6A22"
-          strokeWidth={3}
+        <Marker
+          title="Ben's apartment"
+          description="This is where Ben, Kait, and Belle live."
+          coordinate={{ latitude: 42.064119, longitude: -87.691495 }}
         />
       </MapView>
       <View
@@ -66,89 +68,7 @@ export default function Map() {
           flexDirection: "row",
           justifyContent: "center"
         }}
-      >
-        <Button large warning onPress={handleUndo} style={{ margin: 20 }}>
-          <Text>Undo</Text>
-        </Button>
-        <Button large primary onPress={handleCreate} style={{ margin: 20 }}>
-          <Text>Create</Text>
-        </Button>
-      </View>
-      <Modal
-        animationType="slide"
-        transparent={false}
-        visible={isModalVisible}
-        onRequestClose={() => {
-          console.log("onRequestClose");
-        }}
-      >
-        <View style={{ marginTop: 22 }}>
-          <View>
-          <Text style={{marginTop:100, marginBottom:40, textAlign: 'center'}}>
-            Add some information about your stroll.
-          </Text>
-            <Form>
-              <Item>
-                <Input
-                  placeholder="Name"
-                  value={walkTitle}
-                  onChangeText={text => {
-                    setWalkTitle(text);
-                  }}
-                />
-              </Item>
-              <Item>
-                <Input
-                  placeholder="Description"
-                  value={walkDescription}
-                  onChangeText={text => {
-                    setWalkDescription(text);
-                  }}
-                />
-              </Item>
-              <Item picker>
-                <Picker
-                  mode="dropdown"
-                  iosIcon={<Icon name="arrow-down" />}
-                  iosHeader="Select a tag"
-                  placeholder="Select a tag"
-                  style={{ width: undefined }}
-                  selectedValue={walkTag}
-                  onValueChange={setWalkTag}
-                >
-                  <Picker.Item label="Nature" value="nature" />
-                  <Picker.Item label="Scenic" value="scenic" />
-                  <Picker.Item label="Architecture" value="architecture" />
-                  <Picker.Item label="Dog" value="dog" />
-                  <Picker.Item label="Historical" value="historical" />
-                  <Picker.Item label="Hiking" value="hiking" />
-                  <Picker.Item label="Street art" value="street art" />
-                </Picker>
-              </Item>
-              <Button medium danger style={{ margin: 20 }}>
-                <Text>Cancel</Text>
-              </Button>
-              <Button
-                medium
-                success
-                onPress={handleSubmit}
-                style={{ margin: 20 }}
-              >
-                <Text>Create</Text>
-              </Button>
-            </Form>
-            {/*
-            <TouchableHighlight
-              onPress={() => {
-                setIsModalVisible(false);
-                console.log("touchable higlhight on press");
-              }}
-            >
-              <Text>Hide Modal</Text>
-            </TouchableHighlight> */}
-          </View>
-        </View>
-      </Modal>
+      />
     </SafeAreaView>
   );
 }

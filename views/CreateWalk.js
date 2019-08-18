@@ -21,6 +21,12 @@ export default function Map() {
     setIsModalVisible(true);
   };
 
+  const handleCancel = () => {
+    setIsModalVisible(false);
+    setWalkTitle('');
+    setWalkDescription('');
+  };
+
   const handleSubmit = async () => {
     await axios.post("http://576e347c.ngrok.io/api/navPoints", {
       coords,
@@ -51,7 +57,11 @@ export default function Map() {
         }}
         //use onPress to gather the coordinates for creating walks, dropping pins, etc..
       >
-        <Polyline coordinates={coords} strokeColor="#EE6A22" strokeWidth={3} />
+        <Polyline
+          coordinates={coords}
+          strokeColor="#EE6A22"
+          strokeWidth={3}
+        />
       </MapView>
       <View
         style={{
@@ -81,7 +91,12 @@ export default function Map() {
         <View style={{ marginTop: 22 }}>
           <View>
             <Text
-              style={{ marginTop: 100, marginBottom: 40, textAlign: "center" }}
+              style={{
+                marginTop: 150,
+                marginBottom: 40,
+                textAlign: "center",
+                fontSize: 20
+              }}
             >
               Add some information about your stroll.
             </Text>
@@ -123,27 +138,27 @@ export default function Map() {
                   <Picker.Item label="Street art" value="street art" />
                 </Picker>
               </Item>
-              <Button medium danger style={{ margin: 20 }}>
-                <Text>Cancel</Text>
-              </Button>
-              <Button
-                medium
-                success
-                onPress={handleSubmit}
-                style={{ margin: 20 }}
+              <View
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  marginTop: 50
+                }}
               >
-                <Text>Create</Text>
-              </Button>
+                <Button large danger style={{ margin: 20 }} onPress={handleCancel}>
+                  <Text>Cancel</Text>
+                </Button>
+                <Button
+                  large
+                  success
+                  onPress={handleSubmit}
+                  style={{ margin: 20 }}
+                >
+                  <Text>Create</Text>
+                </Button>
+              </View>
             </Form>
-            {/*
-            <TouchableHighlight
-              onPress={() => {
-                setIsModalVisible(false);
-                console.log("touchable higlhight on press");
-              }}
-            >
-              <Text>Hide Modal</Text>
-            </TouchableHighlight> */}
           </View>
         </View>
       </Modal>
