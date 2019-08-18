@@ -3,6 +3,7 @@ import { View, SafeAreaView } from 'react-native';
 import { Button, Text } from 'native-base';
 import MapView, { Polyline } from 'react-native-maps';
 import axios from 'axios';
+import ngrokSecret from '../secrets';
 
 export default function Map() {
   const [coords, setCoords] = useState([]);
@@ -14,7 +15,7 @@ export default function Map() {
   };
 
   const handleSubmit = async () => {
-    await axios.post('http://f579603d.ngrok.io/api/navPoints', { coords });
+    await axios.post(`${ngrokSecret}/api/navPoints`, { coords });
   };
 
   return (

@@ -156,64 +156,45 @@ const seed = async () => {
       }),
     ]);
 
-    const architectureWalk = await Promise.all([
-      NavPoint.create({
-        id: 1,
-        location: { type: 'Point', coordinates: [41.879353, -87.636712] },
-        prev: null,
-        next: 2,
-        walkId: 8,
-        start: true,
-      }),
-      NavPoint.create({
-        id: 2,
-        location: { type: 'Point', coordinates: [41.879345, -87.632367] },
-        prev: 1,
-        next: 3,
-        walkId: 8,
-        start: false,
-      }),
-      NavPoint.create({
-        id: 3,
-        location: { type: 'Point', coordinates: [41.878131, -87.632356] },
-        prev: 2,
-        next: 4,
-        walkId: 8,
-        start: false,
-      }),
-      NavPoint.create({
-        id: 4,
-        location: { type: 'Point', coordinates: [41.878147, -87.632774] },
-        prev: 3,
-        next: 5,
-        walkId: 8,
-        start: false,
-      }),
-      NavPoint.create({
-        id: 5,
-        location: { type: 'Point', coordinates: [41.876861, -87.632753] },
-        prev: 4,
-        next: 6,
-        walkId: 8,
-        start: false,
-      }),
-      NavPoint.create({
-        id: 6,
-        location: { type: 'Point', coordinates: [41.876941, -87.629298] },
-        prev: 5,
-        next: 7,
-        walkId: 8,
-        start: false,
-      }),
-      NavPoint.create({
-        id: 7,
-        location: { type: 'Point', coordinates: [41.878994, -87.629394] },
-        prev: 6,
+    const archiWalkCoords = [
+      [41.879353, -87.636712],
+      [41.879345, -87.632367],
+      [41.878131, -87.632356],
+      [41.878147, -87.632774],
+      [41.876861, -87.632753],
+      [41.876941, -87.629298],
+      [41.878994, -87.629394],
+    ];
+
+    let architectureWalk = await Promise.all([]);
+    let previous = null;
+    for (let i = 0; i < archiWalkCoords.length; i++) {
+      let previousId = null;
+      let start = i === 0;
+      if (previous !== null) {
+        previousId = previous.dataValues.id;
+      }
+
+      let newPoint = await NavPoint.create({
+        location: {
+          type: 'Point',
+          coordinates: [...archiWalkCoords[i]],
+        },
+        prev: previousId,
         next: null,
+        start: start,
         walkId: 8,
-        start: false,
-      }),
-    ]);
+      });
+
+      architectureWalk.push(newPoint);
+
+      if (previous !== null) {
+        await previous.update({
+          next: newPoint.dataValues.id,
+        });
+      }
+      previous = newPoint;
+    }
 
     return [
       ben,
