@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
-import { View, SafeAreaView } from "react-native";
-import MapView, { Marker } from "react-native-maps";
+import { View, SafeAreaView, Button, Text } from "react-native";
+import { Image } from 'expo'
+import Thumbnail from 'native-base'
+import MapView, { Marker, Callout } from "react-native-maps";
 import { connect } from "react-redux";
 import { getAllWalksThunk} from "../store/walks";
 
@@ -34,7 +36,20 @@ function ExploreMap(props) {
                     longitude: walk.start.coordinates[1],
                     latitude: walk.start.coordinates[0]
                   }}
-                />
+                >
+                  <Callout>
+                    <View>
+                      <Text style={{fontWeight: 'bold'}}>{walk.name}</Text>
+                      <Text>{walk.description}</Text>
+                      <Button
+                        title="Click Me!"
+                        onPress={() => console.log("Clicked")}
+                      />
+
+                    </View>
+                  </Callout>
+                </Marker>
+                //put a modal that opens when the button is clicked with name, description, tag, picture, and button to setActiveWalk
               );
             })
           : null}

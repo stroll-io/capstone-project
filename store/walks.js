@@ -10,7 +10,6 @@ const getAllWalks = (walks) => ({
 
 export const getAllWalksThunk = () => async dispatch => {
   try {
-    console.log('in walks thunk')
     const res = await axios.get(`${ngrok}/api/walks`);
     dispatch(getAllWalks(res.data));
   }
