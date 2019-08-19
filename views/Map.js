@@ -1,12 +1,25 @@
+<<<<<<< HEAD
 import React, { useState } from 'react';
 import { View, SafeAreaView } from 'react-native';
 import { Button, Text } from 'native-base';
 import MapView, { Polyline } from 'react-native-maps';
 import axios from 'axios';
 import ngrokSecret from '../secrets';
+=======
+import React, { useState } from "react";
+import { View, SafeAreaView, Modal  } from "react-native";
+import { Button, Text, Form, Item, Input, Picker, Icon } from "native-base";
+import MapView, { Polyline, Marker } from "react-native-maps";
+import axios from "axios";
+>>>>>>> 9a5a9f12796801f4aa6a29a6ae65489b9e58268c
+
 
 export default function Map() {
   const [coords, setCoords] = useState([]);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [walkTitle, setWalkTitle] = useState('');
+  const [walkDescription, setWalkDescription] = useState('')
+  const [walkTag, setWalkTag] = useState('')
 
   const handleUndo = () => {
     const coordsCopy = coords.slice();
@@ -14,13 +27,27 @@ export default function Map() {
     setCoords(coordsCopy);
   };
 
+<<<<<<< HEAD
   const handleSubmit = async () => {
     await axios.post(`${ngrokSecret}/api/navPoints`, { coords });
+  };
+=======
+  const handleCreate = () => {
+    setIsModalVisible(true);
+  }
+>>>>>>> 9a5a9f12796801f4aa6a29a6ae65489b9e58268c
+
+
+
+  const handleSubmit = async() => {
+
+    await axios.post("http://576e347c.ngrok.io/api/navPoints", { coords, walkTitle, walkDescription, walkTag });
   };
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
       <MapView
+        // showsPointsOfInterest={true}
         //initial region should be stateful based on users current location
         style={{ flex: 1 }}
         initialRegion={{
@@ -35,11 +62,18 @@ export default function Map() {
             longitude: e.nativeEvent.coordinate.longitude,
           };
           setCoords([...coords, newCord]);
-          console.log(e.nativeEvent);
         }}
         //use onPress to gather the coordinates for creating walks, dropping pins, etc..
       >
+<<<<<<< HEAD
         <Polyline coordinates={coords} strokeColor="#EE6A22" strokeWidth={3} />
+=======
+        <Marker
+          title="Ben's apartment"
+          description="This is where Ben, Kait, and Belle live."
+          coordinate={{ latitude: 42.064119, longitude: -87.691495 }}
+        />
+>>>>>>> 9a5a9f12796801f4aa6a29a6ae65489b9e58268c
       </MapView>
       <View
         style={{
@@ -50,14 +84,7 @@ export default function Map() {
           flexDirection: 'row',
           justifyContent: 'center',
         }}
-      >
-        <Button large warning onPress={handleUndo} style={{ margin: 20 }}>
-          <Text>Undo</Text>
-        </Button>
-        <Button large primary onPress={handleSubmit} style={{ margin: 20 }}>
-          <Text>Submit</Text>
-        </Button>
-      </View>
+      />
     </SafeAreaView>
   );
 }
