@@ -1,3 +1,22 @@
+//
+//
+//
+//
+//
+//    I think that this component is no longer necessary as there are other map components that have specific functionality.
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+
+
 import React, { useState } from "react";
 import { View, SafeAreaView, Modal  } from "react-native";
 import { Button, Text, Form, Item, Input, Picker, Icon } from "native-base";

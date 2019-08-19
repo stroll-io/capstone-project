@@ -4,8 +4,9 @@ import thunkMiddleware from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import user from './user'
 import userpins from './userpins';
+import walks from './walks'
 
-const reducer = combineReducers({user, userpins})
+const reducer = combineReducers({user, userpins, walks})
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
 );

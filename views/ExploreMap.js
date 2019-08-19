@@ -2,12 +2,13 @@ import React, { useEffect } from "react";
 import { View, SafeAreaView, Modal } from "react-native";
 import MapView, { Polyline, Marker } from "react-native-maps";
 import { connect } from "react-redux";
-import { getAllPinsThunk } from "../store/userpins";
+import { getAllWalksThunk} from "../store/walks";
 
-function DiscoverMap(props) {
+function ExploreMap(props) {
 
   useEffect(() => {
-    props.getAllPins();}, []);
+    console.log('props :', props);
+    props.getAllWalks()}, []);
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
@@ -21,18 +22,17 @@ function DiscoverMap(props) {
           longitudeDelta: 0.0421
         }}
       >
-        {props.userpins.length
-          ? props.userpins.map(coord => {
-            console.log('chord:', coord)
+        {props.walks.length
+          ? props.walks.map(walk => {
               return (
                 <Marker
-                  key={coord.title}
-                  title={coord.title}
-                  description={coord.description}
+                  key={walk.name}
+                  title={walk.name}
+                  pinColor="#006aff"
+                  description={walk.description}
                   coordinate={{
-                    longitude:
-                      coord.location.coordinates[1],
-                    latitude: coord.location.coordinates[0]
+                    longitude: walk.start.coordinates[1],
+                    latitude: walk.start.coordinates[0]
                   }}
                 />
               );
@@ -55,16 +55,16 @@ function DiscoverMap(props) {
 
 const mapState = (state) => {
   return {
-    userpins: state.userpins
+    walks: state.walks
   };
 };
 
 const mapDispatch = dispatch => {
   return {
-    getAllPins: () => {
-      dispatch(getAllPinsThunk());
+    getAllWalks: () => {
+      dispatch(getAllWalksThunk());
     }
   };
 };
 
-export default connect(mapState, mapDispatch)(DiscoverMap);
+export default connect(mapState, mapDispatch)(ExploreMap);

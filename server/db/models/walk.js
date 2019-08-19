@@ -31,6 +31,9 @@ const Walk = db.define('walk', {
     type: Sequelize.INTEGER,
   },
   userId: Sequelize.INTEGER,
+  start: {
+    type: Sequelize.GEOMETRY('POINT'),
+  }
 });
 
 module.exports = Walk;
