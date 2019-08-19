@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
-import { View, SafeAreaView, Modal } from "react-native";
-import MapView, { Polyline, Marker } from "react-native-maps";
+import { View, SafeAreaView } from "react-native";
+import MapView, { Marker } from "react-native-maps";
 import { connect } from "react-redux";
 import { getAllWalksThunk} from "../store/walks";
 
 function ExploreMap(props) {
 
   useEffect(() => {
-    console.log('props :', props);
-    props.getAllWalks()}, []);
+    props.getAllWalks();
+  }, []);
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
