@@ -200,6 +200,10 @@ const seed = async () => {
       madi.setWalkedByUser(i);
     }
 
+    for (let i = 1; i < 4; i++) {
+      madi.setFavoritedByUser(i);
+    }
+
     return [
       ben,
       madi,

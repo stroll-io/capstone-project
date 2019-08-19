@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, SafeAreaView } from 'react-native';
+import { View, SafeAreaView, Image } from 'react-native';
 import {
   Button,
   Text,
@@ -9,14 +9,13 @@ import {
   Body,
   Container,
   Header,
-  Image,
   Thumbnail,
 } from 'native-base';
 import { fetchAllPastWalks } from '../store/pastWalks';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
 
-//TODO: need to be able to dynamically get the userId
+//TODO need to be able to dynamically get the userId
 class PastWalks extends React.Component {
   async componentDidMount() {
     await this.props.fetchAllPastWalks(2);
@@ -37,11 +36,11 @@ class PastWalks extends React.Component {
                 <Card key={walk.id} style={{ height: 200 }}>
                   <CardItem>
                     <Body>
-                      <Thumbnail
-                        large
+                      <Image
                         source={{
-                          uri: 'https://picsum.photos/id/1047/200/300',
+                          uri: `${walk.imageUrl}`,
                         }}
+                        style={{ height: 200, width: null, flex: 1 }}
                       />
                       <Text>{walk.name}</Text>
                       <Text>{walk.category} walk</Text>
