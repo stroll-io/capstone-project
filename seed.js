@@ -196,6 +196,10 @@ const seed = async () => {
       previous = newPoint;
     }
 
+    for (let i = 1; i < 6; i++) {
+      madi.setWalkedByUser(i);
+    }
+
     return [
       ben,
       madi,
