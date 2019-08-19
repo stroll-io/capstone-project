@@ -4,18 +4,14 @@ import MapView, { Polyline, Marker } from "react-native-maps";
 import { connect } from "react-redux";
 import { getAllPinsThunk } from "../store/userpins";
 
-
-
-
 function DiscoverMap(props) {
-
   useEffect(() => {
-    props.getAllPins();}, []);
+    //dispatch a thunk to get all the walks
+  }, []);
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
       <MapView
-        // showsPointsOfInterest={true}
         //initial region should be stateful based on users current location
         style={{ flex: 1 }}
         initialRegion={{
@@ -27,15 +23,14 @@ function DiscoverMap(props) {
       >
         {props.userpins.length
           ? props.userpins.map(coord => {
-            console.log('chord:', coord)
+              console.log("chord:", coord);
               return (
                 <Marker
                   key={coord.title}
                   title={coord.title}
                   description={coord.description}
                   coordinate={{
-                    longitude:
-                      coord.location.coordinates[1],
+                    longitude: coord.location.coordinates[1],
                     latitude: coord.location.coordinates[0]
                   }}
                 />
@@ -57,18 +52,22 @@ function DiscoverMap(props) {
   );
 }
 
-const mapState = (state) => {
+const mapState = state => {
   return {
-    userpins: state.userpins
+    //set the state with the walks
   };
 };
 
 const mapDispatch = dispatch => {
   return {
-    getAllPins: () => {
-      dispatch(getAllPinsThunk());
-    }
+    //bring in a thunk creator
   };
 };
 
-export default connect(mapState, mapDispatch)(DiscoverMap);
+export default connect(
+  mapState,
+  mapDispatch
+)(DiscoverMap);
+
+
+
