@@ -32,8 +32,6 @@ export default function Map() {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
-
-
       <MapView
         // showsPointsOfInterest={true}
         //initial region should be stateful based on users current location

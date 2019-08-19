@@ -1,41 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { View, SafeAreaView, Modal } from "react-native";
-import { Button, Text, Form, Item, Input, Picker, Icon } from "native-base";
 import MapView, { Polyline, Marker } from "react-native-maps";
-import axios from "axios";
-
-export default function DiscoverMap() {
-  const [coords, setCoords] = useState([
-    {
-      title: "Fullstack Academy",
-      description: "a top-ranked coding bootcamp",
-      coordinate: { latitude: 41.895394, longitude: -87.639032 }
-    },
-    { title: "Yolk",
-      description: "I effing love brunch!",
-      coordinate: { latitude: 41.896256, longitude: -87.633928 }
-  }
-  ]);
+import { connect } from "react-redux";
+import { getAllPinsThunk } from "../store/userpins";
 
 
-  const handleUndo = () => {
-    const coordsCopy = coords.slice();
-    coordsCopy.pop();
-    setCoords(coordsCopy);
-  };
 
-  const handleCreate = () => {
-    setIsModalVisible(true);
-  };
 
-  const handleSubmit = async () => {
-    await axios.post("http://576e347c.ngrok.io/api/navPoints", {
-      coords,
-      walkTitle,
-      walkDescription,
-      walkTag
-    });
-  };
+function DiscoverMap(props) {
+
+  useEffect(() => {
+    props.getAllPins();}, []);
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
@@ -49,30 +24,24 @@ export default function DiscoverMap() {
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421
         }}
-        onPress={e => {
-          const newCord = {
-            latitude: e.nativeEvent.coordinate.latitude,
-            longitude: e.nativeEvent.coordinate.longitude
-          };
-          setCoords([...coords, newCord]);
-        }}
-        //use onPress to gather the coordinates for creating walks, dropping pins, etc..
       >
-        {/* <Marker
-          title="Ben's apartment"
-          description="This is where Ben, Kait, and Belle live."
-          coordinate={{ latitude: 42.064119, longitude: -87.691495 }}
-        /> */}
-        {coords.map(coord => {
-          return (
-            <Marker
-            key={coord.title}
-            title={coord.title}
-            description={coord.description}
-            coordinate={coord.coordinate}
-            ></Marker>
-          )
-        })}
+        {props.userpins.length
+          ? props.userpins.map(coord => {
+            console.log('chord:', coord)
+              return (
+                <Marker
+                  key={coord.title}
+                  title={coord.title}
+                  description={coord.description}
+                  coordinate={{
+                    longitude:
+                      coord.location.coordinates[1],
+                    latitude: coord.location.coordinates[0]
+                  }}
+                />
+              );
+            })
+          : null}
       </MapView>
       <View
         style={{
@@ -88,3 +57,18 @@ export default function DiscoverMap() {
   );
 }
 
+const mapState = (state) => {
+  return {
+    userpins: state.userpins
+  };
+};
+
+const mapDispatch = dispatch => {
+  return {
+    getAllPins: () => {
+      dispatch(getAllPinsThunk());
+    }
+  };
+};
+
+export default connect(mapState, mapDispatch)(DiscoverMap);

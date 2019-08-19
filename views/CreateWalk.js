@@ -28,7 +28,7 @@ export default function Map() {
   };
 
   const handleSubmit = async () => {
-    await axios.post("http://576e347c.ngrok.io/api/navPoints", {
+    await axios.post("http://1116a610.ngrok.io/api/navPoints", {
       coords,
       walkTitle,
       walkDescription,
