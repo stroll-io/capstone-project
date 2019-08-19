@@ -16,6 +16,7 @@ userRouter.put('/:userId/past-walks/:walkId', async (req, res, next) => {
 //TODO: change the ascending order for the imbedded past walk value, not the walk itself
 userRouter.get('/:userId/past-walks', async (req, res, next) => {
   try {
+    console.log('call from the get route past walks');
     const singleUser = await User.findByPk(req.params.userId);
     const pastWalks = await singleUser.getWalkedByUser({
       order: [['createdAt', 'ASC']],

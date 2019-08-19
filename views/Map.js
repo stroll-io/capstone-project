@@ -1,14 +1,8 @@
 import React, { useState } from 'react';
 import { View, SafeAreaView } from 'react-native';
-import { Button, Text } from 'native-base';
-import MapView, { Polyline } from 'react-native-maps';
-import axios from 'axios';
-import ngrokSecret from '../secrets';
-import React, { useState } from 'react';
-import { View, SafeAreaView, Modal } from 'react-native';
-import { Button, Text, Form, Item, Input, Picker, Icon } from 'native-base';
 import MapView, { Polyline, Marker } from 'react-native-maps';
 import axios from 'axios';
+import { Button, Text, Form, Item, Input, Picker, Icon } from 'native-base';
 
 export default function Map() {
   const [coords, setCoords] = useState([]);
