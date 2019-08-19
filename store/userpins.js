@@ -1,4 +1,5 @@
 import axios from 'axios';
+import ngrok from '../secrets'
 
 const GET_ALL_PINS = 'GET_ALL_PINS';
 
@@ -9,7 +10,7 @@ const getAllPins = (pins) => ({
 
 export const getAllPinsThunk = () => async dispatch => {
   try {
-    const res = await axios.get("http://1116a610.ngrok.io/api/userPins/");
+    const res = await axios.get(`${ngrok}/api/userPins/`);
     dispatch(getAllPins(res.data));
   }
   catch (err) {

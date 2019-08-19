@@ -1,4 +1,5 @@
 import axios from 'axios';
+import ngrok from "../secrets";
 
 const GET_ALL_WALKS = "GET_ALL_WALKS";
 
@@ -10,8 +11,8 @@ const getAllWalks = (walks) => ({
 export const getAllWalksThunk = () => async dispatch => {
   try {
     console.log('in walks thunk')
-    const res = await axios.get("http://1116a610.ngrok.io/api/walks");
-    dispatch(getAllWalks(res.data))
+    const res = await axios.get(`${ngrok}/api/walks`);
+    dispatch(getAllWalks(res.data));
   }
   catch(err) {
     console.error(err);
