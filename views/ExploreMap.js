@@ -36,7 +36,6 @@ function ExploreMap(props) {
 
   const handleWalk = () => {
     props.setActiveWalk(id);
-    console.log('id :', id);
   }
 
   return (
@@ -93,6 +92,9 @@ function ExploreMap(props) {
       </Modal>
       <MapView
         //initial region should be stateful based on users current location
+        provider="google"
+        showsUserLocation={true}
+
         style={{ flex: 1 }}
         initialRegion={{
           latitude: 41.895442,
@@ -114,7 +116,12 @@ function ExploreMap(props) {
                   pinColor="#006aff"
                   description={walk.description}
                   onPress={() => {
-                    handleModal(walk.name, walk.description, walk.coordinate, walk.id);
+                    handleModal(
+                      walk.name,
+                      walk.description,
+                      walk.coordinate,
+                      walk.id
+                    );
                     setCurrentMarker(this.marker);
                   }}
                   coordinate={{

@@ -18,6 +18,8 @@ import PastWalks from './views/PastWalks';
 import CreateWalk from './views/CreateWalk';
 import DiscoverMap from './views/DiscoverMap';
 import ExploreMap from './views/ExploreMap'
+import WalkingMap from './views/WalkingMap'
+
 
 const AppNavigator = createStackNavigator(
   {
@@ -33,7 +35,8 @@ const AppNavigator = createStackNavigator(
     StarredWalks: StarredWalks,
     PastWalks: PastWalks,
     DiscoverMap: DiscoverMap,
-    ExploreMap: ExploreMap
+    ExploreMap: ExploreMap,
+    WalkingMap: WalkingMap
   },
   {
     initialRouteName: 'Home',

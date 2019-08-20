@@ -3,6 +3,7 @@ import { View, SafeAreaView, Modal } from "react-native";
 import { Button, Text, Form, Item, Input, Picker, Icon } from "native-base";
 import MapView, { Polyline } from "react-native-maps";
 import axios from "axios";
+import ngrok from '../secrets'
 
 export default function Map() {
   const [coords, setCoords] = useState([]);
@@ -28,7 +29,7 @@ export default function Map() {
   };
 
   const handleSubmit = async () => {
-    await axios.post("http://1116a610.ngrok.io/api/navPoints", {
+    await axios.post(`${ngrok}/api/navPoints`, {
       coords,
       walkTitle,
       walkDescription,
@@ -40,6 +41,7 @@ export default function Map() {
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
       <MapView
         //initial region should be stateful based on users current location
+        provider='google'
         style={{ flex: 1 }}
         initialRegion={{
           latitude: 41.895442,
