@@ -1,7 +1,6 @@
 import React from 'react';
-import { View, SafeAreaView, Image } from 'react-native';
+import { Image } from 'react-native';
 import {
-  Button,
   Text,
   Content,
   Card,
@@ -9,7 +8,6 @@ import {
   Body,
   Container,
   Header,
-  Thumbnail,
 } from 'native-base';
 import { fetchAllPastWalks } from '../store/pastWalks';
 import { connect } from 'react-redux';
