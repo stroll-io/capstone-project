@@ -6,7 +6,6 @@ import { createStackNavigator, createAppContainer } from 'react-navigation';
 import Login from './views/Login';
 import Register from './views/Register';
 import HomeScreen from './views/Home';
-import Map from './views/Map';
 import Camera from './views/Camera';
 import Location from './views/Location';
 import LiveView from './views/LiveView';
@@ -18,7 +17,7 @@ import StarredWalks from './views/StarredWalks';
 import PastWalks from './views/PastWalks';
 import CreateWalk from './views/CreateWalk';
 import DiscoverMap from './views/DiscoverMap';
-
+import ExploreMap from './views/ExploreMap'
 
 const AppNavigator = createStackNavigator(
   {
@@ -33,8 +32,8 @@ const AppNavigator = createStackNavigator(
     AccountInfo: AccountInfo,
     StarredWalks: StarredWalks,
     PastWalks: PastWalks,
-    Map: Map,
-    DiscoverMap: DiscoverMap
+    DiscoverMap: DiscoverMap,
+    ExploreMap: ExploreMap
   },
   {
     initialRouteName: 'Home',

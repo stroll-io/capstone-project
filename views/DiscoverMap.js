@@ -6,7 +6,7 @@ import { getAllPinsThunk } from "../store/userpins";
 
 function DiscoverMap(props) {
   useEffect(() => {
-    //dispatch a thunk to get all the walks
+    props.getAllPins();
   }, []);
 
   return (
@@ -26,8 +26,8 @@ function DiscoverMap(props) {
               console.log("chord:", coord);
               return (
                 <Marker
-                  key={coord.title}
-                  title={coord.title}
+                  key={coord.name}
+                  title={coord.name}
                   description={coord.description}
                   coordinate={{
                     longitude: coord.location.coordinates[1],
@@ -54,13 +54,15 @@ function DiscoverMap(props) {
 
 const mapState = state => {
   return {
-    //set the state with the walks
+    userpins: state.userpins
   };
 };
 
 const mapDispatch = dispatch => {
   return {
-    //bring in a thunk creator
+    getAllPins: () => {
+      dispatch(getAllPinsThunk());
+    }
   };
 };
 
@@ -68,6 +70,3 @@ export default connect(
   mapState,
   mapDispatch
 )(DiscoverMap);
-
-
-

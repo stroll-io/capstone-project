@@ -39,7 +39,6 @@ export default function Map() {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
       <MapView
-        // showsPointsOfInterest={true}
         //initial region should be stateful based on users current location
         style={{ flex: 1 }}
         initialRegion={{
@@ -55,7 +54,6 @@ export default function Map() {
           };
           setCoords([...coords, newCord]);
         }}
-        //use onPress to gather the coordinates for creating walks, dropping pins, etc..
       >
         <Polyline
           coordinates={coords}

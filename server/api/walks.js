@@ -27,4 +27,13 @@ walksRouter.get('/:walkId', async (req, res, next) => {
   }
 });
 
+walksRouter.get("/", async (req, res, next) => {
+  try {
+    const allWalks = await Walk.findAll();
+    res.send(allWalks);
+  } catch (err) {
+    next(err);
+  }
+});
+
 module.exports = walksRouter;
