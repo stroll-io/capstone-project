@@ -6,12 +6,14 @@ import user from './user';
 import userpins from './userpins';
 import allPastWalks from './pastWalks';
 import starredWalks from './starredWalks';
+import loggedInUser from './user';
 
 const reducer = combineReducers({
   user,
   userpins,
   allPastWalks,
   starredWalks,
+  loggedInUser,
 });
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))

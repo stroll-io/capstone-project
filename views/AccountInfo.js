@@ -1,17 +1,30 @@
 import React from 'react';
 import { View, SafeAreaView } from 'react-native';
 import { Button, Text } from 'native-base';
-
+import { fetchLoggedInUser } from '../store/user';
+import { connect } from 'react-redux';
+import propTypes from 'prop-types';
 class AccountInfo extends React.Component {
+  componentDidMount() {
+    this.props.fetchLoggedInUser(2);
+  }
+
   render() {
     return (
       <View>
         <View>
-          <Text>Account Info</Text>
+          <Text>Your account details: </Text>
         </View>
         <View>
-          <Text>First Name:</Text>
-          <Text>Email:</Text>
+          <Text>
+            {this.props.loggedInUser.firstName ? (
+            <Text>First Name:{' '}
+              this.props.loggedInUser.firstName
+            ) : (
+              <Text />
+            )}
+          </Text>
+          <Text>Email: </Text>
           <Button>
             <Text>Edit Info</Text>
           </Button>
@@ -27,4 +40,26 @@ class AccountInfo extends React.Component {
   }
 }
 
-export default AccountInfo;
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchLoggedInUser: userId => {
+      dispatch(fetchLoggedInUser(userId));
+    },
+  };
+};
+
+const mapStateToProps = state => {
+  return {
+    loggedInUser: state.loggedInUser,
+  };
+};
+
+AccountInfo.propTypes = {
+  fetchLoggedInUser: propTypes.func,
+  loggedInUser: propTypes.object,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AccountInfo);
