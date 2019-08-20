@@ -1,44 +1,41 @@
 const navPointRouter = require('express').Router();
 const NavPoint = require('../db/models/navPoint');
-const Walk = require('../db/models/walk')
+const Walk = require('../db/models/walk');
 
 //POST /api/navPoints
 navPointRouter.post('/', async (req, res, next) => {
-
   try {
     const walkInfo = {
-      name: "Ben's test walk",
-      description: "a pretty cool walk",
-      category: "dog"
-    }
+      name: req.body.walkTitle,
+      description: req.body.walkDescription,
+      category: req.body.walkTag,
+    };
     const walk = await Walk.create(walkInfo);
 
     let previous = null;
 
-
+    //this loop isn't quite magic, but make sure to understand what it's doing if you try to change it
     for (let i = 0; i < req.body.coords.length; i++) {
-      const currentPoint = req.body.coords[i]
+      const currentPoint = req.body.coords[i];
       let previousId = null;
       let start = i === 0;
       if (previous !== null) {
         previousId = previous.dataValues.id;
-      };
-      console.log("previousId :", previousId);
+      }
       const newPoint = await NavPoint.create({
         location: {
           type: 'Point',
           coordinates: [currentPoint.latitude, currentPoint.longitude],
         },
-          prev: previousId,
-          next: null,
-          start: start,
-          walkId: walk.id
-        }
-      );
+        prev: previousId,
+        next: null,
+        start: start,
+        walkId: walk.id,
+      });
 
       if (previous !== null) {
         await previous.update({
-          next: newPoint.dataValues.id
+          next: newPoint.dataValues.id,
         });
       }
       previous = newPoint;
