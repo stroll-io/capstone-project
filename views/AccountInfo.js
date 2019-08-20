@@ -18,19 +18,20 @@ class AccountInfo extends React.Component {
         <View>
           <Text>
             {this.props.loggedInUser.firstName ? (
-            <Text>First Name:{' '}
-              this.props.loggedInUser.firstName
+              <>
+                <Text>First Name: {this.props.loggedInUser.firstName}</Text>
+                <Text>Email: {this.props.loggedInUser.email}</Text>
+                <Button>
+                  <Text>Edit Info</Text>
+                </Button>
+                <Button>
+                  <Text>Request password reset</Text>
+                </Button>
+              </>
             ) : (
-              <Text />
+              <Text>Loading...</Text>
             )}
           </Text>
-          <Text>Email: </Text>
-          <Button>
-            <Text>Edit Info</Text>
-          </Button>
-          <Button>
-            <Text>Request password reset</Text>
-          </Button>
           <Button>
             <Text>Delete account</Text>
           </Button>
