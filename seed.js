@@ -101,59 +101,82 @@ const seed = async () => {
       grant,
       art,
       museum,
-      loop,
+      loop
     ] = await Promise.all([
       Walk.create({
         name: `Ben's Commute`,
-        description: 'My walk from Fullstack to Ogilvie',
-        category: 'nature',
-        imageUrl: 'https://picsum.photos/id/1047/200/300',
+        description: "My walk from Fullstack to Ogilvie",
+        category: "nature",
+        imageUrl: "https://picsum.photos/id/1047/200/300",
         userId: 1,
+        start: {
+          type: 'Point',
+          coordinates: [41.879353, -87.636712]}
       }),
       Walk.create({
         name: `Madi's Commute`,
-        description: 'My walk from home to Fullstack',
-        category: 'scenic',
-        imageUrl: 'https://picsum.photos/id/1047/200/300',
+        description: "My walk from home to Fullstack",
+        category: "scenic",
+        imageUrl: "https://picsum.photos/id/1047/200/300",
         userId: 2,
+        start: {
+          type: 'Point',
+          coordinates:[41.879345, -87.632367]}
       }),
       Walk.create({
         name: `Michelle's Commute`,
-        description: 'My walk from my apartment to my car',
-        category: 'dog',
-        imageUrl: 'https://picsum.photos/id/1047/200/300',
+        description: "My walk from my apartment to my car",
+        category: "dog",
+        imageUrl: "https://picsum.photos/id/1047/200/300",
         userId: 3,
+        start: {
+          type: 'Point',
+          coordinates:[41.878131, -87.632356]}
       }),
       Walk.create({
         name: `Millennium Park`,
-        description: 'Lurie Garden, the Bean, and all that jazz',
-        category: 'scenic',
-        imageUrl: 'https://picsum.photos/id/1047/200/300',
+        description: "Lurie Garden, the Bean, and all that jazz",
+        category: "scenic",
+        imageUrl: "https://picsum.photos/id/1047/200/300",
+        start: {
+          type: 'Point',
+          coordinates:[41.878994, -87.629394]}
       }),
       Walk.create({
         name: `Grant Park`,
-        description: 'A big lawn with a big fountain to match',
-        category: 'nature',
-        imageUrl: 'https://picsum.photos/id/1047/200/300',
+        description: "A big lawn with a big fountain to match",
+        category: "nature",
+        imageUrl: "https://picsum.photos/id/1047/200/300",
+        start: {
+          type: 'Point',
+          coordinates:[41.897765, -87.627853]}
       }),
       Walk.create({
         name: `The Art Institute`,
-        description: 'Many expensive paintings',
-        category: 'architecture',
+        description: "Many expensive paintings",
+        category: "architecture",
         imageUrl: null,
+        start: {type: 'Point',
+          coordinates:[41.900201, -87.631222]}
       }),
       Walk.create({
         name: `Museum Campus`,
-        description: 'The Planetarium, Shedd Aquarium, and Field Museum',
-        category: 'historical',
+        description: "The Planetarium, Shedd Aquarium, and Field Museum",
+        category: "historical",
         imageUrl: null,
+        start: {
+          type: 'Point',
+          coordinates:[41.887567, -87.621791]}
       }),
       Walk.create({
         name: `The Loop Architectural Walk`,
-        description: 'Tall buildings for tall folks',
-        category: 'architecture',
+        description: "Tall buildings for tall folks",
+        category: "architecture",
         imageUrl: null,
-      }),
+        start: {
+          type: 'Point',
+          coordinates:[41.88926, -87.632091]}
+      })
     ]);
 
     const archiWalkCoords = [
