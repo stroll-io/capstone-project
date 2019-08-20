@@ -1,19 +1,55 @@
-import React, { useEffect } from "react";
-import { View, SafeAreaView, Button, Text } from "react-native";
-import { Image } from 'expo'
-import Thumbnail from 'native-base'
+import React, { useState, useEffect } from "react";
+import { View, SafeAreaView, Text, Modal, Button, Image } from "react-native";
 import MapView, { Marker, Callout } from "react-native-maps";
 import { connect } from "react-redux";
 import { getAllWalksThunk} from "../store/walks";
 
 function ExploreMap(props) {
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
+  const [coordinate, setCoordinate] = useState({})
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
 
   useEffect(() => {
     props.getAllWalks();
   }, []);
 
+  const handleModal = (walkName, walkDescription, walkCoordinate) => {
+    console.log('in handle modal')
+    setName(walkName);
+    setDescription(walkDescription);
+    setCoordinate(walkCoordinate);
+    setIsModalVisible(true);
+  }
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
+      <Modal
+        animationType="slide"
+        transparent={false}
+        visible={isModalVisible}
+        onRequestClose={() => {
+          console.log("onRequestClose");
+        }}
+      >
+        <View style={{ marginTop: 75 }}>
+          <Text
+            style={{ fontWeight: "bold", fontSize: 30, textAlign: "center", marginBottom: 20 }}
+          >
+            {name}
+          </Text>
+
+          <Image
+            source={{
+              url:
+                "https://www.seattle.gov/images/Departments/ParksAndRecreation/Parks/MNOP/MadisonPark4.jpg"
+            }}
+            style={{ height: 400, width: 400 }}
+          />
+          <Text style={{ margin: 20 }}>{description}</Text>
+        </View>
+      </Modal>
       <MapView
         //initial region should be stateful based on users current location
         style={{ flex: 1 }}
@@ -24,6 +60,7 @@ function ExploreMap(props) {
           longitudeDelta: 0.0421
         }}
       >
+        <View />
         {props.walks.length
           ? props.walks.map(walk => {
               return (
@@ -32,6 +69,9 @@ function ExploreMap(props) {
                   title={walk.name}
                   pinColor="#006aff"
                   description={walk.description}
+                  onPress={() => {
+                    handleModal(walk.name, walk.description, walk.coordinate);
+                  }}
                   coordinate={{
                     longitude: walk.start.coordinates[1],
                     latitude: walk.start.coordinates[0]
@@ -39,13 +79,22 @@ function ExploreMap(props) {
                 >
                   <Callout>
                     <View>
-                      <Text style={{fontWeight: 'bold'}}>{walk.name}</Text>
+                      {/* <Text style={{ fontWeight: "bold" }}>
+                        {walk.name}
+                      </Text>
                       <Text>{walk.description}</Text>
                       <Button
-                        title="Click Me!"
-                        onPress={() => console.log("Clicked")}
-                      />
-
+                        medium
+                        primary
+                        title="See More"
+                        onPress={() => {
+                          handleModal(
+                            walk.name,
+                            walk.description,
+                            walk.coordinate
+                          );
+                        }}
+                      /> */}
                     </View>
                   </Callout>
                 </Marker>
@@ -54,16 +103,6 @@ function ExploreMap(props) {
             })
           : null}
       </MapView>
-      <View
-        style={{
-          display: "flex",
-          position: "absolute",
-          bottom: 40,
-          left: 50,
-          flexDirection: "row",
-          justifyContent: "center"
-        }}
-      />
     </SafeAreaView>
   );
 }

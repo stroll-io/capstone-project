@@ -1,3 +1,3 @@
-const ngrokSecret = "http://1116a610.ngrok.io";
+const ngrokSecret = "http://e36d066d.ngrok.io";
 
 module.exports = ngrokSecret;
