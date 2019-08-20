@@ -1,26 +1,42 @@
 import React, { useState, useEffect } from "react";
-import { View, SafeAreaView, Text, Modal, Button, Image } from "react-native";
+import { View, SafeAreaView, Modal,  Image } from "react-native";
 import MapView, { Marker, Callout } from "react-native-maps";
+import { Button, Text } from 'native-base';
 import { connect } from "react-redux";
-import { getAllWalksThunk} from "../store/walks";
+import { getAllWalksThunk } from "../store/walks";
+import {  setActiveWalkThunk } from '../store/activeWalk'
+
 
 function ExploreMap(props) {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [coordinate, setCoordinate] = useState({})
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [currentMarker, setCurrentMarker] = useState(null)
+  const [id, setId] = useState(null)
+
 
 
   useEffect(() => {
     props.getAllWalks();
   }, []);
 
-  const handleModal = (walkName, walkDescription, walkCoordinate) => {
-    console.log('in handle modal')
+  const handleModal = (walkName, walkDescription, walkCoordinate, walkId) => {
     setName(walkName);
     setDescription(walkDescription);
     setCoordinate(walkCoordinate);
+    setId(walkId)
     setIsModalVisible(true);
+  }
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+    currentMarker.hideCallout()
+  };
+
+  const handleWalk = () => {
+    props.setActiveWalk(id);
+    console.log('id :', id);
   }
 
   return (
@@ -35,7 +51,12 @@ function ExploreMap(props) {
       >
         <View style={{ marginTop: 75 }}>
           <Text
-            style={{ fontWeight: "bold", fontSize: 30, textAlign: "center", marginBottom: 20 }}
+            style={{
+              fontWeight: "bold",
+              fontSize: 30,
+              textAlign: "center",
+              marginBottom: 20
+            }}
           >
             {name}
           </Text>
@@ -48,6 +69,26 @@ function ExploreMap(props) {
             style={{ height: 400, width: 400 }}
           />
           <Text style={{ margin: 20 }}>{description}</Text>
+          <View
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+              marginTop: 50
+            }}
+          >
+            <Button
+              large
+              warning
+              onPress={handleCancel}
+              style={{ margin: 20 }}
+            >
+              <Text>Back</Text>
+            </Button>
+            <Button large primary onPress={handleWalk} style={{ margin: 20 }}>
+              <Text>Walk</Text>
+            </Button>
+          </View>
         </View>
       </Modal>
       <MapView
@@ -65,12 +106,16 @@ function ExploreMap(props) {
           ? props.walks.map(walk => {
               return (
                 <Marker
+                  ref={_marker => {
+                    this.marker = _marker;
+                  }}
                   key={walk.name}
                   title={walk.name}
                   pinColor="#006aff"
                   description={walk.description}
                   onPress={() => {
-                    handleModal(walk.name, walk.description, walk.coordinate);
+                    handleModal(walk.name, walk.description, walk.coordinate, walk.id);
+                    setCurrentMarker(this.marker);
                   }}
                   coordinate={{
                     longitude: walk.start.coordinates[1],
@@ -79,22 +124,7 @@ function ExploreMap(props) {
                 >
                   <Callout>
                     <View>
-                      {/* <Text style={{ fontWeight: "bold" }}>
-                        {walk.name}
-                      </Text>
-                      <Text>{walk.description}</Text>
-                      <Button
-                        medium
-                        primary
-                        title="See More"
-                        onPress={() => {
-                          handleModal(
-                            walk.name,
-                            walk.description,
-                            walk.coordinate
-                          );
-                        }}
-                      /> */}
+                      <Text>{walk.name}</Text>
                     </View>
                   </Callout>
                 </Marker>
@@ -117,6 +147,9 @@ const mapDispatch = dispatch => {
   return {
     getAllWalks: () => {
       dispatch(getAllWalksThunk());
+    },
+    setActiveWalk: (id) => {
+      dispatch(setActiveWalkThunk(id));
     }
   };
 };

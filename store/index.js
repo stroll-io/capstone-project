@@ -5,8 +5,10 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import user from './user'
 import userpins from './userpins';
 import walks from './walks'
+import activeWalk from './activeWalk'
 
-const reducer = combineReducers({user, userpins, walks})
+const reducer = combineReducers({user, userpins, walks, activeWalk});
+
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
 );

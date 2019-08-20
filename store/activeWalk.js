@@ -8,16 +8,23 @@ const setActiveWalk = (walk) => ({
   walk
 })
 
-export const setActiveWalkThunk = () => async dispatch => {
+export const setActiveWalkThunk = (id) => async dispatch => {
   try {
-    //make an api route for axios to get a walk by id
-    //dispatch the thunk with res.data
+    const res = await axios.get(`${ngrok}/api/walks/${id}`);
+    dispatch(setActiveWalk(res.data))
   }
   catch (err) {
     console.error(err)
   }
 }
-const defaultState = {}
-export default function(state = defaultState, action) {
 
+const defaultState = {};
+
+export default function(state = defaultState, action) {
+  switch(action.type) {
+    case SET_ACTIVE_WALK:
+      return action.walk;
+    default:
+      return state;
+  }
 }
