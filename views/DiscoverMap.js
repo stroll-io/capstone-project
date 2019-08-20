@@ -26,8 +26,8 @@ function DiscoverMap(props) {
               console.log("chord:", coord);
               return (
                 <Marker
-                  key={coord.title}
-                  title={coord.title}
+                  key={coord.name}
+                  title={coord.name}
                   description={coord.description}
                   coordinate={{
                     longitude: coord.location.coordinates[1],

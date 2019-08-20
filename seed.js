@@ -3,6 +3,7 @@ const db = require('./server/db');
 const Walk = require('./server/db/models/walk');
 const User = require('./server/db/models/user');
 const NavPoint = require('./server/db/models/navPoint');
+const UserPin = require('./server/db/models/userPin')
 
 // // const Favorite = require('./server/db/favorite');
 // const Pin = require('./server/db/userPin');
@@ -72,6 +73,17 @@ const NavPoint = require('./server/db/models/navPoint');
 const seed = async () => {
   try {
     await db.sync({ force: true });
+
+    const newPin = await UserPin.create({
+        location: {
+          type: "Point",
+          coordinates: [41.895353, -87.639437]
+        },
+        name: "Fullstack Academy",
+        description: "It's pretty cool I guess."
+      });
+
+
     const [ben, madi, michelle] = await Promise.all([
       User.create({
         firstName: 'ben',
@@ -244,7 +256,10 @@ const seed = async () => {
   } catch (err) {
     console.log(red(err));
   }
+
 };
+
+
 
 module.exports = seed;
 
