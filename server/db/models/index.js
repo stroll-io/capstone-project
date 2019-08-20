@@ -1,13 +1,8 @@
 const User = require('./user');
 const Walk = require('./walk');
 const NavPoint = require('./navPoint');
-<<<<<<< HEAD
 const UserPin = require('./userPin');
-const Attraction = require('./attraction');
-=======
-const UserPin = require('./userPin')
 
->>>>>>> 9a5a9f12796801f4aa6a29a6ae65489b9e58268c
 /**
  * If we had any associations to make, this would be a great place to put them!
  * ex. if we had another model called BlogPost, we might say:
@@ -35,10 +30,5 @@ module.exports = {
   User,
   Walk,
   NavPoint,
-<<<<<<< HEAD
   UserPin,
-  Attraction,
-=======
-  UserPin
->>>>>>> 9a5a9f12796801f4aa6a29a6ae65489b9e58268c
 };

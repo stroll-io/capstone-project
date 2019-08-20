@@ -1,61 +1,33 @@
 import React from 'react';
 import { View, Text, Button } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 class HomeScreen extends React.Component {
+  static navigationOptions({ navigation }) {
+    return {
+      headerRight: (
+        <View style={{ padding: 10 }}>
+          <Ionicons
+            name="md-menu"
+            size={24}
+            onPress={() => navigation.navigate('DrawerOpen')}
+          />
+        </View>
+      ),
+    };
+  }
+
   render() {
     return (
-      <View
-        style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
-      >
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Text>Home Screen</Text>
         <Button
-          title="CreateWalk"
-          onPress={() => this.props.navigation.navigate("CreateWalk")}
+          title="Welcome"
+          onPress={() => this.props.navigation.navigate('Welcome')}
         />
         <Button
-          title="Map"
-          onPress={() => this.props.navigation.navigate("Map")}
-        />
-
-        <Button
-          title="Camera"
-          onPress={() => this.props.navigation.navigate("Camera")}
-        />
-        <Button
-          title="Location"
-          onPress={() => this.props.navigation.navigate("Location")}
-        />
-        <Button
-          title="Live View"
-          onPress={() => this.props.navigation.navigate("LiveView")}
-        />
-        <Button
-          title="Side Menu"
-          onPress={() => this.props.navigation.navigate("SideMenu")}
-        />
-        <Button
-          title="Login"
-          onPress={() => this.props.navigation.navigate("Login")}
-        />
-        <Button
-          title="Register"
-          onPress={() => this.props.navigation.navigate("Register")}
-        />
-        <Button
-          title="Account Info"
-          onPress={() => this.props.navigation.navigate("AccountInfo")}
-        />
-        <Button
-          title="Starred Walks"
-          onPress={() => this.props.navigation.navigate("StarredWalks")}
-        />
-        <Button
-          title="Past Walks"
-          onPress={() => this.props.navigation.navigate("PastWalks")}
-        />
-        <Button
-          title="DiscoverMap"
-          onPress={() => this.props.navigation.navigate("DiscoverMap")}
+          title="Registration"
+          onPress={() => this.props.navigation.navigate('Register')}
         />
       </View>
     );
