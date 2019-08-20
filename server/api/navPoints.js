@@ -1,10 +1,9 @@
 const navPointRouter = require('express').Router();
 const NavPoint = require('../db/models/navPoint');
-const Walk = require('../db/models/walk')
+const Walk = require('../db/models/walk');
 
 //POST /api/navPoints
 navPointRouter.post('/', async (req, res, next) => {
-
   try {
     console.log('req.body :', req.body);
     const walkInfo = {
@@ -30,22 +29,21 @@ navPointRouter.post('/', async (req, res, next) => {
       let start = i === 0;
       if (previous !== null) {
         previousId = previous.dataValues.id;
-      };
+      }
       const newPoint = await NavPoint.create({
         location: {
           type: 'Point',
           coordinates: [currentPoint.latitude, currentPoint.longitude],
         },
-          prev: previousId,
-          next: null,
-          start: start,
-          walkId: walk.id
-        }
-      );
+        prev: previousId,
+        next: null,
+        start: start,
+        walkId: walk.id,
+      });
 
       if (previous !== null) {
         await previous.update({
-          next: newPoint.dataValues.id
+          next: newPoint.dataValues.id,
         });
       }
       previous = newPoint;

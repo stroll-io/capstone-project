@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const db = require('../db');
 
-const UserPin = db.define('userPin', {
+const Attraction = db.define('attraction', {
   location: {
     type: Sequelize.GEOMETRY('POINT'),
   },
@@ -11,9 +11,6 @@ const UserPin = db.define('userPin', {
   description: {
     type: Sequelize.TEXT,
   },
-  walkId: {
-    type: Sequelize.INTEGER,
-  },
 });
 
-module.exports = UserPin;
+module.exports = Attraction;
