@@ -49,8 +49,8 @@ function WalkingMap(props) {
         initialRegion={{
           latitude: 41.895442,
           longitude: -87.638957,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421
+          latitudeDelta: 0.00522,
+          longitudeDelta: 0.00221
         }}
       >
         {props.userpins.length

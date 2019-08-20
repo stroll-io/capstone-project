@@ -41,7 +41,7 @@ export default function Map() {
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
       <MapView
         //initial region should be stateful based on users current location
-        provider='google'
+        // provider='google'
         style={{ flex: 1 }}
         initialRegion={{
           latitude: 41.895442,
