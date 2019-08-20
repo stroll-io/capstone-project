@@ -3,7 +3,6 @@ import { View, SafeAreaView, Modal } from "react-native";
 import MapView, { Polyline, Marker } from "react-native-maps";
 import { connect } from "react-redux";
 import { getAllPinsThunk } from "../store/userpins";
-import activeWalk from "../store/activeWalk";
 
 function WalkingMap(props) {
   useEffect(() => {
