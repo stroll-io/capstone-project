@@ -5,10 +5,18 @@ const Walk = require('../db/models/walk');
 //POST /api/navPoints
 navPointRouter.post('/', async (req, res, next) => {
   try {
+    console.log('req.body :', req.body);
     const walkInfo = {
       name: req.body.walkTitle,
       description: req.body.walkDescription,
       category: req.body.walkTag,
+      start: {
+        type: "Point",
+        coordinates: [
+          req.body.coords[0].latitude,
+          req.body.coords[0].longitude
+        ]
+      }
     };
     const walk = await Walk.create(walkInfo);
 

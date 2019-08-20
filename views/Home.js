@@ -12,10 +12,6 @@ class HomeScreen extends React.Component {
           title="CreateWalk"
           onPress={() => this.props.navigation.navigate("CreateWalk")}
         />
-        <Button
-          title="Map"
-          onPress={() => this.props.navigation.navigate("Map")}
-        />
 
         <Button
           title="Camera"
@@ -56,6 +52,10 @@ class HomeScreen extends React.Component {
         <Button
           title="DiscoverMap"
           onPress={() => this.props.navigation.navigate("DiscoverMap")}
+        />
+        <Button
+          title="ExploreMap"
+          onPress={() => this.props.navigation.navigate("ExploreMap")}
         />
       </View>
     );
