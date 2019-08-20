@@ -44,7 +44,7 @@ class StarredWalks extends React.Component {
                       <Text>{walk.name}</Text>
                       <Text>{walk.category} walk</Text>
                       <Text>{walk.description}</Text>
-                      <Text>Walked: {walk.past_walks.createdAt}</Text>
+                      <Text>Walked: {walk.favorite_walks.createdAt}</Text>
                     </Body>
                   </CardItem>
                   <CardItem cardBody />
