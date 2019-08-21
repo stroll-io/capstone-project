@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { ngrokSecret } from '../secrets';
+import console = require('console');
 
 const GET_STARRED_WALKS = 'GET_STARRED_WALKS';
 

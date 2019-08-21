@@ -2,7 +2,6 @@ import React from 'react';
 import { View, Image } from 'react-native';
 import { createSwitchNavigator, createAppContainer } from 'react-navigation';
 import { Button, Text, Input } from 'native-base';
-import styles from './Styles.js';
 import DashboardContainer from './Dashboard';
 
 class Register extends React.Component {

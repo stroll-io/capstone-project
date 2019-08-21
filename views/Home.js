@@ -21,7 +21,7 @@ class HomeScreen extends React.Component {
             position: 'absolute',
           }}
         >
-          <View style={{ marginTop: 275, marginBottom: 200, padding: 20 }}>
+          <View style={{ marginTop: 275, marginBottom: 100, padding: 20 }}>
             <Text style={{ fontFamily: 'Avenir-Heavy', fontSize: 40 }}>
               Hello there,
             </Text>
