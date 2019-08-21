@@ -1,5 +1,8 @@
 import React from 'react';
 import { View, Text, Button } from 'react-native';
+import { createSwitchNavigator, createAppContainer } from 'react-navigation';
+import Login from './Login';
+import Register from './Register';
 
 class HomeScreen extends React.Component {
   render() {
@@ -19,4 +22,18 @@ class HomeScreen extends React.Component {
   }
 }
 
-export default HomeScreen;
+const HomeNavigator = createSwitchNavigator(
+  { Home: HomeScreen, Login: Login, Register: Register },
+  {
+    initialRouteName: 'Home',
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: 'tomato',
+      },
+    },
+  }
+);
+
+const HomeContainer = createAppContainer(HomeNavigator);
+
+export default HomeContainer;

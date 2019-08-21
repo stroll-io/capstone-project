@@ -1,10 +1,20 @@
 import React from 'react';
 import { View } from 'react-native';
 import { Text } from 'native-base';
-import { createDrawerNavigator, createAppContainer } from 'react-navigation';
+import {
+  createDrawerNavigator,
+  createStackNavigator,
+  createAppContainer,
+} from 'react-navigation';
+
+import DiscoverMap from './DiscoverMap';
+import ExploreMap from './ExploreMap';
+import CreateWalk from './CreateWalk';
+import AccountInfo from './AccountInfo';
+import PastWalks from './PastWalks';
+import StarredWalks from './StarredWalks';
+import WalkingMap from './WalkingMap';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import Info from './Info';
-import Walk from './Walk';
 
 class Dashboard extends React.Component {
   render() {
@@ -18,19 +28,65 @@ class Dashboard extends React.Component {
   }
 }
 
-const DashboardNavigator = createDrawerNavigator(
+const DashboardStackNavigator = createStackNavigator(
   {
     Dashboard: Dashboard,
-    Info: Info,
-    Walk: Walk,
+    Discover: DiscoverMap,
+    Explore: ExploreMap,
+    'Walking Map': WalkingMap,
+    'Create Walk': CreateWalk,
+    'Past Walks': PastWalks,
+    'Starred Walks': StarredWalks,
+    'Account Info': AccountInfo,
   },
   {
     initialRouteName: 'Dashboard',
-    defaultNavigationOptions: {
-      headerStyle: {
-        backgroundColor: 'tomato',
-      },
+    defaultNavigationOptions: ({ navigation }) => {
+      return {
+        headerStyle: {
+          backgroundColor: 'tomato',
+        },
+        headerRight: (
+          <Ionicons
+            name="md-menu"
+            size={30}
+            style={{ paddingRight: 10 }}
+            onPress={() => navigation.openDrawer()}
+          />
+        ),
+      };
     },
+
+    // defaultNavigationOptions: {
+    //   headerStyle: {
+    //     backgroundColor: 'tomato',
+    //   },
+    //   headerRight: (
+    //     <Ionicons
+    //       name="md-menu"
+    //       size={30}
+    //       style={{ paddingRight: 10 }}
+    //       onPress={navigation => navigation.openDrawer()}
+    //     />
+    //   ),
+    // },
+  }
+);
+
+const DashboardNavigator = createDrawerNavigator(
+  {
+    Dashboard: DashboardStackNavigator,
+    Discover: DiscoverMap,
+    Explore: ExploreMap,
+    'Walking Map': WalkingMap,
+    'Create Walk': CreateWalk,
+    'Past Walks': PastWalks,
+    'Starred Walks': StarredWalks,
+    'Account Info': AccountInfo,
+  },
+  {
+    initialRouteName: 'Dashboard',
+    drawerPosition: 'right',
   }
 );
 

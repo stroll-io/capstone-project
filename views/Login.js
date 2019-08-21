@@ -1,13 +1,17 @@
 import React from 'react';
 import { View, Button } from 'react-native';
-import { createStackNavigator, createAppContainer } from 'react-navigation';
+import {
+  createStackNavigator,
+  createSwitchNavigator,
+  createAppContainer,
+} from 'react-navigation';
 import { Text } from 'native-base';
 import DashboardContainer from './Dashboard';
 
 class Login extends React.Component {
-  // static navigationOptions = {
-  //   header: null,
-  // };
+  static navigationOptions = {
+    header: null,
+  };
 
   render() {
     return (
@@ -22,13 +26,16 @@ class Login extends React.Component {
   }
 }
 
-const LoginNavigator = createStackNavigator(
+const LoginNavigator = createSwitchNavigator(
   {
     Login: Login,
     Dashboard: DashboardContainer,
   },
   {
     initialRouteName: 'Login',
+    headerStyle: {
+      headerMode: 'none',
+    },
   }
 );
 

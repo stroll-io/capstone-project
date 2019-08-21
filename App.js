@@ -1,12 +1,12 @@
 // In App.js in a new project
 
 import React from 'react';
-import { Provider } from 'react-redux';
 import store from './store';
+import { Provider } from 'react-redux';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import Login from './views/Login';
 import Register from './views/Register';
-import HomeScreen from './views/Home';
+import HomeContainer from './views/Home';
 // import DashboardContainer from './views/Dashboard';
 // import Camera from './views/Camera';
 // import Location from './views/Location';
@@ -21,7 +21,7 @@ import HomeScreen from './views/Home';
 
 const StackNavigator = createStackNavigator(
   {
-    Home: HomeScreen,
+    Home: HomeContainer,
     Login: Login,
     Register: Register,
   },

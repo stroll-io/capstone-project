@@ -1,14 +1,10 @@
 import React from 'react';
 import { View, Button } from 'react-native';
-import { createStackNavigator, createAppContainer } from 'react-navigation';
+import { createSwitchNavigator, createAppContainer } from 'react-navigation';
 import { Text } from 'native-base';
 import DashboardContainer from './Dashboard';
 
 class Register extends React.Component {
-  // static navigationOptions = {
-  //   header: null,
-  // };
-
   render() {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -22,7 +18,7 @@ class Register extends React.Component {
   }
 }
 
-const RegisterNavigator = createStackNavigator(
+const RegisterNavigator = createSwitchNavigator(
   {
     Register: Register,
     Dashboard: DashboardContainer,
