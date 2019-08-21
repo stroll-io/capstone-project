@@ -17,18 +17,24 @@ class AccountInfo extends React.Component {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <View>
-          <Text>Your account details: </Text>
+          <Text style={{ fontSize: 24, fontWeight: '700', marginBottom: 20 }}>
+            Your account details:{' '}
+          </Text>
         </View>
         <View>
           <View>
             {this.props.loggedInUser.firstName ? (
               <>
-                <Text>First Name: {this.props.loggedInUser.firstName}</Text>
-                <Text>Email: {this.props.loggedInUser.email}</Text>
-                <Button>
+                <Text style={{ fontWeight: '700', marginBottom: 2 }}>
+                  First Name: {this.props.loggedInUser.firstName}
+                </Text>
+                <Text style={{ fontWeight: '700' }}>
+                  Email: {this.props.loggedInUser.email}
+                </Text>
+                <Button rounded primary style={{ marginTop: 15 }}>
                   <Text>Edit Info</Text>
                 </Button>
-                <Button>
+                <Button rounded primary style={{ marginTop: 15 }}>
                   <Text>Request password reset</Text>
                 </Button>
               </>
@@ -36,8 +42,8 @@ class AccountInfo extends React.Component {
               <Text>Loading...</Text>
             )}
           </View>
-          <Button>
-            <Text>Delete account</Text>
+          <Button rounded danger style={{ marginTop: 300 }}>
+            <Text style={{ alignSelf: 'center' }}>Delete account</Text>
           </Button>
         </View>
       </View>
