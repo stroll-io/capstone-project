@@ -4,7 +4,7 @@ import MapView, { Polyline, Marker } from 'react-native-maps';
 import { connect } from 'react-redux';
 import { getAllPinsThunk } from '../store/userpins';
 import MapViewDirections from 'react-native-maps-directions';
-import googleSecret from '../secrets';
+import { googleSecret } from '../secrets';
 
 function WalkingMap(props) {
   useEffect(() => {
