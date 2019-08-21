@@ -3,9 +3,7 @@ import { View, SafeAreaView, Modal } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import { connect } from "react-redux";
 import { Button, Text, Form, Item, Input } from 'native-base';
-import { getAllPinsThunk } from "../store/userpins";
-import axios from "axios";
-import {ngrokSecret} from '../secrets'
+import { getAllPinsThunk, addPinThunk } from "../store/userpins";
 
 function DiscoverMap(props) {
   const [isPinBeingAdded, setIsPinBeingAdded] = useState(false);
@@ -34,17 +32,13 @@ function DiscoverMap(props) {
   }
 
   const handleSubmit = async () => {
-    await axios.post(`${ngrokSecret}/api/userPins`, {
+    props.addPin({
       coordinate: coord,
       title,
       description
     })
     setIsPinBeingAdded(false);
     setIsModalVisible(false);
-    setTimeout(function() {
-      //making the app wait for a sec
-    }, 500);
-    props.getAllPins();
   }
 
   return (
@@ -184,6 +178,9 @@ const mapDispatch = dispatch => {
   return {
     getAllPins: () => {
       dispatch(getAllPinsThunk());
+    },
+    addPin: (pin) => {
+      dispatch(addPinThunk(pin))
     }
   };
 };

@@ -4,7 +4,6 @@ const UserPin = require('../db/models/userPin');
 
 userPinsRouter.post('/', async(req, res, next) => {
   try {
-    console.log('req.body :', req.body);
     const newPin = await UserPin.create({
       location: {
         type: 'Point',
