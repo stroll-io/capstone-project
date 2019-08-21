@@ -9,10 +9,16 @@ function DiscoverMap(props) {
     props.getAllPins();
   }, []);
 
+  const logLocationChange = (e) => {
+    console.log('location changed')
+  }
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
       <MapView
         //initial region should be stateful based on users current location
+        provider="google"
+        onUserLocationChange={logLocationChange()}
+        showsUserLocation={true}
         style={{ flex: 1 }}
         initialRegion={{
           latitude: 41.895442,
