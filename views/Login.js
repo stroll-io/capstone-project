@@ -18,7 +18,7 @@ class Login extends React.Component {
           justifyContent: 'center',
         }}
       >
-        <Image source={require('../public/login.png')} style={{ flex: 1 }} />
+        <Image source={require('../public/cloud.png')} style={{ flex: 1 }} />
         <View style={{ position: 'absolute' }}>
           <View>
             <Text

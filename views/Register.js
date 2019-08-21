@@ -9,7 +9,7 @@ class Register extends React.Component {
   render() {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Image source={require('../public/login.png')} style={{ flex: 1 }} />
+        <Image source={require('../public/sunrise.png')} style={{ flex: 1 }} />
         <View style={{ position: 'absolute' }}>
           <View>
             <Text
@@ -112,7 +112,7 @@ class Register extends React.Component {
               }}
               onPress={() => this.props.navigation.navigate('Dashboard')}
             >
-              <Text style={{ fontFamily: 'Avenir-Heavy' }}>Login</Text>
+              <Text style={{ fontFamily: 'Avenir-Heavy' }}>Register</Text>
             </Button>
           </View>
         </View>
