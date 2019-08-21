@@ -1,11 +1,16 @@
 import React from 'react';
-import { View, SafeAreaView } from 'react-native';
+import { View } from 'react-native';
 import { Button, Text } from 'native-base';
 
 class AccountInfo extends React.Component {
+  //navigation header update
+  static navigationOptions = {
+    header: null,
+  };
+
   render() {
     return (
-      <View>
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <View>
           <Text>Account Info</Text>
         </View>
