@@ -74,46 +74,14 @@ const seed = async () => {
   try {
     await db.sync({ force: true });
 
-    const fullstack = await UserPin.create({
-        location: {
-          type: "Point",
-          coordinates: [41.895353, -87.639437]
-        },
-        name: "Fullstack Academy",
-        description: "It's pretty cool I guess."
-      });
-    const headquarters = await UserPin.create({
+    const newPin = await UserPin.create({
       location: {
-        type: "Point",
-        coordinates: [41.897184, -87.635073]
+        type: 'Point',
+        coordinates: [41.895353, -87.639437],
       },
-      name: "Headquarters",
-      description: "Don't come here on St. Patrick's Day..."
+      name: 'Fullstack Academy',
+      description: "It's pretty cool I guess.",
     });
-    const yolk = await UserPin.create({
-      location: {
-        type: "Point",
-        coordinates: [41.896278, -87.633925]
-      },
-      name: "Yolk",
-      description: "Yum!"
-    });
-    const theater = await UserPin.create({
-      location: {
-        type: "Point",
-        coordinates: [41.884645, -87.628657]
-      },
-      name: "James M. Nederlander Theatre",
-      description: "Back in my day they called it the Oriental Theatre!"
-    });
-      const hamilton = await UserPin.create({
-        location: {
-          type: "Point",
-          coordinates: [41.880887, -87.62885]
-        },
-        name: "CIBC Theatre",
-        description: "My name is Alexander Hamilton"
-      });
 
     const [ben, madi, michelle] = await Promise.all([
       User.create({
@@ -282,6 +250,7 @@ const seed = async () => {
     };
 
     archFunc();
+<<<<<<< HEAD
 
     const fullstackWalkCoords = [
       [41.895553, -87.638584],
@@ -301,6 +270,27 @@ const seed = async () => {
           previousId = previous.dataValues.id;
         }
 
+=======
+
+    const fullstackWalkCoords = [
+      [41.895553, -87.638584],
+      [41.893958, -87.638504],
+      [41.89393, -87.640011],
+      [41.895493, -87.640056],
+    ];
+
+    let fullstackWalk = await Promise.all([]);
+
+    const fullstackFunc = async () => {
+      let previous = null;
+      for (let i = 0; i < fullstackWalkCoords.length; i++) {
+        let previousId = null;
+        let start = i === 0;
+        if (previous !== null) {
+          previousId = previous.dataValues.id;
+        }
+
+>>>>>>> 64dd82401d393b28a82c3e7efa1c54186e496c6c
         let newPoint = await NavPoint.create({
           location: {
             type: 'Point',

@@ -21,7 +21,7 @@ function WalkingMap(props) {
   console.log('here are your navPoints :', navPoints);
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
       <MapView
         //initial region should be stateful based on users current location
         provider="google"
@@ -32,8 +32,8 @@ function WalkingMap(props) {
           this.map.animateCamera({
             center: {
               latitude: e.nativeEvent.coordinate.latitude,
-              longitude: e.nativeEvent.coordinate.longitude
-            }
+              longitude: e.nativeEvent.coordinate.longitude,
+            },
           });
         }}
         //e.nativeEvent is like this {target: 215, coordinate {
@@ -65,7 +65,7 @@ function WalkingMap(props) {
         />
         {props.userpins.length
           ? props.userpins.map(coord => {
-              console.log("chord:", coord);
+              console.log('chord:', coord);
               return (
                 <Marker
                   key={coord.name}
@@ -73,7 +73,7 @@ function WalkingMap(props) {
                   description={coord.description}
                   coordinate={{
                     longitude: coord.location.coordinates[1],
-                    latitude: coord.location.coordinates[0]
+                    latitude: coord.location.coordinates[0],
                   }}
                 />
               );
@@ -89,12 +89,12 @@ function WalkingMap(props) {
       </MapView>
       <View
         style={{
-          display: "flex",
-          position: "absolute",
+          display: 'flex',
+          position: 'absolute',
           bottom: 40,
           left: 50,
-          flexDirection: "row",
-          justifyContent: "center"
+          flexDirection: 'row',
+          justifyContent: 'center',
         }}
       />
     </SafeAreaView>

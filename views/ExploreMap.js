@@ -16,7 +16,6 @@ function ExploreMap(props) {
   const [currentMarker, setCurrentMarker] = useState(null);
   const [id, setId] = useState(null);
 
-
   useEffect(() => {
     props.getAllWalks();
 
@@ -50,22 +49,22 @@ function ExploreMap(props) {
 
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
       <Modal
         animationType="slide"
         transparent={false}
         visible={isModalVisible}
         onRequestClose={() => {
-          console.log("onRequestClose");
+          console.log('onRequestClose');
         }}
       >
         <View style={{ marginTop: 75 }}>
           <Text
             style={{
-              fontWeight: "bold",
+              fontWeight: 'bold',
               fontSize: 30,
-              textAlign: "center",
-              marginBottom: 20
+              textAlign: 'center',
+              marginBottom: 20,
             }}
           >
             {name}
@@ -74,25 +73,20 @@ function ExploreMap(props) {
           <Image
             source={{
               url:
-                "https://www.seattle.gov/images/Departments/ParksAndRecreation/Parks/MNOP/MadisonPark4.jpg"
+                'https://www.seattle.gov/images/Departments/ParksAndRecreation/Parks/MNOP/MadisonPark4.jpg',
             }}
             style={{ height: 200, width: 200 }}
           />
           <Text style={{ margin: 20 }}>{description}</Text>
           <View
             style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "center",
-              marginTop: 50
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'center',
+              marginTop: 50,
             }}
           >
-            <Button
-              large
-              warning
-              onPress={handleCancel}
-              style={{ margin: 20 }}
-            >
+            <Button large warning onPress={handleCancel} style={{ margin: 20 }}>
               <Text>Back</Text>
             </Button>
             <Button large primary onPress={handleWalk} style={{ margin: 20 }}>
@@ -110,7 +104,7 @@ function ExploreMap(props) {
           latitude: 41.895442,
           longitude: -87.638957,
           latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421
+          longitudeDelta: 0.0421,
         }}
       >
         <View style={{ position: "absolute", backgroundColor: "white" }}>
@@ -159,7 +153,7 @@ function ExploreMap(props) {
                   }}
                   coordinate={{
                     longitude: walk.start.coordinates[1],
-                    latitude: walk.start.coordinates[0]
+                    latitude: walk.start.coordinates[0],
                   }}
                 >
                   <Callout>

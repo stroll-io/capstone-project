@@ -38,7 +38,7 @@ export default function Map() {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
       <MapView
         provider="google"
         style={{ flex: 1 }}
@@ -46,12 +46,12 @@ export default function Map() {
           latitude: 41.895442,
           longitude: -87.638957,
           latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421
+          longitudeDelta: 0.0421,
         }}
         onPress={e => {
           const newCord = {
             latitude: e.nativeEvent.coordinate.latitude,
-            longitude: e.nativeEvent.coordinate.longitude
+            longitude: e.nativeEvent.coordinate.longitude,
           };
           setCoords([...coords, newCord]);
         }}
@@ -72,12 +72,12 @@ export default function Map() {
       </MapView>
       <View
         style={{
-          display: "flex",
-          position: "absolute",
+          display: 'flex',
+          position: 'absolute',
           bottom: 40,
           left: 50,
-          flexDirection: "row",
-          justifyContent: "center"
+          flexDirection: 'row',
+          justifyContent: 'center',
         }}
       >
         <Button large warning onPress={handleUndo} style={{ margin: 20 }}>
@@ -92,7 +92,7 @@ export default function Map() {
         transparent={false}
         visible={isModalVisible}
         onRequestClose={() => {
-          console.log("onRequestClose");
+          console.log('onRequestClose');
         }}
       >
         <View style={{ marginTop: 22 }}>
@@ -101,8 +101,8 @@ export default function Map() {
               style={{
                 marginTop: 150,
                 marginBottom: 40,
-                textAlign: "center",
-                fontSize: 20
+                textAlign: 'center',
+                fontSize: 20,
               }}
             >
               Add some information about your stroll.
@@ -148,10 +148,10 @@ export default function Map() {
               </Item>
               <View
                 style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  marginTop: 50
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  marginTop: 50,
                 }}
               >
                 <Button

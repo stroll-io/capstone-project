@@ -17,7 +17,7 @@ const getWalksByTag = walks => ({
 
 export const getAllWalksThunk = () => async dispatch => {
   try {
-    const res = await axios.get(`${ngrokSecret}/api/walks/`);
+    const res = await axios.get(`${ngrokSecret}/api/walks`);
     dispatch(getAllWalks(res.data));
   } catch (err) {
     console.error(err);
