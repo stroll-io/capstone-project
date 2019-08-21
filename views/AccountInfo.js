@@ -72,7 +72,7 @@ class AccountInfo extends React.Component {
             </Button>
           </View>
         </View>
-        <Modal
+        {/* <Modal
           animationType="slide"
           transparent={false}
           visible={isModalVisible}
@@ -81,9 +81,9 @@ class AccountInfo extends React.Component {
           }}
         >
           <View>
-            <Text>Modal for </Text>
+            <Text>Modal for thing</Text>
           </View>
-        </Modal>
+        </Modal> */}
       </>
     );
   }
