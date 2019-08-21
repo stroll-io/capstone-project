@@ -30,7 +30,16 @@ class StarredWalks extends React.Component {
           {this.props.starredWalks.length ? (
             this.props.starredWalks.map(walk => {
               return (
-                <Card key={walk.id} style={{ height: 200 }}>
+                <Card
+                  key={walk.id}
+                  style={{
+                    margin: 5,
+                    height: 200,
+                    borderWidth: 5,
+                    borderRadius: 20,
+                    borderColor: 'black',
+                  }}
+                >
                   <CardItem>
                     <Body>
                       <Image
