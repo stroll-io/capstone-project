@@ -5,7 +5,6 @@ const Walk = require('../db/models/walk');
 //POST /api/navPoints
 navPointRouter.post('/', async (req, res, next) => {
   try {
-    console.log('req.body :', req.body);
     const walkInfo = {
       name: req.body.walkTitle,
       description: req.body.walkDescription,

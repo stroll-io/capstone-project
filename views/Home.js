@@ -57,6 +57,10 @@ class HomeScreen extends React.Component {
           title="ExploreMap"
           onPress={() => this.props.navigation.navigate("ExploreMap")}
         />
+        <Button
+          title="WalkingMap"
+          onPress={() => this.props.navigation.navigate("WalkingMap")}
+        />
       </View>
     );
   }
