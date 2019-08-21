@@ -1,5 +1,5 @@
 import axios from 'axios';
-import ngrokSecret from '../secrets';
+import { ngrokSecret } from '../secrets';
 
 const GET_PAST_WALKS = 'GET_PAST_WALKS';
 
