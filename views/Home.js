@@ -21,7 +21,7 @@ class HomeScreen extends React.Component {
             position: 'absolute',
           }}
         >
-          <View style={{ marginTop: 275, marginBottom: 100, padding: 20 }}>
+          <View style={{ marginTop: 275, padding: 20 }}>
             <Text style={{ fontFamily: 'Avenir-Heavy', fontSize: 40 }}>
               Hello there,
             </Text>
@@ -32,7 +32,14 @@ class HomeScreen extends React.Component {
               for a stroll!
             </Text>
           </View>
-          <View style={{ display: 'flex', alignItems: 'center', margin: 10 }}>
+          <View
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              margin: 10,
+              marginBottom: 75,
+            }}
+          >
             <Button
               style={{
                 backgroundColor: '#003e19',
