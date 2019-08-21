@@ -250,7 +250,6 @@ const seed = async () => {
     };
 
     archFunc();
-<<<<<<< HEAD
 
     const fullstackWalkCoords = [
       [41.895553, -87.638584],
@@ -270,27 +269,6 @@ const seed = async () => {
           previousId = previous.dataValues.id;
         }
 
-=======
-
-    const fullstackWalkCoords = [
-      [41.895553, -87.638584],
-      [41.893958, -87.638504],
-      [41.89393, -87.640011],
-      [41.895493, -87.640056],
-    ];
-
-    let fullstackWalk = await Promise.all([]);
-
-    const fullstackFunc = async () => {
-      let previous = null;
-      for (let i = 0; i < fullstackWalkCoords.length; i++) {
-        let previousId = null;
-        let start = i === 0;
-        if (previous !== null) {
-          previousId = previous.dataValues.id;
-        }
-
->>>>>>> 64dd82401d393b28a82c3e7efa1c54186e496c6c
         let newPoint = await NavPoint.create({
           location: {
             type: 'Point',
