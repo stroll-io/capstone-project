@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Button, Text } from 'react-native';
-
 import { createSwitchNavigator, createAppContainer } from 'react-navigation';
 import HomeScreen from './Home';
 
@@ -12,9 +11,9 @@ class Logout extends React.Component {
   render() {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Logout Component</Text>
+        <Text>Logout</Text>
         <Button
-          title="Login"
+          title="Logout"
           onPress={() => this.props.navigation.navigate('Home')}
         />
       </View>

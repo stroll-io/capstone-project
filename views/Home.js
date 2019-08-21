@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, Button, Image } from 'react-native';
+import { View, Image } from 'react-native';
+import { Text, Button } from 'native-base';
 import { createSwitchNavigator, createAppContainer } from 'react-navigation';
 import Login from './Login';
 import Register from './Register';
@@ -31,16 +32,27 @@ class HomeScreen extends React.Component {
               for a stroll!
             </Text>
           </View>
-          <View>
+          <View style={{ display: 'flex', alignItems: 'center', margin: 10 }}>
             <Button
-              title="Login"
-              style={{ border: '2px solid black' }}
+              style={{
+                backgroundColor: '#003e19',
+                borderRadius: '20px',
+                marginBottom: 20,
+              }}
               onPress={() => this.props.navigation.navigate('Login')}
-            />
+            >
+              <Text style={{ fontFamily: 'Avenir-Heavy' }}>
+                Click here to login!
+              </Text>
+            </Button>
             <Button
-              title="Register"
+              style={{ backgroundColor: '#003e19', borderRadius: '20px' }}
               onPress={() => this.props.navigation.navigate('Register')}
-            />
+            >
+              <Text style={{ fontFamily: 'Avenir-Heavy' }}>
+                Click here to register!
+              </Text>
+            </Button>
           </View>
         </View>
       </View>
