@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, SafeAreaView } from 'react-native';
+import { View } from 'react-native';
 import { Button, Text } from 'native-base';
 import { fetchLoggedInUser } from '../store/user';
 import { connect } from 'react-redux';
@@ -8,10 +8,14 @@ class AccountInfo extends React.Component {
   componentDidMount() {
     this.props.fetchLoggedInUser(2);
   }
+  //navigation header update
+  static navigationOptions = {
+    header: null,
+  };
 
   render() {
     return (
-      <View>
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <View>
           <Text>Your account details: </Text>
         </View>
