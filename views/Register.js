@@ -1,20 +1,37 @@
 import React from 'react';
-import { View, SafeAreaView } from 'react-native';
-import { Button, Text } from 'native-base';
+import { View, Button } from 'react-native';
+import { createStackNavigator, createAppContainer } from 'react-navigation';
+import { Text } from 'native-base';
+import DashboardContainer from './Dashboard';
 
 class Register extends React.Component {
+  // static navigationOptions = {
+  //   header: null,
+  // };
+
   render() {
     return (
-      <View>
-        <View>
-          <Text>Registration Component</Text>
-          <Button>
-            <Text>Click me to register!</Text>
-          </Button>
-        </View>
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <Text>Registration Component</Text>
+        <Button
+          title="Register"
+          onPress={() => this.props.navigation.navigate('Dashboard')}
+        />
       </View>
     );
   }
 }
 
-export default Register;
+const RegisterNavigator = createStackNavigator(
+  {
+    Register: Register,
+    Dashboard: DashboardContainer,
+  },
+  {
+    initialRouteName: 'Register',
+  }
+);
+
+const RegisterContainer = createAppContainer(RegisterNavigator);
+
+export default RegisterContainer;

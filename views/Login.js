@@ -1,18 +1,37 @@
 import React from 'react';
-import { View, SafeAreaView } from 'react-native';
-import { Button, Text } from 'native-base';
+import { View, Button } from 'react-native';
+import { createStackNavigator, createAppContainer } from 'react-navigation';
+import { Text } from 'native-base';
+import DashboardContainer from './Dashboard';
 
 class Login extends React.Component {
+  // static navigationOptions = {
+  //   header: null,
+  // };
+
   render() {
     return (
-      <View>
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Text>Login Component</Text>
-        <Button>
-          <Text>Click me to login!</Text>
-        </Button>
+        <Button
+          title="Login"
+          onPress={() => this.props.navigation.navigate('Dashboard')}
+        />
       </View>
     );
   }
 }
 
-export default Login;
+const LoginNavigator = createStackNavigator(
+  {
+    Login: Login,
+    Dashboard: DashboardContainer,
+  },
+  {
+    initialRouteName: 'Login',
+  }
+);
+
+const LoginContainer = createAppContainer(LoginNavigator);
+
+export default LoginContainer;
