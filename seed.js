@@ -74,7 +74,7 @@ const seed = async () => {
   try {
     await db.sync({ force: true });
 
-    const newPin = await UserPin.create({
+    const fullstack = await UserPin.create({
         location: {
           type: "Point",
           coordinates: [41.895353, -87.639437]
@@ -82,7 +82,38 @@ const seed = async () => {
         name: "Fullstack Academy",
         description: "It's pretty cool I guess."
       });
-
+    const headquarters = await UserPin.create({
+      location: {
+        type: "Point",
+        coordinates: [41.897184, -87.635073]
+      },
+      name: "Headquarters",
+      description: "Don't come here on St. Patrick's Day..."
+    });
+    const yolk = await UserPin.create({
+      location: {
+        type: "Point",
+        coordinates: [41.896278, -87.633925]
+      },
+      name: "Yolk",
+      description: "Yum!"
+    });
+    const theater = await UserPin.create({
+      location: {
+        type: "Point",
+        coordinates: [41.884645, -87.628657]
+      },
+      name: "James M. Nederlander Theatre",
+      description: "Back in my day they called it the Oriental Theatre!"
+    });
+      const hamilton = await UserPin.create({
+        location: {
+          type: "Point",
+          coordinates: [41.880887, -87.62885]
+        },
+        name: "CIBC Theatre",
+        description: "My name is Alexander Hamilton"
+      });
 
     const [ben, madi, michelle] = await Promise.all([
       User.create({
