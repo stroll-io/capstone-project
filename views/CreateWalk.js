@@ -1,16 +1,16 @@
-import React, { useState } from "react";
-import { View, SafeAreaView, Modal } from "react-native";
-import { Button, Text, Form, Item, Input, Picker, Icon } from "native-base";
-import MapView, { Polyline } from "react-native-maps";
-import axios from "axios";
-import ngrok from '../secrets'
+import React, { useState } from 'react';
+import { View, SafeAreaView, Modal } from 'react-native';
+import { Button, Text, Form, Item, Input, Picker, Icon } from 'native-base';
+import MapView, { Marker } from 'react-native-maps';
+import axios from 'axios';
+import { ngrokSecret } from '../secrets';
 
 export default function Map() {
   const [coords, setCoords] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [walkTitle, setWalkTitle] = useState("");
-  const [walkDescription, setWalkDescription] = useState("");
-  const [walkTag, setWalkTag] = useState("");
+  const [walkTitle, setWalkTitle] = useState('');
+  const [walkDescription, setWalkDescription] = useState('');
+  const [walkTag, setWalkTag] = useState('');
 
   const handleUndo = () => {
     const coordsCopy = coords.slice();
@@ -29,19 +29,18 @@ export default function Map() {
   };
 
   const handleSubmit = async () => {
-    await axios.post(`${ngrok}/api/navPoints`, {
+    await axios.post(`${ngrokSecret}/api/navPoints`, {
       coords,
       walkTitle,
       walkDescription,
-      walkTag
+      walkTag,
     });
   };
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
       <MapView
-        //initial region should be stateful based on users current location
-        // provider='google'
+        provider="google"
         style={{ flex: 1 }}
         initialRegion={{
           latitude: 41.895442,
@@ -57,11 +56,19 @@ export default function Map() {
           setCoords([...coords, newCord]);
         }}
       >
-        <Polyline
-          coordinates={coords}
-          strokeColor="#EE6A22"
-          strokeWidth={3}
-        />
+        {coords.length
+          ? coords.map(coord => {
+              return (
+                <Marker
+                  key={coord.latitude}
+                  coordinate={{
+                    longitude: coord.longitude,
+                    latitude: coord.latitude
+                  }}
+                />
+              );
+            })
+          : null}
       </MapView>
       <View
         style={{
@@ -129,6 +136,7 @@ export default function Map() {
                   selectedValue={walkTag}
                   onValueChange={setWalkTag}
                 >
+
                   <Picker.Item label="Nature" value="nature" />
                   <Picker.Item label="Scenic" value="scenic" />
                   <Picker.Item label="Architecture" value="architecture" />
@@ -146,7 +154,12 @@ export default function Map() {
                   marginTop: 50
                 }}
               >
-                <Button large danger style={{ margin: 20 }} onPress={handleCancel}>
+                <Button
+                  large
+                  danger
+                  style={{ margin: 20 }}
+                  onPress={handleCancel}
+                >
                   <Text>Cancel</Text>
                 </Button>
                 <Button

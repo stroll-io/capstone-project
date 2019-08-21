@@ -3,7 +3,7 @@ const db = require('./server/db');
 const Walk = require('./server/db/models/walk');
 const User = require('./server/db/models/user');
 const NavPoint = require('./server/db/models/navPoint');
-const UserPin = require('./server/db/models/userPin')
+const UserPin = require('./server/db/models/userPin');
 
 // // const Favorite = require('./server/db/favorite');
 // const Pin = require('./server/db/userPin');
@@ -144,82 +144,99 @@ const seed = async () => {
       grant,
       art,
       museum,
-      loop
+      loop,
     ] = await Promise.all([
       Walk.create({
         name: `Ben's Commute`,
-        description: "My walk from Fullstack to Ogilvie",
-        category: "nature",
-        imageUrl: "https://picsum.photos/id/1047/200/300",
+        description: 'My walk from Fullstack to Ogilvie',
+        category: 'nature',
+        imageUrl: 'https://picsum.photos/id/1047/200/300',
         userId: 1,
         start: {
           type: 'Point',
-          coordinates: [41.879353, -87.636712]}
+          coordinates: [41.879353, -87.636712],
+        },
       }),
       Walk.create({
         name: `Madi's Commute`,
-        description: "My walk from home to Fullstack",
-        category: "scenic",
-        imageUrl: "https://picsum.photos/id/1047/200/300",
+        description: 'My walk from home to Fullstack',
+        category: 'scenic',
+        imageUrl: 'https://picsum.photos/id/1047/200/300',
         userId: 2,
         start: {
           type: 'Point',
-          coordinates:[41.879345, -87.632367]}
+          coordinates: [41.879345, -87.632367],
+        },
+      }),
+      Walk.create({
+        name: `Fullstack Wonder Walk`,
+        description: 'A great lunch walk around Fullstack',
+        category: 'scenic',
+        imageUrl: 'https://picsum.photos/id/1047/200/300',
+        userId: 2,
+        start: {
+          type: 'Point',
+          coordinates: [41.895553, -87.638584],
+        },
       }),
       Walk.create({
         name: `Michelle's Commute`,
-        description: "My walk from my apartment to my car",
-        category: "dog",
-        imageUrl: "https://picsum.photos/id/1047/200/300",
+        description: 'My walk from my apartment to my car',
+        category: 'dog',
+        imageUrl: 'https://picsum.photos/id/1047/200/300',
         userId: 3,
         start: {
           type: 'Point',
-          coordinates:[41.878131, -87.632356]}
+          coordinates: [41.878131, -87.632356],
+        },
       }),
       Walk.create({
         name: `Millennium Park`,
-        description: "Lurie Garden, the Bean, and all that jazz",
-        category: "scenic",
-        imageUrl: "https://picsum.photos/id/1047/200/300",
+        description: 'Lurie Garden, the Bean, and all that jazz',
+        category: 'scenic',
+        imageUrl: 'https://picsum.photos/id/1047/200/300',
         start: {
           type: 'Point',
-          coordinates:[41.878994, -87.629394]}
+          coordinates: [41.878994, -87.629394],
+        },
       }),
       Walk.create({
         name: `Grant Park`,
-        description: "A big lawn with a big fountain to match",
-        category: "nature",
-        imageUrl: "https://picsum.photos/id/1047/200/300",
+        description: 'A big lawn with a big fountain to match',
+        category: 'nature',
+        imageUrl: 'https://picsum.photos/id/1047/200/300',
         start: {
           type: 'Point',
-          coordinates:[41.897765, -87.627853]}
+          coordinates: [41.897765, -87.627853],
+        },
       }),
       Walk.create({
         name: `The Art Institute`,
-        description: "Many expensive paintings",
-        category: "architecture",
+        description: 'Many expensive paintings',
+        category: 'architecture',
         imageUrl: null,
-        start: {type: 'Point',
-          coordinates:[41.900201, -87.631222]}
+        start: { type: 'Point', coordinates: [41.900201, -87.631222] },
       }),
       Walk.create({
         name: `Museum Campus`,
-        description: "The Planetarium, Shedd Aquarium, and Field Museum",
-        category: "historical",
+        description: 'The Planetarium, Shedd Aquarium, and Field Museum',
+        category: 'historical',
         imageUrl: null,
         start: {
           type: 'Point',
-          coordinates:[41.887567, -87.621791]}
+          coordinates: [41.887567, -87.621791],
+        },
       }),
       Walk.create({
         name: `The Loop Architectural Walk`,
-        description: "Tall buildings for tall folks",
-        category: "architecture",
+        description: 'Tall buildings for tall folks',
+        category: 'architecture',
         imageUrl: null,
         start: {
           type: 'Point',
-          coordinates:[41.88926, -87.632091]}
-      })
+          coordinates: [41.879353, -87.636712],
+        },
+      }),
     ]);
 
     const archiWalkCoords = [
@@ -233,34 +250,80 @@ const seed = async () => {
     ];
 
     let architectureWalk = await Promise.all([]);
-    let previous = null;
-    for (let i = 0; i < archiWalkCoords.length; i++) {
-      let previousId = null;
-      let start = i === 0;
-      if (previous !== null) {
-        previousId = previous.dataValues.id;
-      }
+    const archFunc = async () => {
+      let previous = null;
+      for (let i = 0; i < archiWalkCoords.length; i++) {
+        let previousId = null;
+        let start = i === 0;
+        if (previous !== null) {
+          previousId = previous.dataValues.id;
+        }
 
-      let newPoint = await NavPoint.create({
-        location: {
-          type: 'Point',
-          coordinates: [...archiWalkCoords[i]],
-        },
-        prev: previousId,
-        next: null,
-        start: start,
-        walkId: 8,
-      });
-
-      architectureWalk.push(newPoint);
-
-      if (previous !== null) {
-        await previous.update({
-          next: newPoint.dataValues.id,
+        let newPoint = await NavPoint.create({
+          location: {
+            type: 'Point',
+            coordinates: [...archiWalkCoords[i]],
+          },
+          prev: previousId,
+          next: null,
+          start: start,
+          walkId: 8,
         });
+
+        architectureWalk.push(newPoint);
+
+        if (previous !== null) {
+          await previous.update({
+            next: newPoint.dataValues.id,
+          });
+        }
+        previous = newPoint;
       }
-      previous = newPoint;
-    }
+    };
+
+    archFunc();
+
+    const fullstackWalkCoords = [
+      [41.895553, -87.638584],
+      [41.893958, -87.638504],
+      [41.89393, -87.640011],
+      [41.895493, -87.640056],
+    ];
+
+    let fullstackWalk = await Promise.all([]);
+
+    const fullstackFunc = async () => {
+      let previous = null;
+      for (let i = 0; i < fullstackWalkCoords.length; i++) {
+        let previousId = null;
+        let start = i === 0;
+        if (previous !== null) {
+          previousId = previous.dataValues.id;
+        }
+
+        let newPoint = await NavPoint.create({
+          location: {
+            type: 'Point',
+            coordinates: [...fullstackWalkCoords[i]],
+          },
+          prev: previousId,
+          next: null,
+          start: start,
+          walkId: 1,
+        });
+
+        architectureWalk.push(newPoint);
+
+        if (previous !== null) {
+          await previous.update({
+            next: newPoint.dataValues.id,
+          });
+        }
+        previous = newPoint;
+      }
+    };
+
+    fullstackFunc();
 
     for (let i = 1; i < 6; i++) {
       madi.setWalkedByUser(i);
@@ -283,14 +346,12 @@ const seed = async () => {
       museum,
       loop,
       architectureWalk,
+      fullstackWalk,
     ];
   } catch (err) {
     console.log(red(err));
   }
-
 };
-
-
 
 module.exports = seed;
 

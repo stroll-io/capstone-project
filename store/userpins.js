@@ -1,14 +1,14 @@
 import axios from 'axios';
-import {ngrokSecret} from '../secrets'
+import { ngrokSecret } from '../secrets';
 
 const GET_ALL_PINS = 'GET_ALL_PINS';
 const ADD_PIN = 'ADD_PIN'
 
 
 
-const getAllPins = (pins) => ({
+const getAllPins = pins => ({
   type: GET_ALL_PINS,
-  pins
+  pins,
 });
 
 const addPin = (pin) => ({
@@ -20,10 +20,9 @@ const addPin = (pin) => ({
 
 export const getAllPinsThunk = (pin) => async dispatch => {
   try {
-    const res = await axios.get(`${ngrokSecret}/api/userPins/`, pin);
+    const res = await axios.get(`${ngrokSecret}/api/userPins/`);
     dispatch(getAllPins(res.data));
-  }
-  catch (err) {
+  } catch (err) {
     console.error(err);
   }
 };
@@ -42,8 +41,7 @@ export const addPinThunk = (pin) => async dispatch => {
 const defaultState = [];
 
 export default function(state = defaultState, action) {
-
-  switch(action.type) {
+  switch (action.type) {
     case GET_ALL_PINS:
       return action.pins;
     case ADD_PIN:
