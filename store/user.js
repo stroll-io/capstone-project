@@ -1,5 +1,5 @@
 import axios from 'axios';
-import ngrokSecret from '../secrets';
+import { ngrokSecret } from '../secrets';
 
 const GET_LOGGEDIN_USER = 'GET_LOGGEDIN_USER';
 

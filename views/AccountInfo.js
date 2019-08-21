@@ -16,7 +16,7 @@ class AccountInfo extends React.Component {
           <Text>Your account details: </Text>
         </View>
         <View>
-          <Text>
+          <View>
             {this.props.loggedInUser.firstName ? (
               <>
                 <Text>First Name: {this.props.loggedInUser.firstName}</Text>
@@ -31,7 +31,7 @@ class AccountInfo extends React.Component {
             ) : (
               <Text>Loading...</Text>
             )}
-          </Text>
+          </View>
           <Button>
             <Text>Delete account</Text>
           </Button>
