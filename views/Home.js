@@ -20,14 +20,21 @@ class HomeScreen extends React.Component {
             position: 'absolute',
           }}
         >
-          <View style={{ marginTop: 350, marginBottom: 200, padding: 40 }}>
-            <Text style={{ fontSize: 35 }}>Hello there,</Text>
-            <Text style={{ fontSize: 35 }}>It's a beautiful day</Text>
-            <Text style={{ fontSize: 35 }}>for a stroll!</Text>
+          <View style={{ marginTop: 275, marginBottom: 200, padding: 20 }}>
+            <Text style={{ fontFamily: 'Avenir-Heavy', fontSize: 40 }}>
+              Hello there,
+            </Text>
+            <Text style={{ fontFamily: 'Avenir-Heavy', fontSize: 40 }}>
+              It's a beautiful day
+            </Text>
+            <Text style={{ fontFamily: 'Avenir-Heavy', fontSize: 40 }}>
+              for a stroll!
+            </Text>
           </View>
           <View>
             <Button
               title="Login"
+              style={{ border: '2px solid black' }}
               onPress={() => this.props.navigation.navigate('Login')}
             />
             <Button
@@ -47,7 +54,7 @@ const HomeNavigator = createSwitchNavigator(
     initialRouteName: 'Home',
     defaultNavigationOptions: {
       headerStyle: {
-        backgroundColor: 'tomato',
+        backgroundColor: 'gold',
       },
     },
   }
