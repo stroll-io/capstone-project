@@ -4,6 +4,8 @@ import { Text, Button } from 'native-base';
 import { createSwitchNavigator, createAppContainer } from 'react-navigation';
 import Login from './Login';
 import Register from './Register';
+import PastWalks from './PastWalks';
+import StarredWalks from './StarredWalks';
 
 class HomeScreen extends React.Component {
   render() {
@@ -21,7 +23,7 @@ class HomeScreen extends React.Component {
             position: 'absolute',
           }}
         >
-          <View style={{ marginTop: 275, marginBottom: 100, padding: 20 }}>
+          <View style={{ marginTop: 275, padding: 20 }}>
             <Text style={{ fontFamily: 'Avenir-Heavy', fontSize: 40 }}>
               Hello there,
             </Text>
@@ -32,7 +34,14 @@ class HomeScreen extends React.Component {
               for a stroll!
             </Text>
           </View>
-          <View style={{ display: 'flex', alignItems: 'center', margin: 10 }}>
+          <View
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              margin: 10,
+              marginBottom: 75,
+            }}
+          >
             <Button
               style={{
                 backgroundColor: '#003e19',
@@ -53,6 +62,17 @@ class HomeScreen extends React.Component {
                 Click here to register!
               </Text>
             </Button>
+
+            {/* <Button
+              style={{
+                backgroundColor: '#003e19',
+                borderRadius: '20px',
+                marginTop: 20,
+              }}
+              onPress={() => this.props.navigation.navigate('StarredWalks')}
+            >
+              <Text style={{ fontFamily: 'Avenir-Heavy' }}>Starred Walks!</Text>
+            </Button> */}
           </View>
         </View>
       </View>
@@ -61,7 +81,12 @@ class HomeScreen extends React.Component {
 }
 
 const HomeNavigator = createSwitchNavigator(
-  { Home: HomeScreen, Login: Login, Register: Register },
+  {
+    Home: HomeScreen,
+    Login: Login,
+    Register: Register,
+    StarredWalks: StarredWalks,
+  },
   {
     initialRouteName: 'Home',
     defaultNavigationOptions: {

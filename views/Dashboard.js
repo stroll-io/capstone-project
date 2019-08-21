@@ -21,7 +21,9 @@ class Dashboard extends React.Component {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <View>
-          <Text>Dashboard Component</Text>
+          <Text style={{ fontFamily: 'Avenir-Heavy', fontSize: 30 }}>
+            Dashboard Component
+          </Text>
         </View>
       </View>
     );
@@ -44,7 +46,7 @@ const DashboardStackNavigator = createStackNavigator(
     defaultNavigationOptions: ({ navigation }) => {
       return {
         headerStyle: {
-          backgroundColor: 'tomato',
+          backgroundColor: '#028c6a',
         },
         headerRight: (
           <Ionicons
@@ -56,20 +58,6 @@ const DashboardStackNavigator = createStackNavigator(
         ),
       };
     },
-
-    // defaultNavigationOptions: {
-    //   headerStyle: {
-    //     backgroundColor: 'tomato',
-    //   },
-    //   headerRight: (
-    //     <Ionicons
-    //       name="md-menu"
-    //       size={30}
-    //       style={{ paddingRight: 10 }}
-    //       onPress={navigation => navigation.openDrawer()}
-    //     />
-    //   ),
-    // },
   }
 );
 
