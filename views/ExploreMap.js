@@ -1,21 +1,18 @@
-import React, { useState, useEffect } from "react";
-import { View, SafeAreaView, Modal,  Image } from "react-native";
-import MapView, { Marker, Callout } from "react-native-maps";
+import React, { useState, useEffect } from 'react';
+import { View, SafeAreaView, Modal, Image } from 'react-native';
+import MapView, { Marker, Callout } from 'react-native-maps';
 import { Button, Text } from 'native-base';
-import { connect } from "react-redux";
-import { getAllWalksThunk } from "../store/walks";
-import {  setActiveWalkThunk } from '../store/activeWalk'
-
+import { connect } from 'react-redux';
+import { getAllWalksThunk } from '../store/walks';
+import { setActiveWalkThunk } from '../store/activeWalk';
 
 function ExploreMap(props) {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
-  const [coordinate, setCoordinate] = useState({})
+  const [coordinate, setCoordinate] = useState({});
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [currentMarker, setCurrentMarker] = useState(null)
-  const [id, setId] = useState(null)
-
-
+  const [currentMarker, setCurrentMarker] = useState(null);
+  const [id, setId] = useState(null);
 
   useEffect(() => {
     props.getAllWalks();
@@ -25,36 +22,36 @@ function ExploreMap(props) {
     setName(walkName);
     setDescription(walkDescription);
     setCoordinate(walkCoordinate);
-    setId(walkId)
+    setId(walkId);
     setIsModalVisible(true);
-  }
+  };
 
   const handleCancel = () => {
     setIsModalVisible(false);
-    currentMarker.hideCallout()
+    currentMarker.hideCallout();
   };
 
   const handleWalk = () => {
     props.setActiveWalk(id);
-  }
+  };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
       <Modal
         animationType="slide"
         transparent={false}
         visible={isModalVisible}
         onRequestClose={() => {
-          console.log("onRequestClose");
+          console.log('onRequestClose');
         }}
       >
         <View style={{ marginTop: 75 }}>
           <Text
             style={{
-              fontWeight: "bold",
+              fontWeight: 'bold',
               fontSize: 30,
-              textAlign: "center",
-              marginBottom: 20
+              textAlign: 'center',
+              marginBottom: 20,
             }}
           >
             {name}
@@ -63,25 +60,20 @@ function ExploreMap(props) {
           <Image
             source={{
               url:
-                "https://www.seattle.gov/images/Departments/ParksAndRecreation/Parks/MNOP/MadisonPark4.jpg"
+                'https://www.seattle.gov/images/Departments/ParksAndRecreation/Parks/MNOP/MadisonPark4.jpg',
             }}
-            style={{ height: 400, width: 400 }}
+            style={{ height: 200, width: 200 }}
           />
           <Text style={{ margin: 20 }}>{description}</Text>
           <View
             style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "center",
-              marginTop: 50
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'center',
+              marginTop: 50,
             }}
           >
-            <Button
-              large
-              warning
-              onPress={handleCancel}
-              style={{ margin: 20 }}
-            >
+            <Button large warning onPress={handleCancel} style={{ margin: 20 }}>
               <Text>Back</Text>
             </Button>
             <Button large primary onPress={handleWalk} style={{ margin: 20 }}>
@@ -94,13 +86,12 @@ function ExploreMap(props) {
         //initial region should be stateful based on users current location
         provider="google"
         showsUserLocation={true}
-
         style={{ flex: 1 }}
         initialRegion={{
           latitude: 41.895442,
           longitude: -87.638957,
           latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421
+          longitudeDelta: 0.0421,
         }}
       >
         <View />
@@ -126,7 +117,7 @@ function ExploreMap(props) {
                   }}
                   coordinate={{
                     longitude: walk.start.coordinates[1],
-                    latitude: walk.start.coordinates[0]
+                    latitude: walk.start.coordinates[0],
                   }}
                 >
                   <Callout>
@@ -144,9 +135,9 @@ function ExploreMap(props) {
   );
 }
 
-const mapState = (state) => {
+const mapState = state => {
   return {
-    walks: state.walks
+    walks: state.walks,
   };
 };
 
@@ -155,10 +146,13 @@ const mapDispatch = dispatch => {
     getAllWalks: () => {
       dispatch(getAllWalksThunk());
     },
-    setActiveWalk: (id) => {
+    setActiveWalk: id => {
       dispatch(setActiveWalkThunk(id));
-    }
+    },
   };
 };
 
-export default connect(mapState, mapDispatch)(ExploreMap);
+export default connect(
+  mapState,
+  mapDispatch
+)(ExploreMap);

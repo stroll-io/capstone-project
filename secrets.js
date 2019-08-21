@@ -1,3 +1,4 @@
-const ngrokSecret = "http://ef1584a4.ngrok.io";
+const ngrokSecret = 'http://d916044a.ngrok.io';
+const googleSecret = 'AIzaSyA-2WKG4KHUc4S-2TchjWjeNPqzZ9E9Iik';
 
-module.exports = ngrokSecret;
+module.exports = { ngrokSecret, googleSecret };

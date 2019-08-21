@@ -1,12 +1,13 @@
-import React, { useEffect } from "react";
-import { View, SafeAreaView, Modal } from "react-native";
-import MapView, { Polyline, Marker } from "react-native-maps";
-import { connect } from "react-redux";
-import { getAllPinsThunk } from "../store/userpins";
+import React, { useEffect } from 'react';
+import { View, SafeAreaView, Modal } from 'react-native';
+import MapView, { Polyline, Marker } from 'react-native-maps';
+import { connect } from 'react-redux';
+import { getAllPinsThunk } from '../store/userpins';
+import MapViewDirections from 'react-native-maps-directions';
+import googleSecret from '../secrets';
 
 function WalkingMap(props) {
   useEffect(() => {
-    console.log('props.activeWalk :', props.activeWalk);
     props.getAllPins();
   }, []);
 
@@ -14,13 +15,13 @@ function WalkingMap(props) {
   props.activeWalk.navPoints.forEach(navPoint => {
     navPoints.push({
       latitude: navPoint.location.coordinates[0],
-      longitude: navPoint.location.coordinates[1]
+      longitude: navPoint.location.coordinates[1],
     });
-  })
+  });
   console.log('here are your navPoints :', navPoints);
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
       <MapView
         //initial region should be stateful based on users current location
         provider="google"
@@ -28,10 +29,12 @@ function WalkingMap(props) {
           this.map = _map;
         }}
         onUserLocationChange={async e => {
-
-          this.map.animateCamera({center: {latitude: e.nativeEvent.coordinate.latitude,
-          longitude: e.nativeEvent.coordinate.longitude}
-          })
+          this.map.animateCamera({
+            center: {
+              latitude: e.nativeEvent.coordinate.latitude,
+              longitude: e.nativeEvent.coordinate.longitude,
+            },
+          });
         }}
         //e.nativeEvent is like this {target: 215, coordinate {
         // accuracy: 65
@@ -48,13 +51,21 @@ function WalkingMap(props) {
         initialRegion={{
           latitude: 41.895442,
           longitude: -87.638957,
-          latitudeDelta: 0.00522,
-          longitudeDelta: 0.00221
+          latitudeDelta: 0.1,
+          longitudeDelta: 0.1,
         }}
       >
+        <MapViewDirections
+          origin={navPoints[0]}
+          waypoints={navPoints.length > 2 ? navPoints.slice(1, -1) : null}
+          destination={navPoints[navPoints.length - 1]}
+          apikey={googleSecret}
+          strokeWidth={4}
+          strokeColor="blue"
+        />
         {props.userpins.length
           ? props.userpins.map(coord => {
-              console.log("chord:", coord);
+              console.log('chord:', coord);
               return (
                 <Marker
                   key={coord.name}
@@ -62,28 +73,28 @@ function WalkingMap(props) {
                   description={coord.description}
                   coordinate={{
                     longitude: coord.location.coordinates[1],
-                    latitude: coord.location.coordinates[0]
+                    latitude: coord.location.coordinates[0],
                   }}
                 />
               );
             })
           : null}
-          {props.activeWalk.navPoints.length ? (
-            <Polyline
+        {/* {props.activeWalk.navPoints.length ? (
+          <Polyline
             coordinates={navPoints}
-          strokeColor="#EE6A22"
-          strokeWidth={3}
-            ></Polyline>
-          ) : null}
+            strokeColor="#EE6A22"
+            strokeWidth={3}
+          />
+        ) : null} */}
       </MapView>
       <View
         style={{
-          display: "flex",
-          position: "absolute",
+          display: 'flex',
+          position: 'absolute',
           bottom: 40,
           left: 50,
-          flexDirection: "row",
-          justifyContent: "center"
+          flexDirection: 'row',
+          justifyContent: 'center',
         }}
       />
     </SafeAreaView>
@@ -93,7 +104,7 @@ function WalkingMap(props) {
 const mapState = state => {
   return {
     userpins: state.userpins,
-    activeWalk: state.activeWalk
+    activeWalk: state.activeWalk,
   };
 };
 
@@ -101,7 +112,7 @@ const mapDispatch = dispatch => {
   return {
     getAllPins: () => {
       dispatch(getAllPinsThunk());
-    }
+    },
   };
 };
 
