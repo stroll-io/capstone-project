@@ -145,8 +145,12 @@ class Login extends React.Component {
                 onPress={this.handleSubmit}
               >
                 <Text style={{ fontFamily: 'Avenir-Heavy' }}>Login</Text>
-                {this.props.error && <Text>Incorrect email or password.</Text>}
               </Button>
+              {this.props.error && (
+                <Text style={{ color: 'red' }}>
+                  Incorrect email or password
+                </Text>
+              )}
             </View>
           </View>
         </View>
