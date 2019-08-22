@@ -66,7 +66,6 @@ const DashboardNavigator = createDrawerNavigator(
     Dashboard: DashboardStackNavigator,
     Discover: DiscoverMap,
     Explore: ExploreMap,
-    'Walking Map': WalkingMap,
     'Create Walk': CreateWalk,
     'Past Walks': PastWalks,
     'Starred Walks': StarredWalks,

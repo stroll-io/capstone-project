@@ -27,6 +27,19 @@ walksRouter.get('/:walkId', async (req, res, next) => {
   }
 });
 
+walksRouter.get('/tags/:tag', async (req, res, next)=> {
+  try {
+    const walks = await Walk.findAll({
+      where: {
+        category: req.params.tag
+      }
+    })
+    res.send(walks);
+  } catch(err) {
+    next(err)
+  }
+})
+
 walksRouter.get("/", async (req, res, next) => {
   try {
     const allWalks = await Walk.findAll();
