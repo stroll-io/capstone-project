@@ -36,23 +36,31 @@ export default function Map(props) {
       walkTag,
     });
     props.navigation.navigate('Explore')
+    setIsModalVisible(false);
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
+      <View style={{ flex: 1 }}>
+        <Text
+          style={{ fontWeight: "bold", fontSize: 15, textAlign: "center", marginTop:10 }}
+        >
+          Tap the map to start adding points to your walk
+        </Text>
+      </View>
       <MapView
         provider="google"
-        style={{ flex: 1 }}
+        style={{ flex: 18 }}
         initialRegion={{
           latitude: 41.895442,
           longitude: -87.638957,
           latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
+          longitudeDelta: 0.0421
         }}
         onPress={e => {
           const newCord = {
             latitude: e.nativeEvent.coordinate.latitude,
-            longitude: e.nativeEvent.coordinate.longitude,
+            longitude: e.nativeEvent.coordinate.longitude
           };
           setCoords([...coords, newCord]);
         }}
@@ -73,12 +81,12 @@ export default function Map(props) {
       </MapView>
       <View
         style={{
-          display: 'flex',
-          position: 'absolute',
+          display: "flex",
+          position: "absolute",
           bottom: 40,
           left: 50,
-          flexDirection: 'row',
-          justifyContent: 'center',
+          flexDirection: "row",
+          justifyContent: "center"
         }}
       >
         <Button large warning onPress={handleUndo} style={{ margin: 20 }}>
@@ -93,7 +101,7 @@ export default function Map(props) {
         transparent={false}
         visible={isModalVisible}
         onRequestClose={() => {
-          console.log('onRequestClose');
+          console.log("onRequestClose");
         }}
       >
         <View style={{ marginTop: 22 }}>
@@ -102,8 +110,8 @@ export default function Map(props) {
               style={{
                 marginTop: 150,
                 marginBottom: 40,
-                textAlign: 'center',
-                fontSize: 20,
+                textAlign: "center",
+                fontSize: 20
               }}
             >
               Add some information about your stroll.
@@ -137,7 +145,6 @@ export default function Map(props) {
                   selectedValue={walkTag}
                   onValueChange={setWalkTag}
                 >
-
                   <Picker.Item label="Nature" value="nature" />
                   <Picker.Item label="Scenic" value="scenic" />
                   <Picker.Item label="Architecture" value="architecture" />
@@ -149,10 +156,10 @@ export default function Map(props) {
               </Item>
               <View
                 style={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  justifyContent: 'center',
-                  marginTop: 50,
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  marginTop: 50
                 }}
               >
                 <Button

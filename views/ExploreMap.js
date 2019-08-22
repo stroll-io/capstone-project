@@ -39,7 +39,7 @@ function ExploreMap(props) {
     setTimeout(() => {
       setIsModalVisible(false)
       props.navigation.navigate("Walking Map");
-    }, 500)
+    }, 1000)
 
   };
 
