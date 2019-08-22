@@ -6,14 +6,17 @@ import { Button, Text } from "native-base";
 import { getAllPinsThunk } from '../store/userpins';
 import MapViewDirections from 'react-native-maps-directions';
 import { googleSecret } from '../secrets';
+import * as Haptics from 'expo-haptics'
 
 function WalkingMap(props) {
   const [isWalkComplete, setIsWalkComplete] = useState(false);
   const [walkData,setWalkData] = useState(false);
   const [destination, setDestination] = useState();
   const [userLocation, setUserLocation] = useState(null)
+  const [hapticHasTriggered, setHapticHasTriggered] = useState(false)
 
   useEffect(() => {
+
     props.getAllPins();
   }, []);
 
@@ -64,6 +67,11 @@ function WalkingMap(props) {
 
     if (latDiff < .0001 && longDiff < .0001) {
       setIsWalkComplete(true)
+      if (!hapticHasTriggered) {
+        Haptics.notificationAsync();
+        setHapticHasTriggered(true)
+      }
+
     }
   }
   return (
