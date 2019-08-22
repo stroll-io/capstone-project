@@ -4,10 +4,6 @@ import { Button, Text } from 'native-base';
 import { fetchLoggedInUser } from '../store/user';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
-import EditAccount from './EditAccount';
-import PasswordReset from './PasswordReset';
-import DeleteAccount from './DeleteAccount';
-import { createStackNavigator, createAppContainer } from 'react-navigation';
 
 class AccountInfo extends React.Component {
   componentDidMount() {
@@ -50,6 +46,9 @@ class AccountInfo extends React.Component {
                     rounded
                     primary
                     style={{ marginTop: 15, justifyContent: 'center' }}
+                    onPress={() =>
+                      this.props.navigation.navigate('EditAccount')
+                    }
                   >
                     <Text>Edit Info</Text>
                   </Button>
@@ -57,6 +56,9 @@ class AccountInfo extends React.Component {
                     rounded
                     primary
                     style={{ marginTop: 15, justifyContent: 'center' }}
+                    onPress={() =>
+                      this.props.navigation.navigate('PasswordReset')
+                    }
                   >
                     <Text>Request password reset</Text>
                   </Button>
@@ -69,6 +71,7 @@ class AccountInfo extends React.Component {
               rounded
               danger
               style={{ marginTop: 300, justifyContent: 'center' }}
+              onPress={() => this.props.navigation.navigate('DeleteAccount')}
             >
               <Text style={{ alignSelf: 'center' }}>Delete account</Text>
             </Button>
@@ -78,35 +81,6 @@ class AccountInfo extends React.Component {
     );
   }
 }
-
-const AccountStackNavigator = createStackNavigator(
-  {
-    AccountInfo: AccountInfo,
-    EditAccount: EditAccount,
-    PasswordReset: PasswordReset,
-    // DeleteAccount: DeleteAccount,
-  },
-  {
-    initialRouteName: 'AccountInfo',
-    // defaultNavigationOptions: ({ navigation }) => {
-    //   return {
-    //     headerStyle: {
-    //       backgroundColor: '#028c6a',
-    //     },
-    //     headerRight: (
-    //       <Ionicons
-    //         name="md-menu"
-    //         size={30}
-    //         style={{ paddingRight: 10 }}
-    //         onPress={() => navigation.openDrawer()}
-    //       />
-    //     ),
-    //   };
-    // },
-  }
-);
-
-const AccountInfoContainer = createAppContainer(AccountStackNavigator);
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -119,6 +93,15 @@ const mapDispatchToProps = dispatch => {
 const mapStateToProps = state => {
   return {
     loggedInUser: state.loggedInUser,
+    // navigation: props.navigation.state,
+  };
+};
+
+const mergeProps = (state, dispatch, ownProps) => {
+  return {
+    ...ownProps,
+    ...state,
+    ...dispatch,
   };
 };
 
@@ -129,5 +112,6 @@ AccountInfo.propTypes = {
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
-)(AccountInfoContainer);
+  mapDispatchToProps,
+  mergeProps
+)(AccountInfo);
