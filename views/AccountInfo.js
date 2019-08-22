@@ -1,11 +1,9 @@
 import React from 'react';
-import { View, Modal } from 'react-native';
+import { View } from 'react-native';
 import { Button, Text } from 'native-base';
 import { fetchLoggedInUser } from '../store/user';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
-import EditAccount from './EditAccount';
-import { createStackNavigator } from 'react-navigation';
 
 class AccountInfo extends React.Component {
   componentDidMount() {
@@ -48,6 +46,9 @@ class AccountInfo extends React.Component {
                     rounded
                     primary
                     style={{ marginTop: 15, justifyContent: 'center' }}
+                    onPress={() =>
+                      this.props.navigation.navigate('EditAccount')
+                    }
                   >
                     <Text>Edit Info</Text>
                   </Button>
@@ -55,6 +56,9 @@ class AccountInfo extends React.Component {
                     rounded
                     primary
                     style={{ marginTop: 15, justifyContent: 'center' }}
+                    onPress={() =>
+                      this.props.navigation.navigate('PasswordReset')
+                    }
                   >
                     <Text>Request password reset</Text>
                   </Button>
@@ -67,23 +71,12 @@ class AccountInfo extends React.Component {
               rounded
               danger
               style={{ marginTop: 300, justifyContent: 'center' }}
+              onPress={() => this.props.navigation.navigate('DeleteAccount')}
             >
               <Text style={{ alignSelf: 'center' }}>Delete account</Text>
             </Button>
           </View>
         </View>
-        {/* <Modal
-          animationType="slide"
-          transparent={false}
-          visible={isModalVisible}
-          onRequestClose={() => {
-            console.log('onRequestClose');
-          }}
-        >
-          <View>
-            <Text>Modal for thing</Text>
-          </View>
-        </Modal> */}
       </>
     );
   }
@@ -100,6 +93,15 @@ const mapDispatchToProps = dispatch => {
 const mapStateToProps = state => {
   return {
     loggedInUser: state.loggedInUser,
+    // navigation: props.navigation.state,
+  };
+};
+
+const mergeProps = (state, dispatch, ownProps) => {
+  return {
+    ...ownProps,
+    ...state,
+    ...dispatch,
   };
 };
 
@@ -110,5 +112,6 @@ AccountInfo.propTypes = {
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
+  mergeProps
 )(AccountInfo);
