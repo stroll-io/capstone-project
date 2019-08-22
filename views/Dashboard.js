@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, Image } from 'react-native';
 import { Text } from 'native-base';
 import {
   createDrawerNavigator,
@@ -14,13 +14,17 @@ import AccountInfo from './AccountInfo';
 import PastWalks from './PastWalks';
 import StarredWalks from './StarredWalks';
 import WalkingMap from './WalkingMap';
+import EditAccount from './EditAccount';
+import PasswordReset from './PasswordReset';
+import DeleteAccount from './DeleteAccount';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 class Dashboard extends React.Component {
   render() {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <View>
+        <Image source={require('../public/sky.png')} style={{ flex: 1 }} />
+        <View style={{ position: 'absolute' }}>
           <Text style={{ fontFamily: 'Avenir-Heavy', fontSize: 30 }}>
             Dashboard Component
           </Text>
@@ -40,13 +44,22 @@ const DashboardStackNavigator = createStackNavigator(
     'Past Walks': PastWalks,
     'Starred Walks': StarredWalks,
     'Account Info': AccountInfo,
+    EditAccount: EditAccount,
+    PasswordReset: PasswordReset,
+    DeleteAccount: DeleteAccount,
   },
   {
     initialRouteName: 'Dashboard',
     defaultNavigationOptions: ({ navigation }) => {
       return {
         headerStyle: {
-          backgroundColor: '#028c6a',
+          borderBottomWidth: '0',
+          backgroundColor: '#FFF',
+          elevation: 0,
+        },
+        headerTitleStyle: {
+          fontFamily: 'Avenir-Heavy',
+          fontWeight: 'bold',
         },
         headerRight: (
           <Ionicons
@@ -74,6 +87,9 @@ const DashboardNavigator = createDrawerNavigator(
   {
     initialRouteName: 'Dashboard',
     drawerPosition: 'right',
+    contentOptions: {
+      labelStyle: { fontFamily: 'Avenir-Heavy' },
+    },
   }
 );
 

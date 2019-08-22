@@ -153,6 +153,10 @@ function WalkingMap(props) {
         />
         {props.userpins.length
           ? props.userpins.map(coord => {
+<<<<<<< HEAD
+              // console.log('chord:', coord);
+=======
+>>>>>>> cd48feae5e1af3be5cf5007f648fc30317cae7c2
               return (
                 <Marker
                   key={coord.location.coordinates[1]}

@@ -12,7 +12,7 @@ const app = express();
 // const socketio = require('socket.io')
 module.exports = app;
 
-console.log('call from inside the server/index.js');
+// console.log('call from inside the server/index.js');
 
 // This is a global Mocha hook, used for resource cleanup.
 // Otherwise, Mocha v4+ never quits after tests.
@@ -67,6 +67,7 @@ const createApp = () => {
 
   // auth and api routes
   app.use('/api', require('./api'));
+  app.use('/auth', require('./auth'));
 
   // static file-serving middleware
   app.use(express.static(path.join(__dirname, '..', 'public')));
