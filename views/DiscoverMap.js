@@ -189,7 +189,9 @@ const mapDispatch = dispatch => {
     }
   };
 };
-
+DiscoverMap.navigationOptions = {
+  title: 'Discover Pins'
+}
 export default connect(
   mapState,
   mapDispatch

@@ -152,6 +152,7 @@ function WalkingMap(props) {
           strokeWidth={4}
           strokeColor="blue"
           onReady={handleOnReady}
+          mode="WALKING"
         />
         {props.userpins.length
           ? props.userpins.map(coord => {
@@ -203,7 +204,9 @@ const mapDispatch = dispatch => {
     },
   };
 };
-
+WalkingMap.navigationOptions = {
+  title: "Strolling"
+};
 export default connect(
   mapState,
   mapDispatch

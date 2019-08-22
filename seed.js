@@ -118,7 +118,8 @@ const seed = async () => {
         name: `Ben's Commute`,
         description: 'My walk from Fullstack to Ogilvie',
         category: 'nature',
-        imageUrl: 'https://picsum.photos/id/1047/200/300',
+        // imageUrl: 'https://picsum.photos/id/1047/200/300',
+        imageUrl: 'nature.png',
         userId: 1,
         start: {
           type: 'Point',
@@ -129,7 +130,8 @@ const seed = async () => {
         name: `Madi's Commute`,
         description: 'My walk from home to Fullstack',
         category: 'scenic',
-        imageUrl: 'https://picsum.photos/id/1047/200/300',
+        // imageUrl: 'https://picsum.photos/id/1047/200/300',
+        imageUrl: 'scenic.png',
         userId: 2,
         start: {
           type: 'Point',
@@ -140,7 +142,8 @@ const seed = async () => {
         name: `Fullstack Wonder Walk`,
         description: 'A great lunch walk around Fullstack',
         category: 'scenic',
-        imageUrl: 'https://picsum.photos/id/1047/200/300',
+        // imageUrl: 'https://picsum.photos/id/1047/200/300',
+        imageUrl: 'scenic.png',
         userId: 2,
         start: {
           type: 'Point',
@@ -151,7 +154,8 @@ const seed = async () => {
         name: `Michelle's Commute`,
         description: 'My walk from my apartment to my car',
         category: 'dog',
-        imageUrl: 'https://picsum.photos/id/1047/200/300',
+        // imageUrl: 'https://picsum.photos/id/1047/200/300',
+        imageUrl: 'dog.png',
         userId: 3,
         start: {
           type: 'Point',
@@ -162,7 +166,8 @@ const seed = async () => {
         name: `Millennium Park`,
         description: 'Lurie Garden, the Bean, and all that jazz',
         category: 'scenic',
-        imageUrl: 'https://picsum.photos/id/1047/200/300',
+        // imageUrl: 'https://picsum.photos/id/1047/200/300',
+        imageUrl: 'scenic.png',
         start: {
           type: 'Point',
           coordinates: [41.878994, -87.629394],
@@ -172,7 +177,8 @@ const seed = async () => {
         name: `Grant Park`,
         description: 'A big lawn with a big fountain to match',
         category: 'nature',
-        imageUrl: 'https://picsum.photos/id/1047/200/300',
+        // imageUrl: 'https://picsum.photos/id/1047/200/300',
+        imageUrl: 'nature.png',
         start: {
           type: 'Point',
           coordinates: [41.897765, -87.627853],
@@ -182,14 +188,14 @@ const seed = async () => {
         name: `The Art Institute`,
         description: 'Many expensive paintings',
         category: 'architecture',
-        imageUrl: null,
+        imageUrl: 'architecture.png',
         start: { type: 'Point', coordinates: [41.900201, -87.631222] },
       }),
       Walk.create({
         name: `Museum Campus`,
         description: 'The Planetarium, Shedd Aquarium, and Field Museum',
         category: 'historical',
-        imageUrl: null,
+        imageUrl: 'history.png',
         start: {
           type: 'Point',
           coordinates: [41.887567, -87.621791],
@@ -199,7 +205,7 @@ const seed = async () => {
         name: `The Loop Architectural Walk`,
         description: 'Tall buildings for tall folks',
         category: 'architecture',
-        imageUrl: null,
+        imageUrl: 'architecture.png',
         start: {
           type: 'Point',
           coordinates: [41.879353, -87.636712],

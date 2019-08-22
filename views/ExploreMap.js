@@ -176,6 +176,10 @@ function ExploreMap(props) {
   );
 }
 
+ExploreMap.navigationOptions = {
+  title: "Explore Walks"
+};
+
 const mapState = state => {
   return {
     walks: state.walks,

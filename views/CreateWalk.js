@@ -188,7 +188,9 @@ import { getAllWalksThunk } from "../store/walks";
     </SafeAreaView>
   );
 }
-
+CreateWalk.navigationOptions = {
+  title: "Create Walk"
+};
 const mapDispatch = dispatch => {
   return {
     getAllWalks: () => {

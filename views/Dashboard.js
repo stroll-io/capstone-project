@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, Image } from 'react-native';
 import { Text } from 'native-base';
 import {
   createDrawerNavigator,
@@ -14,14 +14,20 @@ import AccountInfo from './AccountInfo';
 import PastWalks from './PastWalks';
 import StarredWalks from './StarredWalks';
 import WalkingMap from './WalkingMap';
+import EditAccount from './EditAccount';
+import PasswordReset from './PasswordReset';
+import DeleteAccount from './DeleteAccount';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 class Dashboard extends React.Component {
   render() {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <View>
-          <Text>Dashboard Component</Text>
+        <Image source={require('../public/sky.png')} style={{ flex: 1 }} />
+        <View style={{ position: 'absolute' }}>
+          <Text style={{ fontFamily: 'Avenir-Heavy', fontSize: 30 }}>
+            Dashboard Component
+          </Text>
         </View>
       </View>
     );
@@ -38,13 +44,22 @@ const DashboardStackNavigator = createStackNavigator(
     'Past Walks': PastWalks,
     'Starred Walks': StarredWalks,
     'Account Info': AccountInfo,
+    EditAccount: EditAccount,
+    PasswordReset: PasswordReset,
+    DeleteAccount: DeleteAccount,
   },
   {
     initialRouteName: 'Dashboard',
     defaultNavigationOptions: ({ navigation }) => {
       return {
         headerStyle: {
-          backgroundColor: 'tomato',
+          borderBottomWidth: '0',
+          backgroundColor: '#FFF',
+          elevation: 0,
+        },
+        headerTitleStyle: {
+          fontFamily: 'Avenir-Heavy',
+          fontWeight: 'bold',
         },
         headerRight: (
           <Ionicons
@@ -56,20 +71,6 @@ const DashboardStackNavigator = createStackNavigator(
         ),
       };
     },
-
-    // defaultNavigationOptions: {
-    //   headerStyle: {
-    //     backgroundColor: 'tomato',
-    //   },
-    //   headerRight: (
-    //     <Ionicons
-    //       name="md-menu"
-    //       size={30}
-    //       style={{ paddingRight: 10 }}
-    //       onPress={navigation => navigation.openDrawer()}
-    //     />
-    //   ),
-    // },
   }
 );
 
@@ -86,6 +87,9 @@ const DashboardNavigator = createDrawerNavigator(
   {
     initialRouteName: 'Dashboard',
     drawerPosition: 'right',
+    contentOptions: {
+      labelStyle: { fontFamily: 'Avenir-Heavy' },
+    },
   }
 );
 
