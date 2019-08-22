@@ -18,7 +18,8 @@ function WalkingMap(props) {
       longitude: navPoint.location.coordinates[1],
     });
   });
-  console.log('here are your navPoints :', navPoints);
+
+  console.log("props.activeWalk :", props.activeWalk);
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
@@ -68,7 +69,7 @@ function WalkingMap(props) {
               console.log('chord:', coord);
               return (
                 <Marker
-                  key={coord.name}
+                  key={coord.latitude}
                   title={coord.name}
                   description={coord.description}
                   coordinate={{

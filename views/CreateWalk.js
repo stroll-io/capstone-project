@@ -5,7 +5,7 @@ import MapView, { Marker } from 'react-native-maps';
 import axios from 'axios';
 import { ngrokSecret } from '../secrets';
 
-export default function Map() {
+export default function Map(props) {
   const [coords, setCoords] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [walkTitle, setWalkTitle] = useState('');
@@ -35,6 +35,7 @@ export default function Map() {
       walkDescription,
       walkTag,
     });
+    props.navigation.navigate('Explore')
   };
 
   return (
