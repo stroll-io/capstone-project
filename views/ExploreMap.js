@@ -95,7 +95,7 @@ function ExploreMap(props) {
               <Text>Back</Text>
             </Button>
             <Button large primary onPress={handleWalk} style={{ margin: 20 }}>
-              <Text>Walk</Text>
+              <Text>Start Walk</Text>
             </Button>
           </View>
         </View>

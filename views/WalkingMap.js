@@ -11,7 +11,7 @@ import * as Haptics from 'expo-haptics'
 function WalkingMap(props) {
   const [isWalkComplete, setIsWalkComplete] = useState(false);
   const [walkData,setWalkData] = useState(false);
-  const [destination, setDestination] = useState();
+  const [destination, setDestination] = useState(null);
   const [userLocation, setUserLocation] = useState(null)
   const [hapticHasTriggered, setHapticHasTriggered] = useState(false)
 
@@ -59,20 +59,23 @@ function WalkingMap(props) {
   }
 
   const checkCompletion = () => {
-    let latDiff = userLocation.latitude - destination.latitude;
-    let longDiff = userLocation.longitude - destination.longitude;
+    if(userLocation && destination) {
+      let latDiff = userLocation.latitude - destination.latitude;
+      let longDiff = userLocation.longitude - destination.longitude;
 
-    if (latDiff < 0) latDiff = latDiff * -1;
-    if (longDiff < 0) longDiff = longDiff * -1;
+      if (latDiff < 0) latDiff = latDiff * -1;
+      if (longDiff < 0) longDiff = longDiff * -1;
 
-    if (latDiff < .0001 && longDiff < .0001) {
-      setIsWalkComplete(true)
-      if (!hapticHasTriggered) {
-        Haptics.notificationAsync();
-        setHapticHasTriggered(true)
+      if (latDiff < 0.0001 && longDiff < 0.0001) {
+        setIsWalkComplete(true);
+        if (!hapticHasTriggered) {
+          Haptics.notificationAsync();
+          setHapticHasTriggered(true);
+        }
       }
 
     }
+
   }
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
@@ -166,13 +169,12 @@ function WalkingMap(props) {
               );
             })
           : null}
-        {/* {props.activeWalk.navPoints.length ? (
-          <Polyline
-            coordinates={navPoints}
-            strokeColor="#EE6A22"
-            strokeWidth={3}
-          />
-        ) : null} */}
+          {navPoints.length ?
+        <Marker
+          title={"Start"}
+          coordinate={navPoints[0]}
+          pinColor='green'
+        />: null }
       </MapView>
       <View
         style={{
