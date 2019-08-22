@@ -18,40 +18,123 @@ class StarredWalks extends React.Component {
     return (
       <Container>
         <Content>
-          {this.props.starredWalks.length ? (
-            this.props.starredWalks.map(walk => {
-              return (
-                <View
-                  key={walk.id}
-                  style={{
-                    margin: 5,
-                    height: 200,
-                    borderWidth: 5,
-                    borderRadius: 20,
-                    borderColor: 'black',
-                  }}
-                >
-                  <View>
-                    <View>
-                      <Image
-                        source={{
-                          uri: `${walk.imageUrl}`,
-                        }}
-                        style={{ height: 200, width: null, flex: 1 }}
-                      />
-                      <Text>{walk.name}</Text>
-                      <Text>{walk.category} walk</Text>
-                      <Text>{walk.description}</Text>
-                      <Text>Walked: {walk.favorite_walks.createdAt}</Text>
+          <View
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            {this.props.starredWalks.length ? (
+              this.props.starredWalks.map(walk => {
+                const type =
+                  walk.category[0].toUpperCase() + walk.category.slice(1);
+                return (
+                  <View
+                    key={walk.id}
+                    style={{
+                      height: 200,
+                      width: '95%',
+                      borderStyle: 'solid',
+                      borderWidth: 3,
+                      borderColor: '#97BAA4',
+                      borderRadius: 25,
+                      backgroundColor: '#97BAA4',
+                      marginTop: 10,
+                      marginBottom: 10,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <View
+                      style={{
+                        justifyContent: 'center',
+                        padding: 10,
+                        textAlign: 'center',
+                      }}
+                    >
+                      <View style={{ display: 'flex', flexDirection: 'row' }}>
+                        <View
+                          style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'space-around',
+                          }}
+                        >
+                          <Image
+                            source={require('../public/thumbnails/fountain.png')}
+                            style={{
+                              display: 'flex',
+                              height: 100,
+                              width: 100,
+                              marginRight: 10,
+                            }}
+                          />
+                        </View>
+                        <View
+                          style={{
+                            display: 'flex',
+                            height: '90%',
+                            width: '70%',
+                            paddingTop: 5,
+                            paddingBottom: 5,
+                            flexDirection: 'column',
+                            justifyContent: 'space-between',
+                          }}
+                        >
+                          <View>
+                            <Text
+                              style={{
+                                fontSize: 16,
+                                fontFamily: 'Avenir-Heavy',
+                              }}
+                            >
+                              {walk.name}
+                            </Text>
+                          </View>
+                          <View>
+                            <Text
+                              style={{
+                                fontSize: 16,
+                                fontFamily: 'Avenir-Heavy',
+                              }}
+                            >
+                              Type: {type}
+                            </Text>
+                          </View>
+                          <View>
+                            <Text
+                              style={{
+                                fontSize: 16,
+                                fontFamily: 'Avenir-Heavy',
+                              }}
+                            >
+                              {walk.description}
+                            </Text>
+                          </View>
+                          <View>
+                            <Text
+                              style={{
+                                fontSize: 16,
+                                fontFamily: 'Avenir-Heavy',
+                              }}
+                            >
+                              Walked: {walk.favorite_walks.createdAt}
+                            </Text>
+                          </View>
+                        </View>
+                      </View>
                     </View>
+                    <View />
                   </View>
-                  <View />
-                </View>
-              );
-            })
-          ) : (
-            <Text />
-          )}
+                );
+              })
+            ) : (
+              <Text />
+            )}
+          </View>
         </Content>
       </Container>
     );

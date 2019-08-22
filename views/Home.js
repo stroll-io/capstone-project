@@ -89,11 +89,11 @@ const HomeNavigator = createSwitchNavigator(
   },
   {
     initialRouteName: 'Home',
-    defaultNavigationOptions: {
-      headerStyle: {
-        backgroundColor: 'gold',
-      },
-    },
+    // defaultNavigationOptions: {
+    //   headerStyle: {
+    //     backgroundColor: 'gold',
+    //   },
+    // },
   }
 );
 
