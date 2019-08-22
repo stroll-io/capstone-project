@@ -1,12 +1,16 @@
 import React from 'react';
 import { Text, View, Image } from 'react-native';
-import { Content, Container, Header } from 'native-base';
+import { Content, Container } from 'native-base';
 import { fetchAllPastWalks } from '../store/pastWalks';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
 
 //TODO need to be able to dynamically get the userId
 class PastWalks extends React.Component {
+  static navigationOptions = {
+    title: 'Past Walks',
+  };
+
   async componentDidMount() {
     await this.props.fetchAllPastWalks(2);
   }
@@ -14,25 +18,6 @@ class PastWalks extends React.Component {
   render() {
     return (
       <Container>
-        {/* <Header
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            backgroundColor: '#007f52',
-          }}
-        >
-          <Text
-            style={{
-              fontFamily: 'Avenir-Heavy',
-              fontSize: 24,
-              alignSelf: 'center',
-              marginBottom: 10,
-            }}
-          >
-            Your Past Walks
-          </Text>
-        </Header> */}
         <Content>
           <View
             style={{

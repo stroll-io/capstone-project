@@ -1,19 +1,15 @@
 import React from 'react';
-import { Image } from 'react-native';
-import {
-  Text,
-  Content,
-  Card,
-  CardItem,
-  Body,
-  Container,
-  Header,
-} from 'native-base';
+import { Image, View } from 'react-native';
+import { Text, Content, Container } from 'native-base';
 import { fetchStarredWalks } from '../store/starredWalks';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
 
 class StarredWalks extends React.Component {
+  static navigationOptions = {
+    title: 'Starred Walks',
+  };
+
   async componentDidMount() {
     await this.props.fetchStarredWalks(2);
   }
@@ -21,16 +17,11 @@ class StarredWalks extends React.Component {
   render() {
     return (
       <Container>
-        <Header>
-          <Text style={{ fontSize: 24, alignSelf: 'center' }}>
-            Your Starred Walks
-          </Text>
-        </Header>
         <Content>
           {this.props.starredWalks.length ? (
             this.props.starredWalks.map(walk => {
               return (
-                <Card
+                <View
                   key={walk.id}
                   style={{
                     margin: 5,
@@ -40,8 +31,8 @@ class StarredWalks extends React.Component {
                     borderColor: 'black',
                   }}
                 >
-                  <CardItem>
-                    <Body>
+                  <View>
+                    <View>
                       <Image
                         source={{
                           uri: `${walk.imageUrl}`,
@@ -52,10 +43,10 @@ class StarredWalks extends React.Component {
                       <Text>{walk.category} walk</Text>
                       <Text>{walk.description}</Text>
                       <Text>Walked: {walk.favorite_walks.createdAt}</Text>
-                    </Body>
-                  </CardItem>
-                  <CardItem cardBody />
-                </Card>
+                    </View>
+                  </View>
+                  <View />
+                </View>
               );
             })
           ) : (

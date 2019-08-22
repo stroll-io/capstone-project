@@ -18,7 +18,7 @@ function WalkingMap(props) {
       longitude: navPoint.location.coordinates[1],
     });
   });
-  console.log('here are your navPoints :', navPoints);
+  // console.log('here are your navPoints :', navPoints);
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
@@ -65,7 +65,7 @@ function WalkingMap(props) {
         />
         {props.userpins.length
           ? props.userpins.map(coord => {
-              console.log('chord:', coord);
+              // console.log('chord:', coord);
               return (
                 <Marker
                   key={coord.name}
