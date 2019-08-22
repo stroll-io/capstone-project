@@ -1,11 +1,13 @@
 import React from 'react';
-import { View, Modal } from 'react-native';
+import { View } from 'react-native';
 import { Button, Text } from 'native-base';
 import { fetchLoggedInUser } from '../store/user';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
 import EditAccount from './EditAccount';
-import { createStackNavigator } from 'react-navigation';
+import PasswordReset from './PasswordReset';
+import DeleteAccount from './DeleteAccount';
+import { createStackNavigator, createAppContainer } from 'react-navigation';
 
 class AccountInfo extends React.Component {
   componentDidMount() {
@@ -72,22 +74,39 @@ class AccountInfo extends React.Component {
             </Button>
           </View>
         </View>
-        {/* <Modal
-          animationType="slide"
-          transparent={false}
-          visible={isModalVisible}
-          onRequestClose={() => {
-            console.log('onRequestClose');
-          }}
-        >
-          <View>
-            <Text>Modal for thing</Text>
-          </View>
-        </Modal> */}
       </>
     );
   }
 }
+
+const AccountStackNavigator = createStackNavigator(
+  {
+    AccountInfo: AccountInfo,
+    EditAccount: EditAccount,
+    PasswordReset: PasswordReset,
+    // DeleteAccount: DeleteAccount,
+  },
+  {
+    initialRouteName: 'AccountInfo',
+    // defaultNavigationOptions: ({ navigation }) => {
+    //   return {
+    //     headerStyle: {
+    //       backgroundColor: '#028c6a',
+    //     },
+    //     headerRight: (
+    //       <Ionicons
+    //         name="md-menu"
+    //         size={30}
+    //         style={{ paddingRight: 10 }}
+    //         onPress={() => navigation.openDrawer()}
+    //       />
+    //     ),
+    //   };
+    // },
+  }
+);
+
+const AccountInfoContainer = createAppContainer(AccountStackNavigator);
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -111,4 +130,4 @@ AccountInfo.propTypes = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(AccountInfo);
+)(AccountInfoContainer);
