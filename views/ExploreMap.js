@@ -36,6 +36,11 @@ function ExploreMap(props) {
 
   const handleWalk = () => {
     props.setActiveWalk(id);
+    setTimeout(() => {
+      setIsModalVisible(false)
+      props.navigation.navigate("Walking Map");
+    }, 1000)
+
   };
 
   const handlePicker = (e) => {
