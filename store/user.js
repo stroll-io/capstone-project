@@ -54,9 +54,12 @@ export const fetchUser = (email, password) => {
   };
 };
 
-export const fetchUpdatedUser = userId => {
+export const fetchUpdatedUser = (userId, name, email) => {
   return async dispatch => {
-    const { data } = await axios.put(`${ngrokSecret}/api/users/${userId}`);
+    const { data } = await axios.put(`${ngrokSecret}/api/users/${userId}`, {
+      name,
+      email,
+    });
     dispatch(updateUser(data));
   };
 };

@@ -20,7 +20,7 @@ const EditAccount = props => {
     if (event) {
       event.preventDefault();
       //TODO figure out where to put the reqbody object
-      await props.fetchUpdatedUser();
+      await props.fetchUpdatedUser(props.user.id, nameInput, emailInput);
     }
   };
 
@@ -57,8 +57,19 @@ const EditAccount = props => {
 
 const mapStateToProps = state => {
   return {
-    loggedInUser: state.loggedInUser,
+    user: state.user,
   };
 };
 
-export default connect(mapStateToProps)(EditAccount);
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchUpdatedUser: (userId, name, email) => {
+      dispatch(fetchUpdatedUser(userId, name, email));
+    },
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(EditAccount);

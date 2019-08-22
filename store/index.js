@@ -8,21 +8,17 @@ import walks from './walks';
 import activeWalk from './activeWalk';
 import allPastWalks from './pastWalks';
 import starredWalks from './starredWalks';
-import loggedInUser from './user';
 
 const reducer = combineReducers({
   user,
   userpins,
   allPastWalks,
   starredWalks,
-  loggedInUser,
   walks,
   activeWalk,
 });
 
-const middleware = composeWithDevTools(
-  applyMiddleware(thunkMiddleware)
-);
+const middleware = composeWithDevTools(applyMiddleware(thunkMiddleware));
 
 const store = createStore(reducer, middleware);
 
