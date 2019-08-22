@@ -73,8 +73,6 @@ export default function(state = defaultUser, action) {
       return action.user;
     case SET_USER:
       return action.user;
-    case BAD_LOGIN:
-      return action.error;
     // case GET_LOGGEDIN_USER:
     //   return action.loggedInUser;
     default:

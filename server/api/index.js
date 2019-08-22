@@ -1,7 +1,6 @@
 const router = require('express').Router();
 module.exports = router;
 
-router.use('/auth', require('../auth'));
 router.use('/users', require('./users'));
 router.use('/navPoints', require('./navPoints'));
 router.use('/walks', require('./walks'));
