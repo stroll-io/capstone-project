@@ -11,9 +11,9 @@ class AccountInfo extends React.Component {
   componentDidMount() {
     this.props.fetchLoggedInUser(2);
   }
-  //navigation header update
+
   static navigationOptions = {
-    header: null,
+    title: 'Account Info',
   };
 
   render() {
