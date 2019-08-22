@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, SafeAreaView, Modal } from 'react-native';
 import { Button, Text, Form, Item, Input, Picker, Icon } from 'native-base';
-import MapView, { Polyline } from 'react-native-maps';
+import MapView, { Marker } from 'react-native-maps';
 import axios from 'axios';
 import { ngrokSecret } from '../secrets';
 
@@ -40,8 +40,7 @@ export default function Map() {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
       <MapView
-        //initial region should be stateful based on users current location
-        // provider='google'
+        provider="google"
         style={{ flex: 1 }}
         initialRegion={{
           latitude: 41.895442,
@@ -57,7 +56,19 @@ export default function Map() {
           setCoords([...coords, newCord]);
         }}
       >
-        <Polyline coordinates={coords} strokeColor="#EE6A22" strokeWidth={3} />
+        {coords.length
+          ? coords.map(coord => {
+              return (
+                <Marker
+                  key={coord.latitude}
+                  coordinate={{
+                    longitude: coord.longitude,
+                    latitude: coord.latitude
+                  }}
+                />
+              );
+            })
+          : null}
       </MapView>
       <View
         style={{
@@ -125,6 +136,7 @@ export default function Map() {
                   selectedValue={walkTag}
                   onValueChange={setWalkTag}
                 >
+
                   <Picker.Item label="Nature" value="nature" />
                   <Picker.Item label="Scenic" value="scenic" />
                   <Picker.Item label="Architecture" value="architecture" />

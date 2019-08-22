@@ -51,8 +51,8 @@ function WalkingMap(props) {
         initialRegion={{
           latitude: 41.895442,
           longitude: -87.638957,
-          latitudeDelta: 0.1,
-          longitudeDelta: 0.1,
+          latitudeDelta: 0.01,
+          longitudeDelta: 0.01
         }}
       >
         <MapViewDirections

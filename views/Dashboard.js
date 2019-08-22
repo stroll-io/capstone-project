@@ -47,7 +47,13 @@ const DashboardStackNavigator = createStackNavigator(
     defaultNavigationOptions: ({ navigation }) => {
       return {
         headerStyle: {
-          backgroundColor: '#6A92CC',
+          borderBottomWidth: '0',
+          backgroundColor: '#FFF',
+          elevation: 0,
+        },
+        headerTitleStyle: {
+          fontFamily: 'Avenir-Heavy',
+          fontWeight: 'bold',
         },
         headerRight: (
           <Ionicons
