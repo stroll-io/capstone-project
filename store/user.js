@@ -55,14 +55,13 @@ export const fetchUser = (email, password) => {
   return async dispatch => {
     try {
       const { data } = await axios.post(`${ngrokSecret}/auth/login`, {
-        params: {
-          email,
-          password,
-        },
+        email,
+        password,
       });
       dispatch(setUser(data));
     } catch (authError) {
       dispatch(setUser({ error: authError }));
+      throw authError;
     }
   };
 };
@@ -73,8 +72,6 @@ export default function(state = defaultUser, action) {
       return action.user;
     case SET_USER:
       return action.user;
-    case BAD_LOGIN:
-      return action.error;
     // case GET_LOGGEDIN_USER:
     //   return action.loggedInUser;
     default:

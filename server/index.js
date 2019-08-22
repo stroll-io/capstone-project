@@ -67,6 +67,7 @@ const createApp = () => {
 
   // auth and api routes
   app.use('/api', require('./api'));
+  app.use('/auth', require('./auth'));
 
   // static file-serving middleware
   app.use(express.static(path.join(__dirname, '..', 'public')));

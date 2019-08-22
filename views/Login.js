@@ -10,7 +10,7 @@ import {
 // import { createSwitchNavigator, createAppContainer } from 'react-navigation';
 import { Button, Text } from 'native-base';
 // import DashboardContainer from './Dashboard';
-// import { fetchUser } from '../store/user';
+import { fetchUser } from '../store/user';
 
 const DismissKeyboard = ({ children }) => (
   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -25,11 +25,22 @@ class Login extends React.Component {
       email: '',
       password: '',
     };
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   static navigationOptions = {
     header: null,
   };
+
+  async handleSubmit(event) {
+    event.preventDefault();
+    try {
+      await this.props.fetchUser(this.state.email, this.state.password);
+      this.props.navigation.navigate('Dashboard');
+    } catch (err) {
+      //this was handled in the thunk creator and rethrown here
+    }
+  }
 
   render() {
     return (
@@ -131,9 +142,10 @@ class Login extends React.Component {
                   borderRadius: 20,
                   marginBottom: 20,
                 }}
-                onPress={() => this.props.navigation.navigate('Dashboard')}
+                onPress={this.handleSubmit}
               >
                 <Text style={{ fontFamily: 'Avenir-Heavy' }}>Login</Text>
+                {this.props.error && <Text>Incorrect email or password.</Text>}
               </Button>
             </View>
           </View>
@@ -142,9 +154,6 @@ class Login extends React.Component {
     );
   }
 }
-
-export default Login;
-
 // const LoginNavigator = createSwitchNavigator(
 //   {
 //     Login: Login,
@@ -160,22 +169,23 @@ export default Login;
 
 // const LoginContainer = createAppContainer(LoginNavigator);
 
-// const mapState = state => {
-//   return {
-//     email: state.email,
-//     password: state.password,
-//   };
-// };
+const mapState = state => {
+  return {
+    email: state.email,
+    password: state.password,
+    error: state.user.error,
+  };
+};
 
-// const mapDispatch = dispatch => {
-//   return {
-//     fetchUser: (email, password) => {
-//       dispatch(fetchUser(email, password));
-//     },
-//   };
-// };
+const mapDispatch = dispatch => {
+  return {
+    fetchUser: (email, password) => {
+      return dispatch(fetchUser(email, password));
+    },
+  };
+};
 
-// export default connect(
-//   mapState,
-//   mapDispatch
-// )(Login);
+export default connect(
+  mapState,
+  mapDispatch
+)(Login);
