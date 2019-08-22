@@ -2,16 +2,6 @@ const userRouter = require('express').Router();
 const User = require('../db/models/user');
 const Walk = require('../db/models/walk');
 
-userRouter.post('/', async (req, res, next) => {
-  try {
-    const { firstName, email, password } = req.body;
-    const user = await User.create({ firstName, email, password });
-    res.send(user);
-  } catch (err) {
-    next(err);
-  }
-});
-
 userRouter.get('/:userId', async (req, res, next) => {
   try {
     const singleUser = await User.findByPk(req.params.userId);

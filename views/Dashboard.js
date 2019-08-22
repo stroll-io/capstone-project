@@ -88,6 +88,9 @@ const DashboardNavigator = createDrawerNavigator(
   {
     initialRouteName: 'Dashboard',
     drawerPosition: 'right',
+    contentOptions: {
+      labelStyle: { fontFamily: 'Avenir-Heavy' },
+    },
   }
 );
 

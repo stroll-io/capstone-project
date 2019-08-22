@@ -8,6 +8,9 @@ import {
 } from 'react-native';
 // import { createSwitchNavigator, createAppContainer } from 'react-navigation';
 import { Button, Text } from 'native-base';
+import { connect } from 'react-redux';
+import { createAccount } from '../store/user';
+
 // import DashboardContainer from './Dashboard';
 
 const DismissKeyboard = ({ children }) => (
@@ -24,6 +27,21 @@ class Register extends React.Component {
       email: '',
       password: '',
     };
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleSubmit(event) {
+    try {
+      event.preventDefault();
+      this.props.createAccount(
+        this.state.firstName,
+        this.state.email,
+        this.state.password
+      );
+      this.props.navigation.navigate('Dashboard');
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   render() {
@@ -159,7 +177,7 @@ class Register extends React.Component {
                   borderRadius: 20,
                   marginBottom: 20,
                 }}
-                onPress={() => this.props.navigation.navigate('Dashboard')}
+                onPress={this.handleSubmit}
               >
                 <Text style={{ fontFamily: 'Avenir-Heavy' }}>Register</Text>
               </Button>
@@ -183,4 +201,23 @@ class Register extends React.Component {
 
 // const RegisterContainer = createAppContainer(RegisterNavigator);
 
-export default Register;
+const mapState = state => {
+  return {
+    firstName: state.firstName,
+    email: state.email,
+    password: state.password,
+  };
+};
+
+const mapDispatch = dispatch => {
+  return {
+    createAccount: (firstName, email, password) => {
+      dispatch(createAccount(firstName, email, password));
+    },
+  };
+};
+
+export default connect(
+  mapState,
+  mapDispatch
+)(Register);

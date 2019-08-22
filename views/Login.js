@@ -1,5 +1,5 @@
 import React from 'react';
-// import { connect } from 'react-redux';
+import { connect } from 'react-redux';
 import {
   View,
   Image,
@@ -10,6 +10,7 @@ import {
 // import { createSwitchNavigator, createAppContainer } from 'react-navigation';
 import { Button, Text } from 'native-base';
 // import DashboardContainer from './Dashboard';
+// import { fetchUser } from '../store/user';
 
 const DismissKeyboard = ({ children }) => (
   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>

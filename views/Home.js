@@ -6,6 +6,7 @@ import Login from './Login';
 import Register from './Register';
 import PastWalks from './PastWalks';
 import StarredWalks from './StarredWalks';
+import DashboardContainer from './Dashboard';
 
 class HomeScreen extends React.Component {
   render() {
@@ -63,16 +64,16 @@ class HomeScreen extends React.Component {
               </Text>
             </Button>
 
-            {/* <Button
+            <Button
               style={{
                 backgroundColor: '#003e19',
                 borderRadius: '20px',
                 marginTop: 20,
               }}
-              onPress={() => this.props.navigation.navigate('StarredWalks')}
+              onPress={() => this.props.navigation.navigate('Dashboard')}
             >
-              <Text style={{ fontFamily: 'Avenir-Heavy' }}>Starred Walks!</Text>
-            </Button> */}
+              <Text style={{ fontFamily: 'Avenir-Heavy' }}>Dashboard</Text>
+            </Button>
           </View>
         </View>
       </View>
@@ -85,7 +86,7 @@ const HomeNavigator = createSwitchNavigator(
     Home: HomeScreen,
     Login: Login,
     Register: Register,
-    StarredWalks: StarredWalks,
+    Dashboard: DashboardContainer,
   },
   {
     initialRouteName: 'Home',
