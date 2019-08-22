@@ -74,33 +74,14 @@ const seed = async () => {
   try {
     await db.sync({ force: true });
 
-    const fullStackPin = await UserPin.create({
+    const newPin = await UserPin.create({
       location: {
-        type: "Point",
-        coordinates: [41.895272, -87.63901]
+        type: 'Point',
+        coordinates: [41.895353, -87.639437],
       },
-      name: "Fullstack Academy",
-      description: "It's pretty cool I guess."
+      name: 'Fullstack Academy',
+      description: "It's pretty cool I guess.",
     });
-
-    const steves = await UserPin.create({
-        location: {
-          type: "Point",
-          coordinates: [41.896738, -87.635378]
-        },
-        name: "Steve's",
-        description: 'People go here to get a food.'
-      })
-
-
-    const jimmy = await UserPin.create({
-        location: {
-          type: "Point",
-          coordinates: [41.896312, -87.640955]
-        },
-        name: "Jimmy J's",
-        description: "The new Cubano is actually pretty good"
-      })
 
     const [ben, madi, michelle] = await Promise.all([
       User.create({
@@ -123,116 +104,117 @@ const seed = async () => {
       }),
     ]);
 
-    // const [
-    //   ogilvie,
-    //   westTown,
-    //   hydePark,
-    //   millenium,
-    //   grant,
-    //   art,
-    //   museum,
-    //   loop
-    // ] =
-    await Promise.all([
+    const [
+      ogilvie,
+      westTown,
+      hydePark,
+      millenium,
+      grant,
+      art,
+      museum,
+      loop,
+    ] = await Promise.all([
       Walk.create({
-        name: `The Loop Architectural Walk`,
-        description: "A tour of the architectual highlights of the loop",
-        category: "architecture",
-        imageUrl: "https://picsum.photos/id/1047/200/300",
+        name: `Ben's Commute`,
+        description: 'My walk from Fullstack to Ogilvie',
+        category: 'nature',
+        imageUrl: 'https://picsum.photos/id/1047/200/300',
         userId: 1,
         start: {
-          type: "Point",
-          coordinates: [41.879373, -87.63619]
-        }
+          type: 'Point',
+          coordinates: [41.879353, -87.636712],
+        },
       }),
-      // Walk.create({
-      //   name: ``,
-      //   description: "My walk from home to Fullstack",
-      //   category: "scenic",
-      //   imageUrl: "https://picsum.photos/id/1047/200/300",
-      //   userId: 2,
-      //   start: {
-      //     type: "Point",
-      //     coordinates: [41.879345, -87.632367]
-      //   }
-      // }),
-      // Walk.create({
-      //   name: `Fullstack Wonder Walk`,
-      //   description: "A great lunch walk around Fullstack",
-      //   category: "scenic",
-      //   imageUrl: "https://picsum.photos/id/1047/200/300",
-      //   userId: 2,
-      //   start: {
-      //     type: "Point",
-      //     coordinates: [41.895553, -87.638584]
-      //   }
-      // }),
-      // Walk.create({
-      //   name: `Michelle's Commute`,
-      //   description: "My walk from my apartment to my car",
-      //   category: "dog",
-      //   imageUrl: "https://picsum.photos/id/1047/200/300",
-      //   userId: 3,
-      //   start: {
-      //     type: "Point",
-      //     coordinates: [41.878131, -87.632356]
-      //   }
-      // }),
-      // Walk.create({
-      //   name: `Millennium Park`,
-      //   description: "Lurie Garden, the Bean, and all that jazz",
-      //   category: "scenic",
-      //   imageUrl: "https://picsum.photos/id/1047/200/300",
-      //   start: {
-      //     type: "Point",
-      //     coordinates: [41.878994, -87.629394]
-      //   }
-      // }),
-      // Walk.create({
-      //   name: `Grant Park`,
-      //   description: "A big lawn with a big fountain to match",
-      //   category: "nature",
-      //   imageUrl: "https://picsum.photos/id/1047/200/300",
-      //   start: {
-      //     type: "Point",
-      //     coordinates: [41.897765, -87.627853]
-      //   }
-      // }),
-      // Walk.create({
-      //   name: `The Art Institute`,
-      //   description: "Many expensive paintings",
-      //   category: "architecture",
-      //   imageUrl: null,
-      //   start: { type: "Point", coordinates: [41.900201, -87.631222] }
-      // }),
-      // Walk.create({
-      //   name: `Museum Campus`,
-      //   description: "The Planetarium, Shedd Aquarium, and Field Museum",
-      //   category: "historical",
-      //   imageUrl: null,
-      //   start: {
-      //     type: "Point",
-      //     coordinates: [41.887567, -87.621791]
-      //   }
-      // }),
-      // Walk.create({
-      //   name: `The Loop Architectural Walk`,
-      //   description: "Tall buildings for tall folks",
-      //   category: "architecture",
-      //   imageUrl: null,
-      //   start: {
-      //     type: "Point",
-      //     coordinates: [41.879353, -87.636712]
-      //   }
-      // })
+      Walk.create({
+        name: `Madi's Commute`,
+        description: 'My walk from home to Fullstack',
+        category: 'scenic',
+        imageUrl: 'https://picsum.photos/id/1047/200/300',
+        userId: 2,
+        start: {
+          type: 'Point',
+          coordinates: [41.879345, -87.632367],
+        },
+      }),
+      Walk.create({
+        name: `Fullstack Wonder Walk`,
+        description: 'A great lunch walk around Fullstack',
+        category: 'scenic',
+        imageUrl: 'https://picsum.photos/id/1047/200/300',
+        userId: 2,
+        start: {
+          type: 'Point',
+          coordinates: [41.895553, -87.638584],
+        },
+      }),
+      Walk.create({
+        name: `Michelle's Commute`,
+        description: 'My walk from my apartment to my car',
+        category: 'dog',
+        imageUrl: 'https://picsum.photos/id/1047/200/300',
+        userId: 3,
+        start: {
+          type: 'Point',
+          coordinates: [41.878131, -87.632356],
+        },
+      }),
+      Walk.create({
+        name: `Millennium Park`,
+        description: 'Lurie Garden, the Bean, and all that jazz',
+        category: 'scenic',
+        imageUrl: 'https://picsum.photos/id/1047/200/300',
+        start: {
+          type: 'Point',
+          coordinates: [41.878994, -87.629394],
+        },
+      }),
+      Walk.create({
+        name: `Grant Park`,
+        description: 'A big lawn with a big fountain to match',
+        category: 'nature',
+        imageUrl: 'https://picsum.photos/id/1047/200/300',
+        start: {
+          type: 'Point',
+          coordinates: [41.897765, -87.627853],
+        },
+      }),
+      Walk.create({
+        name: `The Art Institute`,
+        description: 'Many expensive paintings',
+        category: 'architecture',
+        imageUrl: null,
+        start: { type: 'Point', coordinates: [41.900201, -87.631222] },
+      }),
+      Walk.create({
+        name: `Museum Campus`,
+        description: 'The Planetarium, Shedd Aquarium, and Field Museum',
+        category: 'historical',
+        imageUrl: null,
+        start: {
+          type: 'Point',
+          coordinates: [41.887567, -87.621791],
+        },
+      }),
+      Walk.create({
+        name: `The Loop Architectural Walk`,
+        description: 'Tall buildings for tall folks',
+        category: 'architecture',
+        imageUrl: null,
+        start: {
+          type: 'Point',
+          coordinates: [41.879353, -87.636712],
+        },
+      }),
     ]);
 
     const archiWalkCoords = [
-      [41.879373, -87.63619],
-      [41.879405, -87.632306],
-      [41.876876, -87.633701],
-      [41.876903, -87.62927],
-      [41.878349, -87.629329]
+      [41.879353, -87.636712],
+      [41.879345, -87.632367],
+      [41.878131, -87.632356],
+      [41.878147, -87.632774],
+      [41.876861, -87.632753],
+      [41.876941, -87.629298],
+      [41.878994, -87.629394],
     ];
 
     let architectureWalk = await Promise.all([]);
@@ -253,7 +235,7 @@ const seed = async () => {
           prev: previousId,
           next: null,
           start: start,
-          walkId: 7,
+          walkId: 8,
         });
 
         architectureWalk.push(newPoint);
@@ -319,21 +301,21 @@ const seed = async () => {
       madi.setFavoritedByUser(i);
     }
 
-    // return [
-    //   ben,
-    //   madi,
-    //   michelle,
-    //   ogilvie,
-    //   westTown,
-    //   hydePark,
-    //   millenium,
-    //   grant,
-    //   art,
-    //   museum,
-    //   loop,
-    //   architectureWalk,
-    //   fullstackWalk,
-    // ];
+    return [
+      ben,
+      madi,
+      michelle,
+      ogilvie,
+      westTown,
+      hydePark,
+      millenium,
+      grant,
+      art,
+      museum,
+      loop,
+      architectureWalk,
+      fullstackWalk,
+    ];
   } catch (err) {
     console.log(red(err));
   }

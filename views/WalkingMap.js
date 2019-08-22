@@ -16,7 +16,6 @@ function WalkingMap(props) {
   const [hapticHasTriggered, setHapticHasTriggered] = useState(false)
 
   useEffect(() => {
-
     props.getAllPins();
   }, []);
 
@@ -45,12 +44,12 @@ function WalkingMap(props) {
   }
 
   const handleUserLocationChange = async (e) => {
-      this.map.animateCamera({
-        center: {
-          latitude: e.nativeEvent.coordinate.latitude,
-          longitude: e.nativeEvent.coordinate.longitude
-        }
-      });
+      // this.map.animateCamera({
+      //   center: {
+      //     latitude: e.nativeEvent.coordinate.latitude,
+      //     longitude: e.nativeEvent.coordinate.longitude
+      //   }
+      // });
       setUserLocation({
         latitude: e.nativeEvent.coordinate.latitude,
         longitude: e.nativeEvent.coordinate.longitude

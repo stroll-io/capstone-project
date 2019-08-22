@@ -4,8 +4,10 @@ import { Button, Text, Form, Item, Input, Picker, Icon } from 'native-base';
 import MapView, { Marker } from 'react-native-maps';
 import axios from 'axios';
 import { ngrokSecret } from '../secrets';
+import { connect } from 'react-redux';
+import { getAllWalksThunk } from "../store/walks";
 
-export default function Map(props) {
+  function CreateWalk(props) {
   const [coords, setCoords] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [walkTitle, setWalkTitle] = useState('');
@@ -186,3 +188,13 @@ export default function Map(props) {
     </SafeAreaView>
   );
 }
+
+const mapDispatch = dispatch => {
+  return {
+    getAllWalks: () => {
+      dispatch(getAllWalksThunk());
+    }
+  };
+};
+
+export default connect(null, mapDispatch)(CreateWalk)
