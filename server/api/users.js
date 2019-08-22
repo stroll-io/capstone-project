@@ -11,6 +11,19 @@ userRouter.get('/:userId', async (req, res, next) => {
   }
 });
 
+userRouter.put('/:userId', async (req, res, next) => {
+  try {
+    const singleUser = await User.findByPk(req.params.userId);
+    const updatedUser = await singleUser.update({
+      firstName: req.body.firstName,
+      email: req.body.email,
+    });
+    res.send(updatedUser);
+  } catch (err) {
+    next(err);
+  }
+});
+
 userRouter.put('/:userId/past-walks/:walkId', async (req, res, next) => {
   try {
     let userInstance = await User.findByPk(req.params.userId);
