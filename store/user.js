@@ -1,46 +1,75 @@
 import axios from 'axios';
 import { ngrokSecret } from '../secrets';
 
-const GET_LOGGEDIN_USER = 'GET_LOGGEDIN_USER';
-const UPDATE_LOGGEDIN_USER = 'UPDATE_LOGGEDIN_USER';
+const CREATE_USER = 'CREATE_USER';
+const UPDATE_USER = 'UPDATE_USER';
+const SET_USER = 'SET_USER';
 
-const getLoggedInUser = loggedInUser => {
+const createUser = user => {
   return {
-    type: GET_LOGGEDIN_USER,
-    loggedInUser,
+    type: CREATE_USER,
+    user,
   };
 };
 
-const updateLoggedInUser = updatedUser => {
+const updateUser = updatedUser => {
   return {
-    type: UPDATE_LOGGEDIN_USER,
+    type: UPDATE_USER,
     updatedUser,
+  };
+};
+
+const setUser = user => {
+  return {
+    type: SET_USER,
+    user,
   };
 };
 
 const defaultUser = {};
 
-export default function(state = defaultUser, action) {
-  switch (action.type) {
-    case GET_LOGGEDIN_USER:
-      return action.loggedInUser;
-    case UPDATE_LOGGEDIN_USER:
-      return action.updatedUser;
-    default:
-      return state;
-  }
-}
-
-export const fetchLoggedInUser = userId => {
+export const createAccount = (firstName, email, password) => {
   return async dispatch => {
-    const { data } = await axios.get(`${ngrokSecret}/api/users/${userId}`);
-    dispatch(getLoggedInUser(data));
+    const { data } = await axios.post(`${ngrokSecret}/auth/register`, {
+      firstName,
+      email,
+      password,
+    });
+    dispatch(createUser(data));
+  };
+};
+
+export const fetchUser = (email, password) => {
+  return async dispatch => {
+    try {
+      const { data } = await axios.post(`${ngrokSecret}/auth/login`, {
+        email,
+        password,
+      });
+      dispatch(setUser(data));
+    } catch (authError) {
+      dispatch(setUser({ error: authError }));
+      throw authError;
+    }
   };
 };
 
 export const fetchUpdatedUser = userId => {
   return async dispatch => {
     const { data } = await axios.put(`${ngrokSecret}/api/users/${userId}`);
-    dispatch(updateLoggedInUser(data));
+    dispatch(updateUser(data));
   };
 };
+
+export default function(state = defaultUser, action) {
+  switch (action.type) {
+    case CREATE_USER:
+      return action.user;
+    case SET_USER:
+      return action.user;
+    case UPDATE_USER:
+      return action.updatedUser;
+    default:
+      return state;
+  }
+}

@@ -3,10 +3,12 @@ import { View, SafeAreaView, Modal, Image } from 'react-native';
 import MapView, { Marker, Callout } from 'react-native-maps';
 import { Button, Text } from 'native-base';
 import { connect } from 'react-redux';
-import { getAllWalksThunk } from '../store/walks';
+import { Form, Item, Picker, Icon} from 'native-base';
+import { getAllWalksThunk, getWalksByTagThunk } from '../store/walks';
 import { setActiveWalkThunk } from '../store/activeWalk';
 
 function ExploreMap(props) {
+
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [coordinate, setCoordinate] = useState({});
@@ -16,6 +18,7 @@ function ExploreMap(props) {
 
   useEffect(() => {
     props.getAllWalks();
+
   }, []);
 
   const handleModal = (walkName, walkDescription, walkCoordinate, walkId) => {
@@ -33,7 +36,22 @@ function ExploreMap(props) {
 
   const handleWalk = () => {
     props.setActiveWalk(id);
+    setTimeout(() => {
+      setIsModalVisible(false)
+      props.navigation.navigate("Walking Map");
+    }, 1000)
+
   };
+
+  const handlePicker = (e) => {
+    if (e === 'none') {
+      props.getAllWalks();
+    } else {
+      props.getWalksByTag(e);
+    }
+  }
+
+
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
@@ -94,6 +112,29 @@ function ExploreMap(props) {
           longitudeDelta: 0.0421,
         }}
       >
+        <View style={{ position: "absolute", backgroundColor: "white" }}>
+          <Form>
+            <Item picker>
+              <Picker
+                mode="dropdown"
+                iosIcon={<Icon name="arrow-down" />}
+                iosHeader="Filter"
+                placeholder="Filter by tag"
+                style={{ width: undefined }}
+                onValueChange={handlePicker}
+              >
+                <Picker.Item label="none" value="none" />
+                <Picker.Item label="Nature" value="nature" />
+                <Picker.Item label="Scenic" value="scenic" />
+                <Picker.Item label="Architecture" value="architecture" />
+                <Picker.Item label="Dog" value="dog" />
+                <Picker.Item label="Historical" value="historical" />
+                <Picker.Item label="Hiking" value="hiking" />
+                <Picker.Item label="Street art" value="street art" />
+              </Picker>
+            </Item>
+          </Form>
+        </View>
         <View />
         {props.walks.length
           ? props.walks.map(walk => {
@@ -149,6 +190,9 @@ const mapDispatch = dispatch => {
     setActiveWalk: id => {
       dispatch(setActiveWalkThunk(id));
     },
+    getWalksByTag: tag => {
+      dispatch(getWalksByTagThunk(tag))
+    }
   };
 };
 

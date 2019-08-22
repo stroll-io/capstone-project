@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { View, SafeAreaView, Modal } from 'react-native';
 import { Button, Text, Form, Item, Input, Picker, Icon } from 'native-base';
-import MapView, { Polyline } from 'react-native-maps';
+import MapView, { Marker } from 'react-native-maps';
 import axios from 'axios';
 import { ngrokSecret } from '../secrets';
 
-export default function Map() {
+export default function Map(props) {
   const [coords, setCoords] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [walkTitle, setWalkTitle] = useState('');
@@ -35,38 +35,58 @@ export default function Map() {
       walkDescription,
       walkTag,
     });
+    props.navigation.navigate('Explore')
+    setIsModalVisible(false);
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
+      <View style={{ flex: 1 }}>
+        <Text
+          style={{ fontWeight: "bold", fontSize: 15, textAlign: "center", marginTop:10 }}
+        >
+          Tap the map to start adding points to your walk
+        </Text>
+      </View>
       <MapView
-        //initial region should be stateful based on users current location
-        // provider='google'
-        style={{ flex: 1 }}
+        provider="google"
+        style={{ flex: 18 }}
         initialRegion={{
           latitude: 41.895442,
           longitude: -87.638957,
           latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
+          longitudeDelta: 0.0421
         }}
         onPress={e => {
           const newCord = {
             latitude: e.nativeEvent.coordinate.latitude,
-            longitude: e.nativeEvent.coordinate.longitude,
+            longitude: e.nativeEvent.coordinate.longitude
           };
           setCoords([...coords, newCord]);
         }}
       >
-        <Polyline coordinates={coords} strokeColor="#EE6A22" strokeWidth={3} />
+        {coords.length
+          ? coords.map(coord => {
+              return (
+                <Marker
+                  key={coord.latitude}
+                  coordinate={{
+                    longitude: coord.longitude,
+                    latitude: coord.latitude
+                  }}
+                />
+              );
+            })
+          : null}
       </MapView>
       <View
         style={{
-          display: 'flex',
-          position: 'absolute',
+          display: "flex",
+          position: "absolute",
           bottom: 40,
           left: 50,
-          flexDirection: 'row',
-          justifyContent: 'center',
+          flexDirection: "row",
+          justifyContent: "center"
         }}
       >
         <Button large warning onPress={handleUndo} style={{ margin: 20 }}>
@@ -81,7 +101,7 @@ export default function Map() {
         transparent={false}
         visible={isModalVisible}
         onRequestClose={() => {
-          console.log('onRequestClose');
+          console.log("onRequestClose");
         }}
       >
         <View style={{ marginTop: 22 }}>
@@ -90,8 +110,8 @@ export default function Map() {
               style={{
                 marginTop: 150,
                 marginBottom: 40,
-                textAlign: 'center',
-                fontSize: 20,
+                textAlign: "center",
+                fontSize: 20
               }}
             >
               Add some information about your stroll.
@@ -136,10 +156,10 @@ export default function Map() {
               </Item>
               <View
                 style={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  justifyContent: 'center',
-                  marginTop: 50,
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  marginTop: 50
                 }}
               >
                 <Button
