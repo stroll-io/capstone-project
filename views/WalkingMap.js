@@ -1,22 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { View, SafeAreaView, Modal,  } from 'react-native';
+import { View, SafeAreaView, Modal } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { connect } from 'react-redux';
-import { Button, Text } from "native-base";
+import { Button, Text } from 'native-base';
 import { getAllPinsThunk } from '../store/userpins';
 import MapViewDirections from 'react-native-maps-directions';
 import { googleSecret } from '../secrets';
-import * as Haptics from 'expo-haptics'
+import * as Haptics from 'expo-haptics';
 
 function WalkingMap(props) {
   const [isWalkComplete, setIsWalkComplete] = useState(false);
-  const [walkData,setWalkData] = useState(false);
+  const [walkData, setWalkData] = useState(false);
   const [destination, setDestination] = useState();
-  const [userLocation, setUserLocation] = useState(null)
-  const [hapticHasTriggered, setHapticHasTriggered] = useState(false)
+  const [userLocation, setUserLocation] = useState(null);
+  const [hapticHasTriggered, setHapticHasTriggered] = useState(false);
 
   useEffect(() => {
-
     props.getAllPins();
   }, []);
 
@@ -27,40 +26,34 @@ function WalkingMap(props) {
       longitude: navPoint.location.coordinates[1],
     });
   });
-<<<<<<< HEAD
-  // console.log('here are your navPoints :', navPoints);
-=======
->>>>>>> cd48feae5e1af3be5cf5007f648fc30317cae7c2
 
   const handleFavorite = () => {
     //add the walk to favorites
-  }
+  };
 
   const handleHome = () => {
-    props.navigation.navigate('Dashboard')
-  }
+    props.navigation.navigate('Dashboard');
+  };
 
-  const handleOnReady = (e) => {
+  const handleOnReady = e => {
     console.log('Walk Metadata : ', e);
     setWalkData(e);
-    setDestination(
-      e.coordinates[e.coordinates.length - 1]
-    );
-  }
+    setDestination(e.coordinates[e.coordinates.length - 1]);
+  };
 
-  const handleUserLocationChange = async (e) => {
-      this.map.animateCamera({
-        center: {
-          latitude: e.nativeEvent.coordinate.latitude,
-          longitude: e.nativeEvent.coordinate.longitude
-        }
-      });
-      setUserLocation({
+  const handleUserLocationChange = async e => {
+    this.map.animateCamera({
+      center: {
         latitude: e.nativeEvent.coordinate.latitude,
-        longitude: e.nativeEvent.coordinate.longitude
-      });
-      checkCompletion()
-  }
+        longitude: e.nativeEvent.coordinate.longitude,
+      },
+    });
+    setUserLocation({
+      latitude: e.nativeEvent.coordinate.latitude,
+      longitude: e.nativeEvent.coordinate.longitude,
+    });
+    checkCompletion();
+  };
 
   const checkCompletion = () => {
     let latDiff = userLocation.latitude - destination.latitude;
@@ -69,41 +62,40 @@ function WalkingMap(props) {
     if (latDiff < 0) latDiff = latDiff * -1;
     if (longDiff < 0) longDiff = longDiff * -1;
 
-    if (latDiff < .0001 && longDiff < .0001) {
-      setIsWalkComplete(true)
+    if (latDiff < 0.0001 && longDiff < 0.0001) {
+      setIsWalkComplete(true);
       if (!hapticHasTriggered) {
         Haptics.notificationAsync();
-        setHapticHasTriggered(true)
+        setHapticHasTriggered(true);
       }
-
     }
-  }
+  };
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
       <Modal
         animationType="slide"
         transparent={false}
         visible={isWalkComplete}
         onRequestClose={() => {
-          console.log("onRequestClose");
+          console.log('onRequestClose');
         }}
       >
         <View style={{ marginTop: 250 }}>
           <Text
             style={{
-              fontWeight: "bold",
+              fontWeight: 'bold',
               fontSize: 30,
-              textAlign: "center"
+              textAlign: 'center',
             }}
           >
             Congratulations, you completed your walk!
           </Text>
           <View
             style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "center",
-              marginTop: 50
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'center',
+              marginTop: 50,
             }}
           >
             <Button
@@ -143,7 +135,7 @@ function WalkingMap(props) {
           latitude: 41.895442,
           longitude: -87.638957,
           latitudeDelta: 0.01,
-          longitudeDelta: 0.01
+          longitudeDelta: 0.01,
         }}
       >
         <MapViewDirections
@@ -157,10 +149,6 @@ function WalkingMap(props) {
         />
         {props.userpins.length
           ? props.userpins.map(coord => {
-<<<<<<< HEAD
-              // console.log('chord:', coord);
-=======
->>>>>>> cd48feae5e1af3be5cf5007f648fc30317cae7c2
               return (
                 <Marker
                   key={coord.location.coordinates[1]}
@@ -168,7 +156,7 @@ function WalkingMap(props) {
                   description={coord.description}
                   coordinate={{
                     longitude: coord.location.coordinates[1],
-                    latitude: coord.location.coordinates[0]
+                    latitude: coord.location.coordinates[0],
                   }}
                 />
               );
@@ -184,12 +172,12 @@ function WalkingMap(props) {
       </MapView>
       <View
         style={{
-          display: "flex",
-          position: "absolute",
+          display: 'flex',
+          position: 'absolute',
           bottom: 40,
           left: 50,
-          flexDirection: "row",
-          justifyContent: "center"
+          flexDirection: 'row',
+          justifyContent: 'center',
         }}
       />
     </SafeAreaView>

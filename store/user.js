@@ -55,14 +55,13 @@ export const fetchUser = (email, password) => {
   return async dispatch => {
     try {
       const { data } = await axios.post(`${ngrokSecret}/auth/login`, {
-        params: {
-          email,
-          password,
-        },
+        email,
+        password,
       });
       dispatch(setUser(data));
     } catch (authError) {
       dispatch(setUser({ error: authError }));
+      throw authError;
     }
   };
 };
