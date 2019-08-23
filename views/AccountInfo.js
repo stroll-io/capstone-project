@@ -1,16 +1,10 @@
 import React from 'react';
 import { View } from 'react-native';
 import { Button, Text } from 'native-base';
-import { fetchLoggedInUser } from '../store/user';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
 
 class AccountInfo extends React.Component {
-  componentDidMount() {
-    console.log('this.props :', this.props);
-    this.props.fetchLoggedInUser(2);
-  }
-
   static navigationOptions = {
     title: 'Account Info',
   };
@@ -35,13 +29,13 @@ class AccountInfo extends React.Component {
           </View>
           <View>
             <View>
-              {this.props.loggedInUser.firstName ? (
+              {this.props.user.firstName ? (
                 <>
                   <Text style={{ fontWeight: '700', marginBottom: 2 }}>
-                    First Name: {this.props.loggedInUser.firstName}
+                    First Name: {this.props.user.firstName}
                   </Text>
                   <Text style={{ fontWeight: '700' }}>
-                    Email: {this.props.loggedInUser.email}
+                    Email: {this.props.user.email}
                   </Text>
                   <Button
                     rounded
@@ -83,18 +77,9 @@ class AccountInfo extends React.Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    fetchLoggedInUser: userId => {
-      dispatch(fetchLoggedInUser(userId));
-    },
-  };
-};
-
 const mapStateToProps = state => {
   return {
-    loggedInUser: state.loggedInUser,
-    // navigation: props.navigation.state,
+    user: state.user,
   };
 };
 
@@ -113,6 +98,5 @@ AccountInfo.propTypes = {
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
   mergeProps
 )(AccountInfo);
