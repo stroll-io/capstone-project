@@ -4,9 +4,12 @@ import MapView, { Marker } from 'react-native-maps';
 import { connect } from 'react-redux';
 import { Button, Text } from "native-base";
 import { getAllPinsThunk } from '../store/userpins';
+import { addStarredWalkThunk } from '../store/starredWalks';
+import { addPastWalkThunk } from '../store/pastWalks'
 import MapViewDirections from 'react-native-maps-directions';
 import { googleSecret } from '../secrets';
 import * as Haptics from 'expo-haptics'
+
 
 function WalkingMap(props) {
   const [isWalkComplete, setIsWalkComplete] = useState(false);
@@ -28,7 +31,7 @@ function WalkingMap(props) {
   });
 
   const handleFavorite = () => {
-    //add the walk to favorites
+    props.addFavoriteWalk(props.user.id, props.activeWalk.id);
   }
 
   const handleHome = () => {
@@ -70,6 +73,7 @@ function WalkingMap(props) {
         if (!hapticHasTriggered) {
           Haptics.notificationAsync();
           setHapticHasTriggered(true);
+          props.addPastWalk(props.user.id, props.activeWalk.id)
         }
       }
 
@@ -194,6 +198,7 @@ const mapState = state => {
   return {
     userpins: state.userpins,
     activeWalk: state.activeWalk,
+    user: state.user
   };
 };
 
@@ -202,6 +207,12 @@ const mapDispatch = dispatch => {
     getAllPins: () => {
       dispatch(getAllPinsThunk());
     },
+    addFavoriteWalk: (userId, walkId) => {
+      dispatch(addStarredWalkThunk(userId, walkId))
+    },
+    addPastWalk: (userId, walkId) => {
+      dispatch(addPastWalkThunk(userId, walkId))
+    }
   };
 };
 WalkingMap.navigationOptions = {
