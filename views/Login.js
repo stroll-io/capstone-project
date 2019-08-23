@@ -85,7 +85,7 @@ class Login extends React.Component {
                 Email:
               </Text>
               <TextInput
-                placeholder="Email"
+                placeholder="test@test.com"
                 onChangeText={email => this.setState({ email })}
                 style={{
                   backgroundColor: 'white',
@@ -120,8 +120,8 @@ class Login extends React.Component {
                 Password:
               </Text>
               <TextInput
-                placeholder="Password"
                 secureTextEntry={true}
+                placeholder="test"
                 onChangeText={password => this.setState({ password })}
                 style={{
                   backgroundColor: 'white',

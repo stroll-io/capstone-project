@@ -4,6 +4,7 @@ import MapView, { Marker } from 'react-native-maps';
 import { connect } from 'react-redux';
 import { Button, Text } from 'native-base';
 import { getAllPinsThunk } from '../store/userpins';
+import { getAttractionsThunk } from '../store/attractions';
 import { addStarredWalkThunk } from '../store/starredWalks';
 import { addPastWalkThunk } from '../store/pastWalks';
 import MapViewDirections from 'react-native-maps-directions';
@@ -18,7 +19,7 @@ function WalkingMap(props) {
   const [hapticHasTriggered, setHapticHasTriggered] = useState(false);
 
   useEffect(() => {
-    props.getAllPins();
+    props.getAttractions(props.activeWalk.id);
   }, []);
 
   const navPoints = [];
@@ -50,10 +51,6 @@ function WalkingMap(props) {
     //     longitude: e.nativeEvent.coordinate.longitude
     //   }
     // });
-    setUserLocation({
-      latitude: e.nativeEvent.coordinate.latitude,
-      longitude: e.nativeEvent.coordinate.longitude,
-    });
     setUserLocation({
       latitude: e.nativeEvent.coordinate.latitude,
       longitude: e.nativeEvent.coordinate.longitude,
@@ -157,8 +154,8 @@ function WalkingMap(props) {
           onReady={handleOnReady}
           mode="WALKING"
         />
-        {props.userpins.length
-          ? props.userpins.map(coord => {
+        {props.attractions.length
+          ? props.attractions.map(coord => {
               return (
                 <Marker
                   key={coord.location.coordinates[1]}
@@ -195,6 +192,7 @@ const mapState = state => {
     userpins: state.userpins,
     activeWalk: state.activeWalk,
     user: state.user,
+    attractions: state.attractions,
   };
 };
 
@@ -208,6 +206,9 @@ const mapDispatch = dispatch => {
     },
     addPastWalk: (userId, walkId) => {
       dispatch(addPastWalkThunk(userId, walkId));
+    },
+    getAttractions: walkId => {
+      dispatch(getAttractionsThunk(walkId));
     },
   };
 };
