@@ -89,6 +89,7 @@ class Register extends React.Component {
                 First Name:
               </Text>
               <TextInput
+                placeholder="Bob"
                 onChangeText={firstName => this.setState({ firstName })}
                 style={{
                   backgroundColor: 'white',
@@ -123,6 +124,7 @@ class Register extends React.Component {
                 Email:
               </Text>
               <TextInput
+                placeholder="bobloblaw@lawblog.com"
                 onChangeText={email => this.setState({ email })}
                 style={{
                   backgroundColor: 'white',
@@ -158,6 +160,7 @@ class Register extends React.Component {
                 Password:
               </Text>
               <TextInput
+                placeholder="blahblahblah123"
                 onChangeText={password => this.setState({ password })}
                 style={{
                   backgroundColor: 'white',

@@ -16,7 +16,7 @@ const addPin = (pin) => ({
 
 
 
-export const getAllPinsThunk = (pin) => async dispatch => {
+export const getAllPinsThunk = () => async dispatch => {
   try {
     const res = await axios.get(`${ngrokSecret}/api/userPins/`);
     dispatch(getAllPins(res.data));
