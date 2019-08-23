@@ -1,17 +1,21 @@
 import axios from 'axios';
 import { ngrokSecret } from '../secrets';
 
-const defaultUser = {};
-
 const CREATE_USER = 'CREATE_USER';
+const UPDATE_USER = 'UPDATE_USER';
 const SET_USER = 'SET_USER';
-// const BAD_LOGIN = 'BAD_LOGIN';
-// const GET_LOGGEDIN_USER = 'GET_LOGGEDIN_USER';
 
 const createUser = user => {
   return {
     type: CREATE_USER,
     user,
+  };
+};
+
+const updateUser = updatedUser => {
+  return {
+    type: UPDATE_USER,
+    updatedUser,
   };
 };
 
@@ -22,23 +26,7 @@ const setUser = user => {
   };
 };
 
-// const badLogin = error => {
-//   return { type: BAD_LOGIN, error };
-// };
-
-// const getLoggedInUser = loggedInUser => {
-//   return {
-//     type: GET_LOGGEDIN_USER,
-//     loggedInUser,
-//   };
-// };
-
-// export const fetchLoggedInUser = userId => {
-//   return async dispatch => {
-//     const { data } = await axios.get(`${ngrokSecret}/api/users/${userId}`);
-//     dispatch(getLoggedInUser(data));
-//   };
-// };
+const defaultUser = {};
 
 export const createAccount = (firstName, email, password) => {
   return async dispatch => {
@@ -67,14 +55,24 @@ export const fetchUser = (email, password) => {
   };
 };
 
+export const fetchUpdatedUser = (userId, name, email) => {
+  return async dispatch => {
+    const { data } = await axios.put(`${ngrokSecret}/api/users/${userId}`, {
+      name,
+      email,
+    });
+    dispatch(updateUser(data));
+  };
+};
+
 export default function(state = defaultUser, action) {
   switch (action.type) {
     case CREATE_USER:
       return action.user;
     case SET_USER:
       return action.user;
-    // case GET_LOGGEDIN_USER:
-    //   return action.loggedInUser;
+    case UPDATE_USER:
+      return action.updatedUser;
     default:
       return state;
   }
