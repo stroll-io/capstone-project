@@ -46,6 +46,7 @@ export const fetchUser = (email, password) => {
         email,
         password,
       });
+      console.log('data :', data);
       dispatch(setUser(data));
     } catch (authError) {
       dispatch(setUser({ error: authError }));
