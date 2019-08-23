@@ -18,7 +18,7 @@ function DiscoverMap(props) {
   }, []);
 
   const logLocationChange = (e) => {
-    console.log('location changed')
+    // console.log('location changed')
   }
 
   const addPin = () => {
@@ -29,6 +29,8 @@ function DiscoverMap(props) {
     setIsModalVisible(false);
     setTitle('');
     setDescription('');
+    setIsPinBeingAdded(false);
+    setCoord(null);
   }
 
   const handleSubmit = async () => {
@@ -39,6 +41,9 @@ function DiscoverMap(props) {
     })
     setIsPinBeingAdded(false);
     setIsModalVisible(false);
+    setCoord(null);
+    setTitle('');
+    setDescription('')
   }
 
   return (
@@ -184,7 +189,9 @@ const mapDispatch = dispatch => {
     }
   };
 };
-
+DiscoverMap.navigationOptions = {
+  title: 'Discover Pins'
+}
 export default connect(
   mapState,
   mapDispatch

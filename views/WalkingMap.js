@@ -4,6 +4,9 @@ import MapView, { Marker } from 'react-native-maps';
 import { connect } from 'react-redux';
 import { Button, Text } from 'native-base';
 import { getAllPinsThunk } from '../store/userpins';
+import { getAttractionThunk } from '../store/attractions';
+import { addStarredWalkThunk } from '../store/starredWalks';
+import { addPastWalkThunk } from '../store/pastWalks';
 import MapViewDirections from 'react-native-maps-directions';
 import { googleSecret } from '../secrets';
 import * as Haptics from 'expo-haptics';
@@ -11,12 +14,12 @@ import * as Haptics from 'expo-haptics';
 function WalkingMap(props) {
   const [isWalkComplete, setIsWalkComplete] = useState(false);
   const [walkData, setWalkData] = useState(false);
-  const [destination, setDestination] = useState();
+  const [destination, setDestination] = useState(null);
   const [userLocation, setUserLocation] = useState(null);
   const [hapticHasTriggered, setHapticHasTriggered] = useState(false);
 
   useEffect(() => {
-    props.getAllPins();
+    props.getAttractions(props.activeWalk.id);
   }, []);
 
   const navPoints = [];
@@ -28,7 +31,7 @@ function WalkingMap(props) {
   });
 
   const handleFavorite = () => {
-    //add the walk to favorites
+    props.addFavoriteWalk(props.user.id, props.activeWalk.id);
   };
 
   const handleHome = () => {
@@ -42,12 +45,12 @@ function WalkingMap(props) {
   };
 
   const handleUserLocationChange = async e => {
-    this.map.animateCamera({
-      center: {
-        latitude: e.nativeEvent.coordinate.latitude,
-        longitude: e.nativeEvent.coordinate.longitude,
-      },
-    });
+    // this.map.animateCamera({
+    //   center: {
+    //     latitude: e.nativeEvent.coordinate.latitude,
+    //     longitude: e.nativeEvent.coordinate.longitude
+    //   }
+    // });
     setUserLocation({
       latitude: e.nativeEvent.coordinate.latitude,
       longitude: e.nativeEvent.coordinate.longitude,
@@ -56,17 +59,20 @@ function WalkingMap(props) {
   };
 
   const checkCompletion = () => {
-    let latDiff = userLocation.latitude - destination.latitude;
-    let longDiff = userLocation.longitude - destination.longitude;
+    if (userLocation && destination) {
+      let latDiff = userLocation.latitude - destination.latitude;
+      let longDiff = userLocation.longitude - destination.longitude;
 
-    if (latDiff < 0) latDiff = latDiff * -1;
-    if (longDiff < 0) longDiff = longDiff * -1;
+      if (latDiff < 0) latDiff = latDiff * -1;
+      if (longDiff < 0) longDiff = longDiff * -1;
 
-    if (latDiff < 0.0001 && longDiff < 0.0001) {
-      setIsWalkComplete(true);
-      if (!hapticHasTriggered) {
-        Haptics.notificationAsync();
-        setHapticHasTriggered(true);
+      if (latDiff < 0.0001 && longDiff < 0.0001) {
+        setIsWalkComplete(true);
+        if (!hapticHasTriggered) {
+          Haptics.notificationAsync();
+          setHapticHasTriggered(true);
+          props.addPastWalk(props.user.id, props.activeWalk.id);
+        }
       }
     }
   };
@@ -163,13 +169,9 @@ function WalkingMap(props) {
               );
             })
           : null}
-        {/* {props.activeWalk.navPoints.length ? (
-          <Polyline
-            coordinates={navPoints}
-            strokeColor="#EE6A22"
-            strokeWidth={3}
-          />
-        ) : null} */}
+        {navPoints.length ? (
+          <Marker title={'Start'} coordinate={navPoints[0]} pinColor="green" />
+        ) : null}
       </MapView>
       <View
         style={{
@@ -189,6 +191,8 @@ const mapState = state => {
   return {
     userpins: state.userpins,
     activeWalk: state.activeWalk,
+    user: state.user,
+    attractions: state.attractions,
   };
 };
 
@@ -197,9 +201,20 @@ const mapDispatch = dispatch => {
     getAllPins: () => {
       dispatch(getAllPinsThunk());
     },
+    addFavoriteWalk: (userId, walkId) => {
+      dispatch(addStarredWalkThunk(userId, walkId));
+    },
+    addPastWalk: (userId, walkId) => {
+      dispatch(addPastWalkThunk(userId, walkId));
+    },
+    getAttractions: walkId => {
+      dispatch(getAttractionThunk(walkId));
+    },
   };
 };
-
+WalkingMap.navigationOptions = {
+  title: 'Strolling',
+};
 export default connect(
   mapState,
   mapDispatch

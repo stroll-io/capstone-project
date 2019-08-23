@@ -1,5 +1,4 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
-import { createLogger } from 'redux-logger';
 import thunkMiddleware from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import user from './user';
@@ -8,6 +7,7 @@ import walks from './walks';
 import activeWalk from './activeWalk';
 import allPastWalks from './pastWalks';
 import starredWalks from './starredWalks';
+import attractions from './attractions';
 
 const reducer = combineReducers({
   user,
@@ -16,6 +16,7 @@ const reducer = combineReducers({
   starredWalks,
   walks,
   activeWalk,
+  attractions,
 });
 
 const middleware = composeWithDevTools(applyMiddleware(thunkMiddleware));

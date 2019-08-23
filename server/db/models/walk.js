@@ -2,6 +2,10 @@ const Sequelize = require('sequelize');
 const db = require('../db');
 
 const Walk = db.define('walk', {
+  // id: {
+  //   type: Sequelize.INTEGER,
+  //   primaryKey: true,
+  // },
   name: {
     type: Sequelize.STRING,
     allowNull: false,
@@ -33,7 +37,7 @@ const Walk = db.define('walk', {
   userId: Sequelize.INTEGER,
   start: {
     type: Sequelize.GEOMETRY('POINT'),
-  }
+  },
 });
 
 module.exports = Walk;
