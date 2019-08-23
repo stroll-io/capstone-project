@@ -45,8 +45,7 @@ const seed = async () => {
     //USERS
 
     //admin users
-
-    const [ben, madi, michelle] = await Promise.all([
+    const [ben, madi, michelle, test] = await Promise.all([
       User.create({
         firstName: 'ben',
         email: 'ben@stroll.io',
@@ -67,15 +66,15 @@ const seed = async () => {
       }),
       //this user is to be provided to recruitors/professionals to use the app
       User.create({
-        firstName: 'guest',
-        email: 'guest@generic.com',
+        firstName: 'test',
+        email: 'test@test.com',
         isAdmin: true,
-        password: 'guest',
+        password: 'test',
       }),
     ]);
 
     //guest users
-    const [bob, jim, steve, guest] = await Promise.all([
+    const [bob, jim, steve] = await Promise.all([
       User.create({
         firstName: 'bob',
         email: 'bob@bob.com',
@@ -935,13 +934,24 @@ const seed = async () => {
 
     // fullstackFunc();
 
-    // for (let i = 1; i < 6; i++) {
-    //   madi.setWalkedByUser(i);
-    // }
+    //setting history for users
+    for (let i = 1; i < 6; i++) {
+      madi.setWalkedByUser(i);
+    }
 
-    // for (let i = 1; i < 4; i++) {
-    //   madi.setFavoritedByUser(i);
-    // }
+    for (let i = 1; i < 4; i++) {
+      madi.setFavoritedByUser(i);
+    }
+
+    for (let i = 1; i < 10; i++) {
+      if (i % 2 !== 0) {
+        test.setWalkedByUser(i);
+      }
+    }
+
+    for (let j = 1; j < 14; j++) {
+      test.setFavoritedByUser(j);
+    }
 
     milleniumPark.setAttractions([1, 2, 3, 4, 5, 6]);
     grantPark.setAttractions([7, 8, 9]);
@@ -1053,7 +1063,7 @@ const seed = async () => {
       ben,
       madi,
       michelle,
-      guest,
+      test,
       bob,
       jim,
       steve,
