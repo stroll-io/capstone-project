@@ -15,6 +15,9 @@ User.hasMany(Walk);
 NavPoint.belongsTo(Walk);
 Walk.hasMany(NavPoint);
 
+Attraction.belongsTo(Walk);
+Walk.hasMany(Attraction);
+
 User.belongsToMany(Walk, {
   through: 'favorite_walks',
   as: 'favoritedByUser',
@@ -48,7 +51,7 @@ Walk.belongsToMany(User, {
 module.exports = {
   User,
   Walk,
+  Attraction,
   NavPoint,
   UserPin,
-  Attraction,
 };
