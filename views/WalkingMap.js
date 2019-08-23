@@ -4,7 +4,7 @@ import MapView, { Marker } from 'react-native-maps';
 import { connect } from 'react-redux';
 import { Button, Text } from 'native-base';
 import { getAllPinsThunk } from '../store/userpins';
-import { getAttractionThunk } from '../store/attractions'
+import { getAttractionsThunk } from '../store/attractions'
 import { addStarredWalkThunk } from '../store/starredWalks';
 import { addPastWalkThunk } from '../store/pastWalks'
 import MapViewDirections from 'react-native-maps-directions';
@@ -157,8 +157,8 @@ function WalkingMap(props) {
           onReady={handleOnReady}
           mode="WALKING"
         />
-        {props.userpins.length
-          ? props.userpins.map(coord => {
+        {props.attractions.length
+          ? props.attractions.map(coord => {
               return (
                 <Marker
                   key={coord.location.coordinates[1]}
@@ -214,7 +214,7 @@ const mapDispatch = dispatch => {
       dispatch(addPastWalkThunk(userId, walkId))
     },
     getAttractions: (walkId) => {
-      dispatch(getAttractionThunk(walkId))
+      dispatch(getAttractionsThunk(walkId))
     }
   };
 };
