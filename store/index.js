@@ -9,6 +9,7 @@ import activeWalk from './activeWalk';
 import allPastWalks from './pastWalks';
 import starredWalks from './starredWalks';
 import loggedInUser from './user';
+import attractions from './attractions'
 
 const reducer = combineReducers({
   user,
@@ -18,6 +19,7 @@ const reducer = combineReducers({
   loggedInUser,
   walks,
   activeWalk,
+  attractions,
 });
 
 const middleware = composeWithDevTools(
