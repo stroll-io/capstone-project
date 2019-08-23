@@ -7,6 +7,7 @@ import propTypes from 'prop-types';
 
 class AccountInfo extends React.Component {
   componentDidMount() {
+    console.log('this.props :', this.props);
     this.props.fetchLoggedInUser(2);
   }
 

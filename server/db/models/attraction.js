@@ -11,6 +11,9 @@ const Attraction = db.define('attraction', {
   description: {
     type: Sequelize.TEXT,
   },
+  category: {
+    type: Sequelize.STRING
+  }, 
 });
 
 module.exports = Attraction;

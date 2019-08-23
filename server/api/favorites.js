@@ -4,11 +4,11 @@ const Walk = require('../db/models/walk');
 
 
 favoritesRouter.post('/:userId/:walkId', async (req, res, next) => {
-  try{
+  try {
     const user = await User.findByPk(req.params.userId);
-  const walk = await Walk.findByPk(req.params.walkId);
-  const newFavorite = await user.setFavoritedByUser(walk)
-  res.send(newFavorite)
+    const walk = await Walk.findByPk(req.params.walkId);
+    const newFavorite = await user.setFavoritedByUser(walk)
+    res.send(newFavorite)
   } catch(err) {
     next(err)
   }

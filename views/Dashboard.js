@@ -23,10 +23,16 @@ class Dashboard extends React.Component {
   render() {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Image source={require('../public/sky.png')} style={{ flex: 1 }} />
+        <Image source={require('../public/sunrise.png')} style={{ flex: 1 }} />
         <View style={{ position: 'absolute' }}>
-          <Text style={{ fontFamily: 'Avenir-Heavy', fontSize: 30 }}>
-            Dashboard Component
+          <Text style={{ fontFamily: 'Avenir-Heavy', fontSize: 35 }}>
+            Welcome,
+          </Text>
+          <Text style={{ fontFamily: 'Avenir-Heavy', fontSize: 35 }}>
+            Click on the sidebar
+          </Text>
+          <Text style={{ fontFamily: 'Avenir-Heavy', fontSize: 35 }}>
+            to get started!
           </Text>
         </View>
       </View>
