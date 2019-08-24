@@ -24,7 +24,7 @@ class PastWalks extends React.Component {
     this.props.setActiveWalkThunk(walkId);
     setTimeout(() => {
       this.props.navigation.navigate('Walking Map');
-    }, 1000);
+    }, 200);
   }
 
   render() {
