@@ -26,6 +26,7 @@ class Login extends React.Component {
       password: '',
     };
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.easyLogin = this.easyLogin.bind(this);
   }
 
   static navigationOptions = {
@@ -40,6 +41,11 @@ class Login extends React.Component {
     } catch (err) {
       //this was handled in the thunk creator and rethrown here
     }
+  }
+
+  async easyLogin() {
+    await this.props.fetchUser('test@test.com', 'test');
+    this.props.navigation.navigate('Dashboard');
   }
 
   render() {
@@ -61,6 +67,7 @@ class Login extends React.Component {
                   fontSize: 35,
                   marginBottom: 100,
                 }}
+                onPress={this.easyLogin}
               >
                 Sign into your account
               </Text>

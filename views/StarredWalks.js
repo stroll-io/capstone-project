@@ -19,9 +19,11 @@ class StarredWalks extends React.Component {
     await this.props.fetchStarredWalks(this.props.user.id);
   }
 
-  async handleWalkNavigation(walkId) {
-    await this.props.setActiveWalkThunk(walkId);
-    this.props.navigation.navigate('Walking Map');
+  handleWalkNavigation(walkId) {
+    this.props.setActiveWalkThunk(walkId);
+    setTimeout(() => {
+      this.props.navigation.navigate('Walking Map');
+    }, 1000);
   }
 
   render() {
@@ -136,6 +138,7 @@ class StarredWalks extends React.Component {
                             </Text>
                             <Button
                               onPress={() => this.handleWalkNavigation(walk.id)}
+                              style={{ borderRadius: '20px', width: '60%' }}
                             >
                               <Text>Start this Walk</Text>
                             </Button>
