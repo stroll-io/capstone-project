@@ -97,53 +97,53 @@ const seed = async () => {
 
     //WALKS
 
-    const [fullstack, ogilvie, westTown, hydePark] = await Promise.all([
-      Walk.create({
-        name: `Fullstack Wonder Walk`,
-        description: 'A great lunch walk around Fullstack',
-        category: 'scenic',
-        imageUrl: 'scenic.png',
-        userId: 2,
-        start: {
-          type: 'Point',
-          coordinates: [41.895553, -87.638584],
-        },
-      }),
-      Walk.create({
-        name: `Ben's Commute`,
-        description: 'My walk from Fullstack to Ogilvie',
-        category: 'nature',
-        imageUrl: 'nature.png',
-        userId: 1,
-        start: {
-          type: 'Point',
-          coordinates: [41.879353, -87.636712],
-        },
-      }),
-      Walk.create({
-        name: `Madi's Commute`,
-        description: 'My walk from home to Fullstack',
-        category: 'scenic',
-        imageUrl: 'scenic.png',
-        userId: 2,
-        start: {
-          type: 'Point',
-          coordinates: [41.879345, -87.632367],
-        },
-      }),
+    // const [fullstack, ogilvie, westTown, hydePark] = await Promise.all([
+    //   Walk.create({
+    //     name: `Fullstack Wonder Walk`,
+    //     description: 'A great lunch walk around Fullstack',
+    //     category: 'scenic',
+    //     imageUrl: 'scenic.png',
+    //     userId: 2,
+    //     start: {
+    //       type: 'Point',
+    //       coordinates: [41.895553, -87.638584],
+    //     },
+    //   }),
+    //   Walk.create({
+    //     name: `Ben's Commute`,
+    //     description: 'My walk from Fullstack to Ogilvie',
+    //     category: 'nature',
+    //     imageUrl: 'nature.png',
+    //     userId: 1,
+    //     start: {
+    //       type: 'Point',
+    //       coordinates: [41.879353, -87.636712],
+    //     },
+    //   }),
+    //   Walk.create({
+    //     name: `Madi's Commute`,
+    //     description: 'My walk from home to Fullstack',
+    //     category: 'scenic',
+    //     imageUrl: 'scenic.png',
+    //     userId: 2,
+    //     start: {
+    //       type: 'Point',
+    //       coordinates: [41.879345, -87.632367],
+    //     },
+    //   }),
 
-      Walk.create({
-        name: `Michelle's Commute`,
-        description: 'My walk from my apartment to my car',
-        category: 'dog',
-        imageUrl: 'dog.png',
-        userId: 3,
-        start: {
-          type: 'Point',
-          coordinates: [41.878131, -87.632356],
-        },
-      }),
-    ]);
+    //   Walk.create({
+    //     name: `Michelle's Commute`,
+    //     description: 'My walk from my apartment to my car',
+    //     category: 'dog',
+    //     imageUrl: 'dog.png',
+    //     userId: 3,
+    //     start: {
+    //       type: 'Point',
+    //       coordinates: [41.878131, -87.632356],
+    //     },
+    //   }),
+    // ]);
 
     const [
       milleniumPark,
@@ -949,7 +949,7 @@ const seed = async () => {
       }
     }
 
-    for (let j = 1; j < 14; j++) {
+    for (let j = 1; j < 10; j++) {
       test.setFavoritedByUser(j);
     }
 
@@ -1067,10 +1067,10 @@ const seed = async () => {
       bob,
       jim,
       steve,
-      fullstack,
-      ogilvie,
-      westTown,
-      hydePark,
+      // fullstack,
+      // ogilvie,
+      // westTown,
+      // hydePark,
       milleniumPark,
       grantPark,
       museumCampus,
