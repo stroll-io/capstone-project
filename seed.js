@@ -153,8 +153,7 @@ const seed = async () => {
       }),
       Walk.create({
         name: `Museum Campus`,
-        description:
-          'Adler Planetarium, Shedd Aquarium, and Field Museum of Natural historical',
+        description: 'Adler Planetarium, Shedd Aquarium, and Field Museum',
         category: 'historical',
         imageUrl: 'historical.png',
         start: {
