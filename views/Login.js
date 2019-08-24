@@ -11,6 +11,7 @@ import {
 import { Button, Text } from 'native-base';
 // import DashboardContainer from './Dashboard';
 import { fetchUser } from '../store/user';
+import * as Haptics from 'expo-haptics';
 
 const DismissKeyboard = ({ children }) => (
   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -24,6 +25,7 @@ class Login extends React.Component {
     this.state = {
       email: '',
       password: '',
+      hapticsTriggered: false,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.easyLogin = this.easyLogin.bind(this);
