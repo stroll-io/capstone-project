@@ -43,11 +43,6 @@ class Login extends React.Component {
     }
   }
 
-  async easyLogin() {
-    await this.props.fetchUser('test@test.com', 'test');
-    this.props.navigation.navigate('Dashboard');
-  }
-
   render() {
     return (
       <DismissKeyboard>
@@ -67,7 +62,6 @@ class Login extends React.Component {
                   fontSize: 35,
                   marginBottom: 100,
                 }}
-                onPress={this.easyLogin}
               >
                 Sign into your account
               </Text>
