@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { View, SafeAreaView, Modal } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { connect } from 'react-redux';
-import { Button, Text, Form, Item, Input } from 'native-base';
+import { Button, Text, Form, Item, Input, Picker, Icon } from 'native-base';
 import { getAllPinsThunk, addPinThunk } from '../store/userpins';
+import { getAllAttractionsThunk } from '../store/attractions';
 
-function DiscoverMap(props) {
+function AttractionsMap(props) {
   const [isPinBeingAdded, setIsPinBeingAdded] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [coord, setCoord] = useState(null);
@@ -44,6 +45,14 @@ function DiscoverMap(props) {
     setTitle('');
     setDescription('');
   };
+
+  // const handlePicker = (e) => {
+  //   if (e === 'none') {
+  //     props.getAllPins();
+  //   } else {
+  //     props.getPinsByTag(e);
+  //   }
+  // }
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
@@ -126,6 +135,42 @@ function DiscoverMap(props) {
           }
         }}
       >
+        <View
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            position: 'absolute',
+            width: '100%',
+          }}
+        >
+          <View
+            style={{
+              backgroundColor: 'white',
+            }}
+          >
+            <Form>
+              <Item picker>
+                <Picker
+                  mode="dropdown"
+                  iosIcon={<Icon name="arrow-down" />}
+                  iosHeader="Legend"
+                  placeholder="Filter by tag"
+                  style={{ width: undefined }}
+                  // onValueChange={handlePicker}
+                >
+                  <Picker.Item label="none" value="none" />
+                  <Picker.Item label="Nature" value="nature" />
+                  <Picker.Item label="Scenic" value="scenic" />
+                  <Picker.Item label="Architecture" value="architecture" />
+                  <Picker.Item label="Dog" value="dog" />
+                  <Picker.Item label="Historical" value="historical" />
+                  <Picker.Item label="Hiking" value="hiking" />
+                  <Picker.Item label="Street art" value="street art" />
+                </Picker>
+              </Item>
+            </Form>
+          </View>
+        </View>
         {isPinBeingAdded ? (
           <Text style={{ position: 'absolute', backgroundColor: 'white' }}>
             Tap the location where you would like to add a pin
@@ -133,8 +178,8 @@ function DiscoverMap(props) {
         ) : (
           <Text></Text>
         )}
-        {props.userpins.length
-          ? props.userpins.map(coord => {
+        {props.attractions.length
+          ? props.attractions.map(coord => {
               return (
                 <Marker
                   key={coord.id}
@@ -152,14 +197,18 @@ function DiscoverMap(props) {
       <View
         style={{
           display: 'flex',
+          flexDirection: 'row',
           position: 'absolute',
           bottom: 40,
-          left: 120,
-          right: 120,
+          // left: 120,
+          // right: 120,
         }}
       >
         <Button large primary style={{ margin: 0 }} onPress={addPin}>
-          <Text style={{ textAlign: 'center' }}>Add a Pin</Text>
+          <Text style={{ textAlign: 'center' }}>Add Pin</Text>
+        </Button>
+        <Button large primary style={{ margin: 0 }} onPress={addPin}>
+          <Text style={{ textAlign: 'center' }}>Legend</Text>
         </Button>
       </View>
     </SafeAreaView>
@@ -168,12 +217,14 @@ function DiscoverMap(props) {
 
 const mapState = state => {
   return {
+    attractions: state.attractions,
     userpins: state.userpins,
   };
 };
 
 const mapDispatch = dispatch => {
   return {
+    getAttractions: () => dispatch(getAllAttractionsThunk()),
     getAllPins: () => {
       dispatch(getAllPinsThunk());
     },
@@ -182,10 +233,10 @@ const mapDispatch = dispatch => {
     },
   };
 };
-DiscoverMap.navigationOptions = {
-  title: 'Discover Pins',
+AttractionsMap.navigationOptions = {
+  title: 'Nearby Attractions',
 };
 export default connect(
   mapState,
   mapDispatch
-)(DiscoverMap);
+)(AttractionsMap);

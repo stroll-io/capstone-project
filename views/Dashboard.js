@@ -7,7 +7,8 @@ import {
   createAppContainer,
 } from 'react-navigation';
 
-import DiscoverMap from './DiscoverMap';
+// import DiscoverMap from './DiscoverMap';
+import AttractionsMap from './AttractionsMap';
 import ExploreMap from './ExploreMap';
 import CreateWalk from './CreateWalk';
 import AccountInfo from './AccountInfo';
@@ -43,7 +44,7 @@ class Dashboard extends React.Component {
 const DashboardStackNavigator = createStackNavigator(
   {
     Dashboard: Dashboard,
-    Discover: DiscoverMap,
+    'Nearby Attractions': AttractionsMap,
     Explore: ExploreMap,
     'Walking Map': WalkingMap,
     'Create Walk': CreateWalk,
@@ -83,7 +84,7 @@ const DashboardStackNavigator = createStackNavigator(
 const DashboardNavigator = createDrawerNavigator(
   {
     Dashboard: DashboardStackNavigator,
-    Discover: DiscoverMap,
+    'Nearby Attractions': AttractionsMap,
     Explore: ExploreMap,
     'Create Walk': CreateWalk,
     'Past Walks': PastWalks,
