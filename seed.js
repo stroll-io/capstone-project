@@ -8,35 +8,33 @@ const {
   UserPin,
 } = require('./server/db/models');
 
-
-
-    async function createNavPoints(walkInstance, promiseArray, walkCoords) {
-      let previous = null;
-      for (let i = 0; i < walkCoords.length; i++) {
-        let previousId = null;
-        let start = i === 0;
-        if (previous !== null) {
-          previousId = previous.dataValues.id;
-        }
-        let newPoint = await NavPoint.create({
-          location: {
-            type: "Point",
-            coordinates: [...walkCoords[i]]
-          },
-          prev: previousId,
-          next: null,
-          start: start,
-          walkId: walkInstance.id
-        });
-        promiseArray.push(newPoint);
-        if (previous !== null) {
-          await previous.update({
-            next: newPoint.dataValues.id
-          });
-        }
-        previous = newPoint;
-      }
+async function createNavPoints(walkInstance, promiseArray, walkCoords) {
+  let previous = null;
+  for (let i = 0; i < walkCoords.length; i++) {
+    let previousId = null;
+    let start = i === 0;
+    if (previous !== null) {
+      previousId = previous.dataValues.id;
     }
+    let newPoint = await NavPoint.create({
+      location: {
+        type: 'Point',
+        coordinates: [...walkCoords[i]],
+      },
+      prev: previousId,
+      next: null,
+      start: start,
+      walkId: walkInstance.id,
+    });
+    promiseArray.push(newPoint);
+    if (previous !== null) {
+      await previous.update({
+        next: newPoint.dataValues.id,
+      });
+    }
+    previous = newPoint;
+  }
+}
 
 const seed = async () => {
   try {
@@ -72,30 +70,6 @@ const seed = async () => {
         password: 'test',
       }),
     ]);
-
-    //guest users
-    const [bob, jim, steve] = await Promise.all([
-      User.create({
-        firstName: 'bob',
-        email: 'bob@bob.com',
-        isAdmin: false,
-        password: 'bob',
-      }),
-      User.create({
-        firstName: 'jim',
-        email: 'jim@jim.com',
-        isAdmin: false,
-        password: 'jim',
-      }),
-      User.create({
-        firstName: 'steve',
-        email: 'steve@steve.com',
-        isAdmin: false,
-        password: 'steve',
-      }),
-    ]);
-
-    //WALKS
 
     // const [fullstack, ogilvie, westTown, hydePark] = await Promise.all([
     //   Walk.create({
@@ -145,6 +119,7 @@ const seed = async () => {
     //   }),
     // ]);
 
+    //WALKS
     const [
       milleniumPark,
       grantPark,
@@ -179,9 +154,9 @@ const seed = async () => {
       Walk.create({
         name: `Museum Campus`,
         description:
-          'Adler Planetarium, Shedd Aquarium, and Field Museum of Natural History',
+          'Adler Planetarium, Shedd Aquarium, and Field Museum of Natural historical',
         category: 'historical',
-        imageUrl: 'history.png',
+        imageUrl: 'historical.png',
         start: {
           type: 'Point',
           coordinates: [41.867492, -87.619216],
@@ -262,7 +237,6 @@ const seed = async () => {
     //ATTRACTIONS
 
     //millenium park
-
     const [
       milleniumMonument,
       cloudGate,
@@ -279,6 +253,7 @@ const seed = async () => {
         },
         name: 'Millenium Monument',
         description: '',
+        category: 'architecture',
       }),
       Attraction.create({
         id: 2,
@@ -288,6 +263,7 @@ const seed = async () => {
         },
         name: 'Cloud Gate',
         description: '',
+        category: 'architecture',
       }),
       Attraction.create({
         id: 3,
@@ -297,6 +273,7 @@ const seed = async () => {
         },
         name: 'Crown Fountain',
         description: '',
+        category: 'architecture',
       }),
       Attraction.create({
         id: 4,
@@ -306,6 +283,7 @@ const seed = async () => {
         },
         name: 'Jay Pritzker Pavilion',
         description: '',
+        category: 'architecture',
       }),
       Attraction.create({
         id: 5,
@@ -315,6 +293,7 @@ const seed = async () => {
         },
         name: 'Lurie Garden',
         description: '',
+        category: 'nature',
       }),
       Attraction.create({
         id: 6,
@@ -324,6 +303,7 @@ const seed = async () => {
         },
         name: 'BP Bridge',
         description: '',
+        category: 'architecture',
       }),
     ]);
 
@@ -337,6 +317,7 @@ const seed = async () => {
         },
         name: `Cancer Survivors' Garden`,
         description: '',
+        category: 'nature',
       }),
       Attraction.create({
         id: 8,
@@ -346,6 +327,7 @@ const seed = async () => {
         },
         name: 'North Rose Garden',
         description: '',
+        category: 'nature',
       }),
       Attraction.create({
         id: 9,
@@ -355,6 +337,7 @@ const seed = async () => {
         },
         name: 'Buckingham Fountain',
         description: '',
+        category: 'architecture',
       }),
     ]);
 
@@ -368,6 +351,7 @@ const seed = async () => {
         },
         name: 'Shedd Aquarium',
         description: '',
+        category: 'art and museums',
       }),
       Attraction.create({
         id: 11,
@@ -377,6 +361,7 @@ const seed = async () => {
         },
         name: 'Adler Planetarium',
         description: '',
+        category: 'art and museums',
       }),
       Attraction.create({
         id: 12,
@@ -386,6 +371,7 @@ const seed = async () => {
         },
         name: `America's Courtyard`,
         description: '',
+        category: 'scenic',
       }),
       Attraction.create({
         id: 13,
@@ -395,6 +381,7 @@ const seed = async () => {
         },
         name: 'Field Museum',
         description: '',
+        category: 'art and museums',
       }),
     ]);
 
@@ -414,6 +401,7 @@ const seed = async () => {
         },
         name: 'Dusable Bridge',
         description: '',
+        category: 'architecture',
       }),
       Attraction.create({
         id: 15,
@@ -423,6 +411,7 @@ const seed = async () => {
         },
         name: 'Carbide and Carbon Building',
         description: '',
+        category: 'architecture',
       }),
       Attraction.create({
         id: 16,
@@ -432,6 +421,7 @@ const seed = async () => {
         },
         name: 'Chicago Cultural Center',
         description: '',
+        category: 'architecture',
       }),
       Attraction.create({
         id: 17,
@@ -441,6 +431,7 @@ const seed = async () => {
         },
         name: 'Art Institute of Chicago',
         description: '',
+        category: 'art and museums',
       }),
       Attraction.create({
         id: 18,
@@ -450,6 +441,7 @@ const seed = async () => {
         },
         name: 'ArchiCenter',
         description: '',
+        category: 'architecture',
       }),
     ]);
 
@@ -470,6 +462,7 @@ const seed = async () => {
         },
         name: 'Thompson Center',
         description: '',
+        category: 'architecture',
       }),
       Attraction.create({
         id: 20,
@@ -479,6 +472,7 @@ const seed = async () => {
         },
         name: 'Delaware Building',
         description: '',
+        category: 'architecture',
       }),
       Attraction.create({
         id: 21,
@@ -488,6 +482,7 @@ const seed = async () => {
         },
         name: `Marshall Field's Building`,
         description: '',
+        category: 'architecture',
       }),
       Attraction.create({
         id: 22,
@@ -497,6 +492,7 @@ const seed = async () => {
         },
         name: 'Reliance Building',
         description: '',
+        category: 'architecture',
       }),
       Attraction.create({
         id: 23,
@@ -506,6 +502,7 @@ const seed = async () => {
         },
         name: 'Carson Pirie Scott Building',
         description: '',
+        category: 'architecture',
       }),
       Attraction.create({
         id: 24,
@@ -515,6 +512,7 @@ const seed = async () => {
         },
         name: 'Willis Tower',
         description: '',
+        category: 'architecture',
       }),
     ]);
 
@@ -528,6 +526,7 @@ const seed = async () => {
         },
         name: 'Rookery Building',
         description: '',
+        category: 'architecture',
       }),
       Attraction.create({
         id: 26,
@@ -537,6 +536,7 @@ const seed = async () => {
         },
         name: 'Chicago Board of Trade',
         description: '',
+        category: 'architecture',
       }),
       Attraction.create({
         id: 27,
@@ -544,8 +544,9 @@ const seed = async () => {
           type: 'Point',
           coordinates: [41.876585, -87.630433],
         },
-        name: 'Metropolitan Correctional Ctr',
+        name: 'Metropolitan Correctional Center',
         description: '',
+        category: 'historical',
       }),
       Attraction.create({
         id: 28,
@@ -555,6 +556,7 @@ const seed = async () => {
         },
         name: 'Modnadnock Building',
         description: '',
+        category: 'historical',
       }),
       Attraction.create({
         id: 29,
@@ -564,6 +566,7 @@ const seed = async () => {
         },
         name: 'Federal Plaza',
         description: '',
+        category: 'historical',
       }),
     ]);
 
@@ -585,6 +588,7 @@ const seed = async () => {
         },
         name: 'Monument with Standing Beast (Sculpture)',
         description: 'Sculpture by Jean Dubuffet',
+        category: 'art and museums',
       }),
       Attraction.create({
         id: 31,
@@ -594,6 +598,7 @@ const seed = async () => {
         },
         name: 'Untitled (Sculpture)',
         description: 'Sculpture by Pablo Picasso',
+        category: 'art and museums',
       }),
       Attraction.create({
         id: 32,
@@ -603,6 +608,7 @@ const seed = async () => {
         },
         name: 'Chicago (Sculpture)',
         description: 'Sculpture by Joan Miro',
+        category: 'art and museums',
       }),
       Attraction.create({
         id: 33,
@@ -612,6 +618,7 @@ const seed = async () => {
         },
         name: 'The Four Seasons (Mosaic)',
         description: 'Mosaic by Marc Chagall',
+        category: 'art and museums',
       }),
       Attraction.create({
         id: 34,
@@ -621,6 +628,7 @@ const seed = async () => {
         },
         name: 'Flamingo (Sculpture)',
         description: 'Sculpture by Alexander Calder',
+        category: 'art and museums',
       }),
       Attraction.create({
         id: 35,
@@ -630,6 +638,7 @@ const seed = async () => {
         },
         name: 'Dawn Shadows (Sculpture)',
         description: 'Sculpture by Louise Nevelson',
+        category: 'art and museums',
       }),
       Attraction.create({
         id: 36,
@@ -639,6 +648,7 @@ const seed = async () => {
         },
         name: 'Batcolumn (Sculpture)',
         description: 'Sculpture by Claes Oldenburg',
+        category: 'art and museums',
       }),
     ]);
 
@@ -660,6 +670,7 @@ const seed = async () => {
         },
         name: `Chicago Children's Museum`,
         description: '',
+        category: 'art and museums',
       }),
       Attraction.create({
         id: 38,
@@ -669,6 +680,7 @@ const seed = async () => {
         },
         name: 'Crystal Gardens',
         description: '',
+        category: 'architecture',
       }),
       Attraction.create({
         id: 39,
@@ -678,6 +690,7 @@ const seed = async () => {
         },
         name: 'Navy Pier Park',
         description: '',
+        category: 'art and museums',
       }),
       Attraction.create({
         id: 40,
@@ -687,6 +700,7 @@ const seed = async () => {
         },
         name: 'Amazing Chicago Funhouse Maze',
         description: '',
+        category: 'art and museums',
       }),
       Attraction.create({
         id: 41,
@@ -696,6 +710,7 @@ const seed = async () => {
         },
         name: 'Chicago Shakespeare Theatre',
         description: '',
+        category: 'historical',
       }),
       Attraction.create({
         id: 42,
@@ -705,6 +720,7 @@ const seed = async () => {
         },
         name: 'The Windy of Chicago',
         description: 'A boat',
+        category: 'scenic',
       }),
       Attraction.create({
         id: 43,
@@ -714,6 +730,7 @@ const seed = async () => {
         },
         name: 'Navy Pier Observation Deck',
         description: '',
+        category: 'scenic',
       }),
     ]);
 
@@ -735,6 +752,7 @@ const seed = async () => {
         },
         name: 'Wrigley Building',
         description: '',
+        category: 'architecture',
       }),
       Attraction.create({
         id: 45,
@@ -744,6 +762,7 @@ const seed = async () => {
         },
         name: 'Plaza of the Americas',
         description: '',
+        category: 'scenic',
       }),
       Attraction.create({
         id: 46,
@@ -751,8 +770,9 @@ const seed = async () => {
           type: 'Point',
           coordinates: [41.890477, -87.623274],
         },
-        name: 'Tribute Tower',
+        name: 'Tribune Tower',
         description: '',
+        category: 'architecture',
       }),
       Attraction.create({
         id: 47,
@@ -762,6 +782,7 @@ const seed = async () => {
         },
         name: 'Museum of Contemporary Art',
         description: '',
+        category: 'art and museums',
       }),
       Attraction.create({
         id: 48,
@@ -771,6 +792,7 @@ const seed = async () => {
         },
         name: 'Water Tower Place',
         description: '',
+        category: 'architecture',
       }),
       Attraction.create({
         id: 49,
@@ -780,6 +802,7 @@ const seed = async () => {
         },
         name: 'Fourth Presbyterian Church',
         description: '',
+        category: 'architecture',
       }),
       Attraction.create({
         id: 50,
@@ -789,6 +812,7 @@ const seed = async () => {
         },
         name: 'John Hancock Building/ 360 Sky Deck',
         description: '',
+        category: 'scenic',
       }),
     ]);
 
@@ -808,6 +832,7 @@ const seed = async () => {
         },
         name: 'North Pond Nature Sanctuary',
         description: '',
+        category: 'nature',
       }),
       Attraction.create({
         id: 52,
@@ -817,6 +842,7 @@ const seed = async () => {
         },
         name: 'Peggy Notebaert Nature Museum',
         description: '',
+        category: 'nature',
       }),
       Attraction.create({
         id: 53,
@@ -826,6 +852,7 @@ const seed = async () => {
         },
         name: 'Alfred Caldwell Lily Pool',
         description: '',
+        category: 'nature',
       }),
       Attraction.create({
         id: 54,
@@ -835,6 +862,7 @@ const seed = async () => {
         },
         name: 'Lincoln Park Zoo',
         description: '',
+        category: 'nature',
       }),
       Attraction.create({
         id: 55,
@@ -844,95 +872,9 @@ const seed = async () => {
         },
         name: 'Lincoln Park Conservatory',
         description: '',
+        category: 'nature',
       }),
     ]);
-
-    // creating navPoints for each walk
-    // const archiWalkCoords = [
-    //   [41.879353, -87.636712],
-    //   [41.879345, -87.632367],
-    //   [41.878131, -87.632356],
-    //   [41.878147, -87.632774],
-    //   [41.876861, -87.632753],
-    //   [41.876941, -87.629298],
-    //   [41.878994, -87.629394],
-    // ];
-
-    // let architectureWalk = await Promise.all([]);
-    // const archFunc = async () => {
-    //   let previous = null;
-    //   for (let i = 0; i < archiWalkCoords.length; i++) {
-    //     let previousId = null;
-    //     let start = i === 0;
-    //     if (previous !== null) {
-    //       previousId = previous.dataValues.id;
-    //     }
-
-    //     let newPoint = await NavPoint.create({
-    //       location: {
-    //         type: 'Point',
-    //         coordinates: [...archiWalkCoords[i]],
-    //       },
-    //       prev: previousId,
-    //       next: null,
-    //       start: start,
-    //       walkId: 8,
-    //     });
-
-    //     architectureWalk.push(newPoint);
-
-    //     if (previous !== null) {
-    //       await previous.update({
-    //         next: newPoint.dataValues.id,
-    //       });
-    //     }
-    //     previous = newPoint;
-    //   }
-    // };
-
-    // archFunc();
-
-    // const fullstackWalkCoords = [
-    //   [41.895553, -87.638584],
-    //   [41.893958, -87.638504],
-    //   [41.89393, -87.640011],
-    //   [41.895493, -87.640056],
-    // ];
-
-    // let fullstackWalk = await Promise.all([]);
-
-    // const fullstackFunc = async () => {
-    //   let previous = null;
-    //   for (let i = 0; i < fullstackWalkCoords.length; i++) {
-    //     let previousId = null;
-    //     let start = i === 0;
-    //     if (previous !== null) {
-    //       previousId = previous.dataValues.id;
-    //     }
-
-    //     let newPoint = await NavPoint.create({
-    //       location: {
-    //         type: 'Point',
-    //         coordinates: [...fullstackWalkCoords[i]],
-    //       },
-    //       prev: previousId,
-    //       next: null,
-    //       start: start,
-    //       walkId: 1,
-    //     });
-
-    //     architectureWalk.push(newPoint);
-
-    //     if (previous !== null) {
-    //       await previous.update({
-    //         next: newPoint.dataValues.id,
-    //       });
-    //     }
-    //     previous = newPoint;
-    //   }
-    // };
-
-    // fullstackFunc();
 
     //setting history for users
     for (let i = 1; i < 6; i++) {
@@ -963,22 +905,20 @@ const seed = async () => {
     magMile.setAttractions([44, 45, 46, 47, 48, 49, 50]);
     lincolnPark.setAttractions([51, 52, 53, 54, 55]);
 
-
-
     const milleniumParkCoords = [
       [41.883931, -87.6238],
       [41.882815, -87.623284],
       [41.8812, -87.623775],
       [41.88327, -87.621802],
       [41.881113, -87.621829],
-      [41.882728, -87.620179]
+      [41.882728, -87.620179],
     ];
+    createNavPoints(milleniumPark, [], milleniumParkCoords);
 
-    createNavPoints(milleniumPark, [], milleniumParkCoords)
     const grantParkCoords = [
       [41.883644, -87.617362],
       [41.877821, -87.618999],
-      [41.875797, -87.618957]
+      [41.875797, -87.618957],
     ];
     createNavPoints(grantPark, [], grantParkCoords);
 
@@ -986,17 +926,16 @@ const seed = async () => {
       [41.867652, -87.613544],
       [41.866365, -87.607117],
       [41.865815, -87.606499],
-      [41.866359, -87.616957]
+      [41.866359, -87.616957],
     ];
     createNavPoints(museumCampus, [], museumCampusCoords);
-
 
     const michiganAveCoords = [
       [41.888909, -87.624261],
       [41.88656, -87.624748],
       [41.883808, -87.624857],
       [41.879635, -87.623644],
-      [41.878699, -87.624933]
+      [41.878699, -87.624933],
     ];
     createNavPoints(michiganAve, [], michiganAveCoords);
 
@@ -1011,7 +950,7 @@ const seed = async () => {
       [41.877509, -87.631823],
       [41.876585, -87.630433],
       [41.877442, -87.629626],
-      [41.879041, -87.629575]
+      [41.879041, -87.629575],
     ];
     createNavPoints(theLoop, [], theLoopCoords);
 
@@ -1022,9 +961,9 @@ const seed = async () => {
       [41.881129, -87.629708],
       [41.878927, -87.62943],
       [41.882182, -87.634148],
-      [41.882005, -87.643085]
+      [41.882005, -87.643085],
     ];
-    createNavPoints(loopSculpture, [], loopSculptureCoords)
+    createNavPoints(loopSculpture, [], loopSculptureCoords);
 
     const navyPierCoords = [
       [41.891401, -87.609164],
@@ -1033,10 +972,9 @@ const seed = async () => {
       [41.891489, -87.605174],
       [41.891517, -87.605761],
       [41.891126, -87.60512],
-      [41.892392, -87.600738]
+      [41.892392, -87.600738],
     ];
-
-    createNavPoints(navyPier, [], navyPierCoords)
+    createNavPoints(navyPier, [], navyPierCoords);
 
     const magMileCoords = [
       [41.889806, -87.624595],
@@ -1045,7 +983,7 @@ const seed = async () => {
       [41.897258, -87.621244],
       [41.89716, -87.624418],
       [41.898984, -87.62468],
-      [41.898776, -87.622829]
+      [41.898776, -87.622829],
     ];
     createNavPoints(magMile, [], magMileCoords);
 
@@ -1055,18 +993,15 @@ const seed = async () => {
       [41.924942, -87.633975],
       [41.92327, -87.63337],
       [41.92327, -87.63337],
-      [41.924136, -87.635296]
+      [41.924136, -87.635296],
     ];
-    createNavPoints(lincolnPark, [], lincolnParkCoords)
+    createNavPoints(lincolnPark, [], lincolnParkCoords);
 
     return [
       ben,
       madi,
       michelle,
       test,
-      bob,
-      jim,
-      steve,
       // fullstack,
       // ogilvie,
       // westTown,
