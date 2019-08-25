@@ -8,7 +8,7 @@ walksRouter.get('/:walkId', async (req, res, next) => {
     const walkInstance = await Walk.findByPk(req.params.walkId, {
       include: [{ model: NavPoint }],
     });
-    walkCopy = walkInstance.get({
+    let walkCopy = walkInstance.get({
       plain: true,
     });
 
