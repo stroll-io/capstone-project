@@ -1,18 +1,30 @@
 import React from 'react';
 import { Text, View, Image } from 'react-native';
-import { Content, Container } from 'native-base';
+import { Content, Container, Button } from 'native-base';
 import { fetchAllPastWalks } from '../store/pastWalks';
+import { setActiveWalkThunk } from '../store/activeWalk';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
 
 //TODO need to be able to dynamically get the userId
 class PastWalks extends React.Component {
+  constructor() {
+    super();
+    this.handleWalkNavigation = this.handleWalkNavigation.bind(this);
+  }
   static navigationOptions = {
     title: 'Past Walks',
   };
 
   async componentDidMount() {
-    await this.props.fetchAllPastWalks(2);
+    await this.props.fetchAllPastWalks(this.props.user.id);
+  }
+
+  handleWalkNavigation(walkId) {
+    this.props.setActiveWalkThunk(walkId);
+    setTimeout(() => {
+      this.props.navigation.navigate('Walking Map');
+    }, 200);
   }
 
   render() {
@@ -126,6 +138,18 @@ class PastWalks extends React.Component {
                             >
                               Date: {walk.past_walks.createdAt}
                             </Text>
+                            <Button
+                              onPress={() => this.handleWalkNavigation(walk.id)}
+                              style={{
+                                borderRadius: '20px',
+                                width: '60%',
+                                justifyContent: 'center',
+                              }}
+                            >
+                              <Text style={{ color: 'white' }}>
+                                Start this Walk
+                              </Text>
+                            </Button>
                           </View>
                         </View>
                       </View>
@@ -149,12 +173,16 @@ const mapDispatchToProps = dispatch => {
     fetchAllPastWalks: userId => {
       dispatch(fetchAllPastWalks(userId));
     },
+    setActiveWalkThunk: walkId => {
+      dispatch(setActiveWalkThunk(walkId));
+    },
   };
 };
 
 const mapStateToProps = state => {
   return {
     pastWalks: state.allPastWalks,
+    user: state.user,
   };
 };
 
