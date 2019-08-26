@@ -12,10 +12,13 @@ const WalkInfo = (props) => {
     const [navPoints, setNavPoints] = useState([])
     const [distance, setDistance] = useState(0);
     const [duration, setDuration] = useState(0);
-    console.log('props.activeWalk :', props.activeWalk);
+    const [start, setStart] = useState({
+      latitude: 41.884061,
+      longitude: -87.633389
+    });
+
 
   useEffect(() => {
-    //set start for active walk in state, if it's different than props.activeWalk.start change it.
     const navArr = [];
     if (props.activeWalk.navPoints) {
       props.activeWalk.navPoints.forEach(navPoint => {
@@ -26,28 +29,35 @@ const WalkInfo = (props) => {
       });
       setNavPoints(navArr);
     }
+    if(props.activeWalk.start) {
+      setStart(props.activeWalk.start);
+      animateCamera(props.activeWalk);
+    }
+
   }, [props.activeWalk]);
 
 
   const handleOnReady = e => {
-    const roundedDuration = parseFloat(e.duration).toFixed(2);
+    const roundedDuration = parseFloat(e.duration).toFixed(1);
     setDistance(parseFloat(e.distance / 1.609).toFixed(2));
     setDuration(roundedDuration);
 
   };
 
-  const handleCancel = () => {
-
-
-  };
+  const animateCamera = (activeWalk) => {
+    this.map.animateCamera({
+      center: {
+        latitude: activeWalk.start.coordinates[0],
+        longitude: activeWalk.start.coordinates[1]
+      }
+    }
+    )
+  }
 
   const handleWalk = () => {
-
     setTimeout(() => {
-
       props.navigation.navigate("Walking Map");
     }, 1000);
-     //setTimeout is to prevent the Walking Map from loading before the walks prop is active
   };
 
   if (props.activeWalk.start) {
@@ -71,11 +81,14 @@ const WalkInfo = (props) => {
           </View>
           <View style={{ flex: 3 }}>
             <MapView
+              ref={_map => {
+                this.map = _map;
+              }}
               provider="google"
               style={{ flex: 1 }}
               initialRegion={{
-                latitude: props.activeWalk.start.coordinates[0],
-                longitude: props.activeWalk.start.coordinates[1],
+                latitude: 41.884061,
+                longitude: -87.633389,
                 latitudeDelta: 0.02,
                 longitudeDelta: 0.02
               }}

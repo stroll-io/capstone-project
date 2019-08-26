@@ -3,7 +3,7 @@ import { View, SafeAreaView, Modal, Image } from 'react-native';
 import MapView, { Marker, Callout } from 'react-native-maps';
 import { Button, Text } from 'native-base';
 import { connect } from 'react-redux';
-import { Form, Item, Picker, Icon} from 'native-base';
+import { Form, Item, Picker, Icon } from 'native-base';
 import { getAllWalksThunk, getWalksByTagThunk } from '../store/walks';
 import { setActiveWalkThunk } from '../store/activeWalk';
 import MapViewDirections from "react-native-maps-directions";
@@ -42,25 +42,7 @@ function ExploreMap(props) {
       });
       setNavPoints(navArr);
     }
-
     }, [props.activeWalk.navPoints]);
-
-
-
-  // const handleModal = (walkName, walkDescription, walkCoordinate, walkId, category) => {
-  //   props.setActiveWalk(walkId);
-  //   setName(walkName);
-  //   setDescription(walkDescription);
-  //   setCoordinate({
-  //       longitude: walkCoordinate[1],
-  //       latitude: walkCoordinate[0]
-  //     });
-  //   setId(walkId);
-  //   setIsModalVisible(true);
-  //   setCategory(category)
-  // };
-
-
 
   const handleCancel = () => {
     setIsModalVisible(false);
@@ -70,13 +52,12 @@ function ExploreMap(props) {
   const handleWalk = () => {
     props.setActiveWalk(id);
     setTimeout(() => {
-      setIsModalVisible(false)
-      props.navigation.navigate("Walking Map");
-    }, 1000)
-    //setTimeout is to prevent the Walking Map from loading before the walks prop is active
+      setIsModalVisible(false);
+      props.navigation.navigate('Walking Map');
+    }, 1000);
   };
 
-  const handlePicker = (e) => {
+  const handlePicker = e => {
     if (e === 'none') {
       props.getAllWalks();
     } else {
@@ -85,14 +66,12 @@ function ExploreMap(props) {
   }
 
   const handleOnMapReady = (e) => {
-    console.log('e :', e);
     if(!isMapReady)
     setIsMapReady(true)
   }
 
   const handleOnReady = (e) => {
     const roundedDuration = parseFloat(e.duration).toFixed(2);
-
     setDistance(e.distance / 1.609);
     setDuration(roundedDuration)
     if (!isDirectionsReady) setIsDirectionsReady(true)
@@ -183,7 +162,7 @@ function ExploreMap(props) {
           longitudeDelta: 0.0421
         }}
       >
-        <View style={{ position: "absolute", backgroundColor: "white" }}>
+        <View style={{ position: 'absolute', backgroundColor: 'white' }}>
           <Form>
             <Item picker>
               <Picker
