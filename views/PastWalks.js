@@ -99,9 +99,7 @@ class PastWalks extends React.Component {
                           }}
                         >
                           <Image
-                            source={{
-                              uri: `../public/thumbnails/${walk.imageUrl}`,
-                            }}
+                            source={require('../public/thumbnails/leaf.png')}
                             style={{
                               display: 'flex',
                               height: 100,
