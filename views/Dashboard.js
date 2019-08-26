@@ -12,7 +12,7 @@ import AllWalks from './AllWalks';
 import CreateWalk from './CreateWalk';
 import AccountInfo from './AccountInfo';
 import PastWalks from './PastWalks';
-import StarredWalks from './StarredWalks';
+import SavedWalks from './SavedWalks';
 import WalkingMap from './WalkingMap';
 import EditAccount from './EditAccount';
 import PasswordReset from './PasswordReset';
@@ -339,7 +339,7 @@ const DashboardStackNavigator = createStackNavigator(
     'Walking Map': WalkingMap,
     'Create Walk': CreateWalk,
     'Past Walks': PastWalks,
-    'Starred Walks': StarredWalks,
+    'Saved Walks': SavedWalks,
     'Account Info': AccountInfo,
     EditAccount: EditAccount,
     PasswordReset: PasswordReset,
@@ -380,7 +380,7 @@ const DashboardNavigator = createDrawerNavigator(
     Explore: ExploreMap,
     'Create Walk': CreateWalk,
     'Past Walks': PastWalks,
-    'Starred Walks': StarredWalks,
+    'Saved Walks': SavedWalks,
     'Account Info': AccountInfo,
     Logout: Login,
   },
