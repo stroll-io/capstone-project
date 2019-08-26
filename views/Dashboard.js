@@ -17,6 +17,7 @@ import WalkingMap from './WalkingMap';
 import EditAccount from './EditAccount';
 import PasswordReset from './PasswordReset';
 import DeleteAccount from './DeleteAccount';
+import Login from './Login';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 class Dashboard extends React.Component {
@@ -53,6 +54,7 @@ const DashboardStackNavigator = createStackNavigator(
     EditAccount: EditAccount,
     PasswordReset: PasswordReset,
     DeleteAccount: DeleteAccount,
+    Logout: Login,
   },
   {
     initialRouteName: 'Dashboard',
@@ -89,6 +91,7 @@ const DashboardNavigator = createDrawerNavigator(
     'Past Walks': PastWalks,
     'Starred Walks': StarredWalks,
     'Account Info': AccountInfo,
+    Logout: Login,
   },
   {
     initialRouteName: 'Dashboard',

@@ -10,6 +10,7 @@ import {
 import { Button, Text } from 'native-base';
 import { connect } from 'react-redux';
 import { createAccount } from '../store/user';
+import * as Haptics from 'expo-haptics';
 
 // import DashboardContainer from './Dashboard';
 
@@ -30,17 +31,20 @@ class Register extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleSubmit(event) {
+  async handleSubmit(event) {
+    event.preventDefault();
     try {
-      event.preventDefault();
-      this.props.createAccount(
+      const user = await this.props.createAccount(
         this.state.firstName,
         this.state.email,
         this.state.password
       );
-      this.props.navigation.navigate('Dashboard');
+      if (user) {
+        this.props.navigation.navigate('Dashboard');
+      }
     } catch (err) {
-      console.log(err);
+      //this was handled in the thunk creator and rethrown here
+      Haptics.notificationAsync();
     }
   }
 
@@ -184,6 +188,11 @@ class Register extends React.Component {
               >
                 <Text style={{ fontFamily: 'Avenir-Heavy' }}>Register</Text>
               </Button>
+              {this.props.error && (
+                <Text style={{ color: 'red' }}>
+                  An account is already registered with this email
+                </Text>
+              )}
             </View>
           </View>
         </View>
@@ -192,30 +201,17 @@ class Register extends React.Component {
   }
 }
 
-// const RegisterNavigator = createSwitchNavigator(
-//   {
-//     Register: Register,
-//     Dashboard: DashboardContainer,
-//   },
-//   {
-//     initialRouteName: 'Register',
-//   }
-// );
-
-// const RegisterContainer = createAppContainer(RegisterNavigator);
-
 const mapState = state => {
   return {
-    firstName: state.firstName,
-    email: state.email,
-    password: state.password,
+    error: state.user.error,
+    user: state.user,
   };
 };
 
 const mapDispatch = dispatch => {
   return {
     createAccount: (firstName, email, password) => {
-      dispatch(createAccount(firstName, email, password));
+      return dispatch(createAccount(firstName, email, password));
     },
   };
 };
