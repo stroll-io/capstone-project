@@ -14,6 +14,7 @@ class PastWalks extends React.Component {
     this.handleWalkNavigation = this.handleWalkNavigation.bind(this);
     this.totalDistanceReducer = this.totalDistanceReducer.bind(this);
     this.handleSave = this.handleSave.bind(this);
+    this.imageAdder = this.imageAdder.bind(this);
   }
   static navigationOptions = {
     title: 'Past Walks',
@@ -38,6 +39,10 @@ class PastWalks extends React.Component {
 
   handleSave(userId, walkId) {
     this.props.addSavedWalkThunk(userId, walkId);
+  }
+
+  imageAdder(imageUrl) {
+    return `../public/thumbnails/${imageUrl}`;
   }
 
   render() {
@@ -99,7 +104,9 @@ class PastWalks extends React.Component {
                           }}
                         >
                           <Image
-                            source={require('../public/thumbnails/dog.png')}
+                            source={{
+                              uri: `../public/thumbnails/${walk.imageUrl}`,
+                            }}
                             style={{
                               display: 'flex',
                               height: 100,
