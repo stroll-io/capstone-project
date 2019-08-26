@@ -34,8 +34,8 @@ savedRouter.delete('/:userId/:walkId', async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.userId);
     const walk = await Walk.findByPk(req.params.walkId);
-    const removed = await user.removeSavedByUser(walk);
-    res.send(removed);
+    await user.removeSavedByUser(walk);
+    res.send('deleted');
   } catch (err) {
     next(err);
   }

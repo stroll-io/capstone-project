@@ -57,9 +57,7 @@ export const addSavedWalkThunk = (userId, walkId) => {
 
 export const removeSavedWalkThunk = (userId, walkId) => {
   return async dispatch => {
-    const { data } = await axios.delete(
-      `${ngrokSecret}/api/savedWalks/${userId}/${walkId}`
-    );
-    dispatch(removeSavedWalk(data));
+    await axios.delete(`${ngrokSecret}/api/savedWalks/${userId}/${walkId}`);
+    dispatch(removeSavedWalk(walkId));
   };
 };
