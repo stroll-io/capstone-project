@@ -3,14 +3,17 @@ import { Text, View, Image } from 'react-native';
 import { Content, Container, Button } from 'native-base';
 import { fetchAllPastWalks } from '../store/pastWalks';
 import { setActiveWalkThunk } from '../store/activeWalk';
+import { addSavedWalkThunk } from '../store/savedWalks';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
+import { SimpleLineIcons } from 'react-native-vector-icons';
 
 class PastWalks extends React.Component {
   constructor() {
     super();
     this.handleWalkNavigation = this.handleWalkNavigation.bind(this);
     this.totalDistanceReducer = this.totalDistanceReducer.bind(this);
+    this.handleSave = this.handleSave.bind(this);
   }
   static navigationOptions = {
     title: 'Past Walks',
@@ -31,6 +34,10 @@ class PastWalks extends React.Component {
     return walkArray.reduce((accum, currVal) => {
       return accum + currVal.distance;
     }, 0);
+  }
+
+  handleSave(userId, walkId) {
+    this.props.addSavedWalkThunk(userId, walkId);
   }
 
   render() {
@@ -168,18 +175,53 @@ class PastWalks extends React.Component {
                                 walk.past_walks.createdAt
                               ).toDateString()}
                             </Text>
-                            <Button
-                              onPress={() => this.handleWalkNavigation(walk.id)}
-                              style={{
-                                borderRadius: '20px',
-                                width: '60%',
-                                justifyContent: 'center',
-                              }}
-                            >
-                              <Text style={{ color: 'white' }}>
-                                Start this Walk
-                              </Text>
-                            </Button>
+                            <View style={{ flexDirection: 'row' }}>
+                              <Button
+                                style={{
+                                  width: '30%',
+                                  borderRadius: 20,
+                                  marginRight: 10,
+                                  backgroundColor: 'tomato',
+                                  alignContent: 'center',
+                                  justifyContent: 'center',
+                                }}
+                                onPress={() =>
+                                  this.handleSave(this.props.user.id, walk.id)
+                                }
+                              >
+                                <View style={{ marginLeft: 8, marginRight: 5 }}>
+                                  <SimpleLineIcons
+                                    name="heart"
+                                    size={25}
+                                    color="white"
+                                  />
+                                </View>
+                                <Text
+                                  style={{
+                                    justifyContent: 'center',
+                                    color: 'white',
+                                    fontSize: 14,
+                                    fontFamily: 'Avenir-Heavy',
+                                  }}
+                                >
+                                  Save
+                                </Text>
+                              </Button>
+                              <Button
+                                onPress={() =>
+                                  this.handleWalkNavigation(walk.id)
+                                }
+                                style={{
+                                  borderRadius: '20px',
+                                  width: '60%',
+                                  justifyContent: 'center',
+                                }}
+                              >
+                                <Text style={{ color: 'white' }}>
+                                  Start this Walk
+                                </Text>
+                              </Button>
+                            </View>
                           </View>
                         </View>
                       </View>
@@ -205,6 +247,9 @@ const mapDispatchToProps = dispatch => {
     },
     setActiveWalkThunk: walkId => {
       dispatch(setActiveWalkThunk(walkId));
+    },
+    addSavedWalkThunk: (userId, walkId) => {
+      dispatch(addSavedWalkThunk(userId, walkId));
     },
   };
 };
