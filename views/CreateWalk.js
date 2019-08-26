@@ -8,13 +8,17 @@ import { connect } from 'react-redux';
 import { getAllWalksThunk } from '../store/walks';
 import { setActiveWalkThunk } from '../store/activeWalk';
 import { AntDesign } from 'react-native-vector-icons';
+import MapViewDirections from 'react-native-maps-directions';
+import { googleSecret } from '../secrets';
 
 function CreateWalk(props) {
   const [coords, setCoords] = useState([]);
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isCreateModalVisible, setIsCreateModalVisible] = useState(false);
   const [walkTitle, setWalkTitle] = useState('');
   const [walkDescription, setWalkDescription] = useState('');
+  const [distance, setDistance] = useState(0);
   const [walkTag, setWalkTag] = useState('');
+  const [isQuestionModalVisible, setIsQuestionModalVisible] = useState(false);
 
   const handleUndo = () => {
     const coordsCopy = coords.slice();
@@ -23,11 +27,11 @@ function CreateWalk(props) {
   };
 
   const handleCreate = () => {
-    setIsModalVisible(true);
+    setIsCreateModalVisible(true);
   };
 
   const handleCancel = () => {
-    setIsModalVisible(false);
+    setIsCreateModalVisible(false);
     setWalkTitle('');
     setWalkDescription('');
   };
@@ -38,9 +42,10 @@ function CreateWalk(props) {
       walkTitle,
       walkDescription,
       walkTag,
+      distance,
     });
     props.navigation.navigate('Explore');
-    setIsModalVisible(false);
+    setIsCreateModalVisible(false);
   };
 
   const handleStart = async () => {
@@ -49,16 +54,39 @@ function CreateWalk(props) {
       walkTitle,
       walkDescription,
       walkTag,
+      distance,
     });
     props.setActiveWalkThunk(data.id);
     setTimeout(() => {
       props.navigation.navigate('Walking Map');
-      setIsModalVisible(false);
+      setIsCreateModalVisible(false);
     }, 200);
+  };
+
+  const openQuestionModal = () => {
+    setIsQuestionModalVisible(true);
+  };
+
+  const closeQuestionModal = () => {
+    setIsQuestionModalVisible(false);
+  };
+
+  const handleOnReady = event => {
+    setDistance((event.distance * 0.621371).toFixed(2));
   };
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
+      <Modal
+        animationType="slide"
+        transparent={false}
+        visible={isQuestionModalVisible}
+      >
+        <Text style={{ marginTop: 50 }}>Here is some text in the modal</Text>
+        <Button large info onPress={closeQuestionModal}>
+          <Text>This closes the modal</Text>
+        </Button>
+      </Modal>
       <View style={{ flex: 1 }}>
         <View style={{ display: 'flex', flexDirection: 'row' }}>
           <View style={{ width: '80%' }}>
@@ -84,13 +112,14 @@ function CreateWalk(props) {
                 backgroundColor: 'white',
                 padding: 10,
               }}
+              onPress={openQuestionModal}
             />
           </View>
         </View>
       </View>
       <MapView
         provider="google"
-        style={{ flex: 18 }}
+        style={{ flex: 16 }}
         initialRegion={{
           latitude: 41.895442,
           longitude: -87.638957,
@@ -105,6 +134,16 @@ function CreateWalk(props) {
           setCoords([...coords, newCord]);
         }}
       >
+        <MapViewDirections
+          origin={coords[0]}
+          waypoints={coords.length > 2 ? coords.slice(1, -1) : null}
+          destination={coords[coords.length - 1]}
+          apikey={googleSecret}
+          strokeWidth={4}
+          strokeColor="blue"
+          onReady={handleOnReady}
+          mode="WALKING"
+        />
         {coords.length
           ? coords.map(coord => {
               return (
@@ -141,13 +180,14 @@ function CreateWalk(props) {
           </Text>
         </Button>
       </View>
+      <Text>Current Distance: {distance} mi</Text>
       <Modal
         animationType="slide"
         transparent={false}
-        visible={isModalVisible}
-        onRequestClose={() => {
-          console.log('onRequestClose');
-        }}
+        visible={isCreateModalVisible}
+        // onRequestClose={() => {
+        //   console.log('onRequestClose');
+        // }}
       >
         <View style={{ marginTop: 22 }}>
           <View>
@@ -254,9 +294,11 @@ function CreateWalk(props) {
     </SafeAreaView>
   );
 }
+
 CreateWalk.navigationOptions = {
   title: 'Create Walk',
 };
+
 const mapDispatch = dispatch => {
   return {
     getAllWalks: () => {

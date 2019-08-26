@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
-import { View, SafeAreaView } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, SafeAreaView, Modal, Text } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { connect } from 'react-redux';
-import { Form, Item, Picker, Icon } from 'native-base';
+import { Form, Item, Picker, Icon, Button } from 'native-base';
 import { AntDesign } from 'react-native-vector-icons';
 import {
   getAllAttractionsThunk,
@@ -10,14 +10,18 @@ import {
 } from '../store/attractions';
 
 function AttractionsMap(props) {
+  const [isModalVisible, setIsModalVisible] = useState(false);
   useEffect(() => {
     props.getAllAttractions();
   }, []);
 
-  const logLocationChange = e => {
-    // console.log('location changed')
+  const openModal = () => {
+    setIsModalVisible(true);
   };
 
+  const closeModal = () => {
+    setIsModalVisible(false);
+  };
   // const handleBack = () => {
   //   setIsModalVisible(false);
   //   setTitle('');
@@ -67,10 +71,15 @@ function AttractionsMap(props) {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
+      <Modal animationType="slide" transparent={false} visible={isModalVisible}>
+        <Text style={{ marginTop: 50 }}>Here is some text in the modal</Text>
+        <Button large info onPress={closeModal}>
+          <Text>This closes the modal</Text>
+        </Button>
+      </Modal>
       <MapView
         //initial region should be stateful based on users current location
         provider="google"
-        onUserLocationChange={logLocationChange()}
         showsUserLocation={true}
         style={{ flex: 1 }}
         initialRegion={{
@@ -128,6 +137,7 @@ function AttractionsMap(props) {
               paddingLeft: 190,
               left: 150,
             }}
+            onPress={openModal}
           />
         </View>
 

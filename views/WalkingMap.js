@@ -11,6 +11,7 @@ import { addPastWalkThunk } from '../store/pastWalks';
 import MapViewDirections from 'react-native-maps-directions';
 import { googleSecret } from '../secrets';
 import * as Haptics from 'expo-haptics';
+import axios from 'axios'
 
 function WalkingMap(props) {
   const [isWalkComplete, setIsWalkComplete] = useState(false);
@@ -39,6 +40,24 @@ function WalkingMap(props) {
     props.navigation.navigate('Dashboard');
   };
 
+
+  const getDirections = async () => {
+    const res = await axios.get(
+      `https://maps.googleapis.com/maps/api/directions/json?origin=${navPoints[0]}&destination=${navPoints[navPoints.length-1]}&key=${googleSecret}&waypoints=${navPoints.slice(1, -1)}`
+    );
+
+    console.log(
+      `https://maps.googleapis.com/maps/api/directions/json?origin=${
+        navPoints[0]
+      }&destination=${
+        navPoints[navPoints.length - 1]
+      }&key=${googleSecret}&waypoints=${navPoints.slice(1, -1)}`
+    );
+    //less
+    //save this as json
+    console.log('res :', res);
+  };
+
   const handleOnReady = e => {
     setWalkData(e);
     setDestination(e.coordinates[e.coordinates.length - 1]);
@@ -48,6 +67,7 @@ function WalkingMap(props) {
         longitude: e.coordinates[0].longitude,
       },
     });
+    getDirections();
   };
 
   const handleUserLocationChange = async e => {

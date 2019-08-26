@@ -77,79 +77,21 @@ function ExploreMap(props) {
     if (!isDirectionsReady) setIsDirectionsReady(true);
   };
 
+  const openModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setIsModalVisible(false);
+  };
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
-      <Modal
-        animationType="slide"
-        transparent={false}
-        visible={isModalVisible}
-        onRequestClose={() => {
-          console.log('onRequestClose');
-        }}
-      >
-        <View style={{ marginTop: 75, flex: 1 }}>
-          <View>
-            <Text
-              style={{
-                fontWeight: 'bold',
-                fontSize: 30,
-                textAlign: 'center',
-                marginBottom: 5,
-              }}
-            >
-              {name}
-            </Text>
-            <Text style={{ textAlign: 'center', marginBottom: 5 }}>
-              Type: {category}
-            </Text>
-          </View>
-          <View style={{ flex: 3 }}>
-            <MapView
-              provider="google"
-              style={{ flex: 1 }}
-              initialRegion={{
-                latitude: coordinate.latitude,
-                longitude: coordinate.longitude,
-                latitudeDelta: 0.01,
-                longitudeDelta: 0.01,
-              }}
-              scrollEnabled={false}
-              onMapReady={handleOnMapReady}
-            />
-            {navPoints.length ? (
-              <MapViewDirections
-                origin={navPoints[0]}
-                waypoints={navPoints.length > 2 ? navPoints.slice(1, -1) : null}
-                destination={navPoints[navPoints.length - 1]}
-                apikey={googleSecret}
-                strokeWidth={6}
-                strokeColor="green"
-                onReady={handleOnReady}
-                mode="WALKING"
-              />
-            ) : null}
-          </View>
-          <Text style={{ margin: 20, flex: 1 }}>
-            {distance} miles {duration} minutes
-          </Text>
-          <Text style={{ margin: 20, flex: 1 }}>{description}</Text>
-          <View
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'center',
-              marginTop: 50,
-              flex: 1,
-            }}
-          >
-            <Button large warning onPress={handleCancel} style={{ margin: 20 }}>
-              <Text>Back</Text>
-            </Button>
-            <Button large primary onPress={handleWalk} style={{ margin: 20 }}>
-              <Text>Start Walk</Text>
-            </Button>
-          </View>
-        </View>
+      <Modal animationType="slide" transparent={false} visible={isModalVisible}>
+        <Text style={{ marginTop: 50 }}>Here is some text in the modal</Text>
+        <Button large info onPress={closeModal}>
+          <Text>This closes the modal</Text>
+        </Button>
       </Modal>
       <MapView
         //initial region should be stateful based on users current location
@@ -198,6 +140,7 @@ function ExploreMap(props) {
               paddingLeft: 190,
               left: 150,
             }}
+            onPress={openModal}
           />
         </View>
         <View />

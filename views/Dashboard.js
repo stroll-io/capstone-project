@@ -144,17 +144,6 @@ class Dashboard extends React.Component {
                     <AntDesign name="questioncircleo" size={25} color="black" />
                   </View>
                 </View>
-                {/* <View>
-                  <Text
-                    style={{
-                      textAlign: 'right',
-                      fontSize: 14,
-                      fontFamily: 'Avenir-Heavy',
-                    }}
-                  >
-                    (Below each header)
-                  </Text>
-                </View> */}
               </View>
               <View
                 style={{
