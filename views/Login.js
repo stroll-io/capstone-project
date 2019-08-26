@@ -7,10 +7,10 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
 } from 'react-native';
-// import { createSwitchNavigator, createAppContainer } from 'react-navigation';
 import { Button, Text } from 'native-base';
-// import DashboardContainer from './Dashboard';
 import { fetchUser } from '../store/user';
+import * as Haptics from 'expo-haptics';
+import { AntDesign } from 'react-native-vector-icons';
 
 const DismissKeyboard = ({ children }) => (
   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -26,10 +26,12 @@ class Login extends React.Component {
       password: '',
     };
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.easyLogin = this.easyLogin.bind(this);
   }
 
   static navigationOptions = {
     header: null,
+    gesturesEnabled: false,
   };
 
   async handleSubmit(event) {
@@ -39,7 +41,13 @@ class Login extends React.Component {
       this.props.navigation.navigate('Dashboard');
     } catch (err) {
       //this was handled in the thunk creator and rethrown here
+      Haptics.notificationAsync();
     }
+  }
+
+  easyLogin() {
+    this.props.fetchUser('test@test.com', 'test');
+    this.props.navigation.navigate('Dashboard');
   }
 
   render() {
@@ -61,6 +69,7 @@ class Login extends React.Component {
                   fontSize: 35,
                   marginBottom: 100,
                 }}
+                onPress={this.easyLogin}
               >
                 Sign into your account
               </Text>
@@ -147,9 +156,23 @@ class Login extends React.Component {
                 <Text style={{ fontFamily: 'Avenir-Heavy' }}>Login</Text>
               </Button>
               {this.props.error && (
-                <Text style={{ color: 'red' }}>
-                  Incorrect email or password
-                </Text>
+                <View
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignContent: 'center',
+                    margin: 10,
+                  }}
+                >
+                  <View style={{ justifyContent: 'center' }}>
+                    <Text style={{ fontFamily: 'Avenir-Heavy', color: 'red' }}>
+                      Incorrect email or password
+                    </Text>
+                  </View>
+                  <View style={{ padding: 5, justifyContent: 'center' }}>
+                    <AntDesign name="frown" size={25} color="red" />
+                  </View>
+                </View>
               )}
             </View>
           </View>
@@ -158,20 +181,6 @@ class Login extends React.Component {
     );
   }
 }
-// const LoginNavigator = createSwitchNavigator(
-//   {
-//     Login: Login,
-//     Dashboard: DashboardContainer,
-//   },
-//   {
-//     initialRouteName: 'Login',
-//     headerStyle: {
-//       headerMode: 'none',
-//     },
-//   }
-// );
-
-// const LoginContainer = createAppContainer(LoginNavigator);
 
 const mapState = state => {
   return {

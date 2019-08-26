@@ -38,6 +38,9 @@ const Walk = db.define('walk', {
   start: {
     type: Sequelize.GEOMETRY('POINT'),
   },
+  distance: {
+    type: Sequelize.FLOAT,
+  },
 });
 
 module.exports = Walk;

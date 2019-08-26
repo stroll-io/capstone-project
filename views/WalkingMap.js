@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
 import { View, SafeAreaView, Modal } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
@@ -5,7 +6,7 @@ import { connect } from 'react-redux';
 import { Button, Text } from 'native-base';
 import { getAllPinsThunk } from '../store/userpins';
 import { getAttractionsThunk } from '../store/attractions';
-import { addStarredWalkThunk } from '../store/starredWalks';
+import { addSavedWalkThunk } from '../store/savedWalks';
 import { addPastWalkThunk } from '../store/pastWalks';
 import MapViewDirections from 'react-native-maps-directions';
 import { googleSecret } from '../secrets';
@@ -30,8 +31,8 @@ function WalkingMap(props) {
     });
   });
 
-  const handleFavorite = () => {
-    props.addFavoriteWalk(props.user.id, props.activeWalk.id);
+  const handleSave = () => {
+    props.saveWalk(props.user.id, props.activeWalk.id);
   };
 
   const handleHome = () => {
@@ -39,9 +40,14 @@ function WalkingMap(props) {
   };
 
   const handleOnReady = e => {
-    console.log('Walk Metadata : ', e);
     setWalkData(e);
     setDestination(e.coordinates[e.coordinates.length - 1]);
+    this.map.animateCamera({
+      center: {
+        latitude: e.coordinates[0].latitude,
+        longitude: e.coordinates[0].longitude,
+      },
+    });
   };
 
   const handleUserLocationChange = async e => {
@@ -104,13 +110,8 @@ function WalkingMap(props) {
               marginTop: 50,
             }}
           >
-            <Button
-              large
-              primary
-              onPress={handleFavorite}
-              style={{ margin: 20 }}
-            >
-              <Text>Add to Favorites</Text>
+            <Button large primary onPress={handleSave} style={{ margin: 20 }}>
+              <Text>Save</Text>
             </Button>
             <Button large success onPress={handleHome} style={{ margin: 20 }}>
               <Text>Go to Dashboard</Text>
@@ -154,6 +155,7 @@ function WalkingMap(props) {
           onReady={handleOnReady}
           mode="WALKING"
         />
+
         {props.attractions.length
           ? props.attractions.map(coord => {
               return (
@@ -201,8 +203,8 @@ const mapDispatch = dispatch => {
     getAllPins: () => {
       dispatch(getAllPinsThunk());
     },
-    addFavoriteWalk: (userId, walkId) => {
-      dispatch(addStarredWalkThunk(userId, walkId));
+    saveWalk: (userId, walkId) => {
+      dispatch(addSavedWalkThunk(userId, walkId));
     },
     addPastWalk: (userId, walkId) => {
       dispatch(addPastWalkThunk(userId, walkId));

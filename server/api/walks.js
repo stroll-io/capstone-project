@@ -8,7 +8,7 @@ walksRouter.get('/:walkId', async (req, res, next) => {
     const walkInstance = await Walk.findByPk(req.params.walkId, {
       include: [{ model: NavPoint }],
     });
-    walkCopy = walkInstance.get({
+    let walkCopy = walkInstance.get({
       plain: true,
     });
 
@@ -27,20 +27,21 @@ walksRouter.get('/:walkId', async (req, res, next) => {
   }
 });
 
-walksRouter.get('/tags/:tag', async (req, res, next)=> {
+walksRouter.get('/tags/:tag', async (req, res, next) => {
   try {
     const walks = await Walk.findAll({
       where: {
-        category: req.params.tag
-      }
-    })
-    res.send(walks);
-  } catch(err) {
-    next(err)
-  }
-})
+        category: req.params.tag,
+      },
+    });
 
-walksRouter.get("/", async (req, res, next) => {
+    res.send(walks);
+  } catch (err) {
+    next(err);
+  }
+});
+
+walksRouter.get('/', async (req, res, next) => {
   try {
     const allWalks = await Walk.findAll();
     res.send(allWalks);

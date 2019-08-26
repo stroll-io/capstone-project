@@ -4,6 +4,8 @@
     "es6": true,
     "node": true
   },
-  "parser": "babel-eslint"
-
+  "parser": "babel-eslint",
+  "rules": {
+    "react/prop-types": 0
+  }
 }

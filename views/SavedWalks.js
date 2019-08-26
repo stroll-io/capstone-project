@@ -1,17 +1,29 @@
 import React from 'react';
 import { Image, View } from 'react-native';
-import { Text, Content, Container } from 'native-base';
-import { fetchStarredWalks } from '../store/starredWalks';
+import { Text, Content, Container, Button } from 'native-base';
+import { fetchSavedWalks } from '../store/savedWalks';
+import { setActiveWalkThunk } from '../store/activeWalk';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
 
-class StarredWalks extends React.Component {
+class SavedWalks extends React.Component {
+  constructor() {
+    super();
+    this.handleWalkNavigation = this.handleWalkNavigation.bind(this);
+  }
   static navigationOptions = {
-    title: 'Starred Walks',
+    title: 'Saved Walks',
   };
 
   async componentDidMount() {
-    await this.props.fetchStarredWalks(2);
+    await this.props.fetchSavedWalks(this.props.user.id);
+  }
+
+  handleWalkNavigation(walkId) {
+    this.props.setActiveWalkThunk(walkId);
+    setTimeout(() => {
+      this.props.navigation.navigate('Walking Map');
+    }, 200);
   }
 
   render() {
@@ -27,8 +39,8 @@ class StarredWalks extends React.Component {
               alignItems: 'center',
             }}
           >
-            {this.props.starredWalks.length ? (
-              this.props.starredWalks.map(walk => {
+            {this.props.savedWalks.length ? (
+              this.props.savedWalks.map(walk => {
                 const type =
                   walk.category[0].toUpperCase() + walk.category.slice(1);
                 return (
@@ -122,8 +134,24 @@ class StarredWalks extends React.Component {
                                 fontFamily: 'Avenir-Heavy',
                               }}
                             >
-                              Walked: {walk.favorite_walks.createdAt}
+                              Distance: {walk.distance} mi
                             </Text>
+                          </View>
+                          <View>
+                            <Text
+                              style={{
+                                fontSize: 16,
+                                fontFamily: 'Avenir-Heavy',
+                              }}
+                            >
+                              Walked: {walk.saved_walks.createdAt}
+                            </Text>
+                            <Button
+                              onPress={() => this.handleWalkNavigation(walk.id)}
+                              style={{ borderRadius: '20px', width: '60%' }}
+                            >
+                              <Text>Start this Walk</Text>
+                            </Button>
                           </View>
                         </View>
                       </View>
@@ -144,24 +172,28 @@ class StarredWalks extends React.Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchStarredWalks: userId => {
-      dispatch(fetchStarredWalks(userId));
+    fetchSavedWalks: userId => {
+      dispatch(fetchSavedWalks(userId));
+    },
+    setActiveWalkThunk: walkId => {
+      dispatch(setActiveWalkThunk(walkId));
     },
   };
 };
 
 const mapStateToProps = state => {
   return {
-    starredWalks: state.starredWalks,
+    savedWalks: state.savedWalks,
+    user: state.user,
   };
 };
 
-StarredWalks.propTypes = {
-  fetchStarredWalks: propTypes.func,
-  starredWalks: propTypes.array,
+SavedWalks.propTypes = {
+  fetchSavedWalks: propTypes.func,
+  savedWalks: propTypes.array,
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(StarredWalks);
+)(SavedWalks);

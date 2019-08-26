@@ -10,12 +10,12 @@ navPointRouter.post('/', async (req, res, next) => {
       description: req.body.walkDescription,
       category: req.body.walkTag,
       start: {
-        type: "Point",
+        type: 'Point',
         coordinates: [
           req.body.coords[0].latitude,
-          req.body.coords[0].longitude
-        ]
-      }
+          req.body.coords[0].longitude,
+        ],
+      },
     };
     const walk = await Walk.create(walkInfo);
 
@@ -47,7 +47,7 @@ navPointRouter.post('/', async (req, res, next) => {
       }
       previous = newPoint;
     }
-    res.send(req.body);
+    res.send(walk);
   } catch (err) {
     next(err);
   }

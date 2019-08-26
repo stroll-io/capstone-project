@@ -30,12 +30,18 @@ const defaultUser = {};
 
 export const createAccount = (firstName, email, password) => {
   return async dispatch => {
-    const { data } = await axios.post(`${ngrokSecret}/auth/register`, {
-      firstName,
-      email,
-      password,
-    });
-    dispatch(createUser(data));
+    try {
+      const { data } = await axios.post(`${ngrokSecret}/auth/register`, {
+        firstName,
+        email,
+        password,
+      });
+      dispatch(createUser(data));
+      return data;
+    } catch (err) {
+      dispatch(setUser({ error: err }));
+      throw err;
+    }
   };
 };
 
