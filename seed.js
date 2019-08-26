@@ -8,35 +8,33 @@ const {
   UserPin,
 } = require('./server/db/models');
 
-
-
-    async function createNavPoints(walkInstance, promiseArray, walkCoords) {
-      let previous = null;
-      for (let i = 0; i < walkCoords.length; i++) {
-        let previousId = null;
-        let start = i === 0;
-        if (previous !== null) {
-          previousId = previous.dataValues.id;
-        }
-        let newPoint = await NavPoint.create({
-          location: {
-            type: "Point",
-            coordinates: [...walkCoords[i]]
-          },
-          prev: previousId,
-          next: null,
-          start: start,
-          walkId: walkInstance.id
-        });
-        promiseArray.push(newPoint);
-        if (previous !== null) {
-          await previous.update({
-            next: newPoint.dataValues.id
-          });
-        }
-        previous = newPoint;
-      }
+async function createNavPoints(walkInstance, promiseArray, walkCoords) {
+  let previous = null;
+  for (let i = 0; i < walkCoords.length; i++) {
+    let previousId = null;
+    let start = i === 0;
+    if (previous !== null) {
+      previousId = previous.dataValues.id;
     }
+    let newPoint = await NavPoint.create({
+      location: {
+        type: 'Point',
+        coordinates: [...walkCoords[i]],
+      },
+      prev: previousId,
+      next: null,
+      start: start,
+      walkId: walkInstance.id,
+    });
+    promiseArray.push(newPoint);
+    if (previous !== null) {
+      await previous.update({
+        next: newPoint.dataValues.id,
+      });
+    }
+    previous = newPoint;
+  }
+}
 
 const seed = async () => {
   try {
@@ -108,6 +106,7 @@ const seed = async () => {
           type: 'Point',
           coordinates: [41.895553, -87.638584],
         },
+        distance: 3.45,
       }),
       Walk.create({
         name: `Ben's Commute`,
@@ -119,6 +118,7 @@ const seed = async () => {
           type: 'Point',
           coordinates: [41.879353, -87.636712],
         },
+        distance: 2.0,
       }),
       Walk.create({
         name: `Madi's Commute`,
@@ -130,6 +130,7 @@ const seed = async () => {
           type: 'Point',
           coordinates: [41.879345, -87.632367],
         },
+        distance: 5.0,
       }),
 
       Walk.create({
@@ -142,6 +143,7 @@ const seed = async () => {
           type: 'Point',
           coordinates: [41.878131, -87.632356],
         },
+        distance: 7.65,
       }),
     ]);
 
@@ -165,6 +167,7 @@ const seed = async () => {
           type: 'Point',
           coordinates: [41.884278, -87.624225],
         },
+        distance: 1.86,
       }),
       Walk.create({
         name: `Grant Park`,
@@ -175,6 +178,7 @@ const seed = async () => {
           type: 'Point',
           coordinates: [41.882289, -87.619441],
         },
+        distance: 3.04,
       }),
       Walk.create({
         name: `Museum Campus`,
@@ -186,6 +190,7 @@ const seed = async () => {
           type: 'Point',
           coordinates: [41.867492, -87.619216],
         },
+        distance: 2.57,
       }),
       Walk.create({
         name: `Michigan Ave`,
@@ -196,6 +201,7 @@ const seed = async () => {
           type: 'Point',
           coordinates: [41.888909, -87.624261],
         },
+        distance: 2.34,
       }),
       Walk.create({
         name: `The Loop Architectural Walk`,
@@ -206,6 +212,7 @@ const seed = async () => {
           type: 'Point',
           coordinates: [41.884567, -87.632226],
         },
+        distance: 1.09,
       }),
       Walk.create({
         name: 'Sculpture in the Loop',
@@ -216,6 +223,7 @@ const seed = async () => {
           type: 'Point',
           coordinates: [41.884567, -87.632226],
         },
+        distance: 4.88,
       }),
       Walk.create({
         name: 'Navy Pier',
@@ -226,6 +234,7 @@ const seed = async () => {
           type: 'Point',
           coordinates: [41.891353, -87.609756],
         },
+        distance: 3.05,
       }),
       Walk.create({
         name: 'Magnificent Mile',
@@ -237,6 +246,7 @@ const seed = async () => {
           type: 'Point',
           coordinates: [41.88895, -87.624381],
         },
+        distance: 2.0,
       }),
       Walk.create({
         name: 'Lincoln Park Zoo',
@@ -247,6 +257,7 @@ const seed = async () => {
           type: 'Point',
           coordinates: [41.930322, -87.637067],
         },
+        distance: 3.09,
       }),
     ]);
 
@@ -963,22 +974,20 @@ const seed = async () => {
     magMile.setAttractions([44, 45, 46, 47, 48, 49, 50]);
     lincolnPark.setAttractions([51, 52, 53, 54, 55]);
 
-
-
     const milleniumParkCoords = [
       [41.883931, -87.6238],
       [41.882815, -87.623284],
       [41.8812, -87.623775],
       [41.88327, -87.621802],
       [41.881113, -87.621829],
-      [41.882728, -87.620179]
+      [41.882728, -87.620179],
     ];
 
-    createNavPoints(milleniumPark, [], milleniumParkCoords)
+    createNavPoints(milleniumPark, [], milleniumParkCoords);
     const grantParkCoords = [
       [41.883644, -87.617362],
       [41.877821, -87.618999],
-      [41.875797, -87.618957]
+      [41.875797, -87.618957],
     ];
     createNavPoints(grantPark, [], grantParkCoords);
 
@@ -986,17 +995,16 @@ const seed = async () => {
       [41.867652, -87.613544],
       [41.866365, -87.607117],
       [41.865815, -87.606499],
-      [41.866359, -87.616957]
+      [41.866359, -87.616957],
     ];
     createNavPoints(museumCampus, [], museumCampusCoords);
-
 
     const michiganAveCoords = [
       [41.888909, -87.624261],
       [41.88656, -87.624748],
       [41.883808, -87.624857],
       [41.879635, -87.623644],
-      [41.878699, -87.624933]
+      [41.878699, -87.624933],
     ];
     createNavPoints(michiganAve, [], michiganAveCoords);
 
@@ -1011,7 +1019,7 @@ const seed = async () => {
       [41.877509, -87.631823],
       [41.876585, -87.630433],
       [41.877442, -87.629626],
-      [41.879041, -87.629575]
+      [41.879041, -87.629575],
     ];
     createNavPoints(theLoop, [], theLoopCoords);
 
@@ -1022,9 +1030,9 @@ const seed = async () => {
       [41.881129, -87.629708],
       [41.878927, -87.62943],
       [41.882182, -87.634148],
-      [41.882005, -87.643085]
+      [41.882005, -87.643085],
     ];
-    createNavPoints(loopSculpture, [], loopSculptureCoords)
+    createNavPoints(loopSculpture, [], loopSculptureCoords);
 
     const navyPierCoords = [
       [41.891401, -87.609164],
@@ -1033,10 +1041,10 @@ const seed = async () => {
       [41.891489, -87.605174],
       [41.891517, -87.605761],
       [41.891126, -87.60512],
-      [41.892392, -87.600738]
+      [41.892392, -87.600738],
     ];
 
-    createNavPoints(navyPier, [], navyPierCoords)
+    createNavPoints(navyPier, [], navyPierCoords);
 
     const magMileCoords = [
       [41.889806, -87.624595],
@@ -1045,7 +1053,7 @@ const seed = async () => {
       [41.897258, -87.621244],
       [41.89716, -87.624418],
       [41.898984, -87.62468],
-      [41.898776, -87.622829]
+      [41.898776, -87.622829],
     ];
     createNavPoints(magMile, [], magMileCoords);
 
@@ -1055,9 +1063,9 @@ const seed = async () => {
       [41.924942, -87.633975],
       [41.92327, -87.63337],
       [41.92327, -87.63337],
-      [41.924136, -87.635296]
+      [41.924136, -87.635296],
     ];
-    createNavPoints(lincolnPark, [], lincolnParkCoords)
+    createNavPoints(lincolnPark, [], lincolnParkCoords);
 
     return [
       ben,
