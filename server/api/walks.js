@@ -44,7 +44,6 @@ walksRouter.get('/tags/:tag', async (req, res, next) => {
 walksRouter.get('/', async (req, res, next) => {
   try {
     const allWalks = await Walk.findAll();
-    console.log(allWalks);
     res.send(allWalks);
   } catch (err) {
     next(err);

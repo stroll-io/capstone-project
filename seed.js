@@ -890,7 +890,7 @@ const seed = async () => {
     }
 
     for (let i = 1; i < 4; i++) {
-      madi.setFavoritedByUser(i);
+      madi.setSavedByUser(i);
     }
 
     for (let i = 1; i < 10; i++) {
@@ -900,7 +900,7 @@ const seed = async () => {
     }
 
     for (let j = 1; j < 10; j++) {
-      test.setFavoritedByUser(j);
+      test.setSavedByUser(j);
     }
 
     milleniumPark.setAttractions([1, 2, 3, 4, 5, 6]);
