@@ -34,6 +34,7 @@
     "expo-permissions": "^6.0.0",
     "express": "^4.17.1",
     "express-session": "^1.16.2",
+    "font": "0.0.4",
     "morgan": "^1.9.1",
     "native-base": "^2.13.5",
     "passport": "^0.4.0",
