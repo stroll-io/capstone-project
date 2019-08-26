@@ -134,6 +134,16 @@ class StarredWalks extends React.Component {
                                 fontFamily: 'Avenir-Heavy',
                               }}
                             >
+                              Distance: {walk.distance} mi
+                            </Text>
+                          </View>
+                          <View>
+                            <Text
+                              style={{
+                                fontSize: 16,
+                                fontFamily: 'Avenir-Heavy',
+                              }}
+                            >
                               Walked: {walk.favorite_walks.createdAt}
                             </Text>
                             <Button
