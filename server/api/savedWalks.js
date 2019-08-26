@@ -25,4 +25,15 @@ savedRouter.post('/:userId/:walkId', async (req, res, next) => {
   }
 });
 
+savedRouter.delete('/:userId/:walkId', async (req, res, next) => {
+  try {
+    const user = await User.findByPk(req.params.userId);
+    const walk = await Walk.findByPk(req.params.walkId);
+    await user.removeSavedByUser(walk);
+    res.send(walk);
+  } catch (err) {
+    next(err);
+  }
+});
+
 module.exports = savedRouter;
