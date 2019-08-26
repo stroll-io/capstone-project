@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, View, SafeAreaView } from 'react-native';
+import { Image, View, SafeAreaView, Modal } from "react-native";
 import {
   Button,
   Text,
@@ -13,27 +13,42 @@ import {
 import { getAllWalksThunk, getWalksByTagThunk } from '../store/walks';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
-import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
+import { AntDesign, SimpleLineIcons } from 'react-native-vector-icons';
 
 class AllWalks extends React.Component {
   constructor() {
     super();
     this.state = {
       walks: [],
+      isModalVisible: false
     };
     this.handlePicker = this.handlePicker.bind(this);
+    this.openModal = this.openModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
   }
 
   static navigationOptions = {
-    title: 'Recommended Walks',
+    title: "Recommended Walks"
   };
 
   async componentDidMount() {
     await this.props.getAllWalks();
   }
 
+  openModal() {
+    this.setState({
+      isModalVisible: true
+    });
+  }
+
+  closeModal() {
+    this.setState({
+      isModalVisible: false
+    });
+  }
+
   handlePicker(e) {
-    if (e === 'View All') {
+    if (e === "View All") {
       this.props.getAllWalks();
     } else {
       this.props.getWalksByTag(e);
@@ -41,55 +56,38 @@ class AllWalks extends React.Component {
   }
 
   render() {
-    // let list = this.props.walks;
-    // const colors = [
-    //   '#D4FCFF',
-    //   '#A9ECF2',
-    //   '#89D8E5',
-    //   '#4FA3C6',
-    //   '#206098',
-    //   '#4FA3C6',
-    //   '#89D8E5',
-    //   '#A9ECF2',
-    // ];
-
-    // if (this.props.walks.length) {
-    //   let counter = 0;
-    //   for (let i = 0; i < list.length; i++) {
-    //     let item = list[i];
-    //     if (counter < colors.length) {
-    //       item.color = colors[counter];
-    //       counter++;
-    //     } else {
-    //       counter = 0;
-    //       item.color = colors[counter];
-    //       counter++;
-    //     }
-    //   }
-    // }
-
     return (
       <SafeAreaView style={{ flex: 1 }}>
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={this.state.isModalVisible}
+        >
+          <Text style={{ marginTop: 50 }}>Here is some text in the modal</Text>
+          <Button large info onPress={this.closeModal}>
+            <Text>This closes the modal</Text>
+          </Button>
+        </Modal>
         <Container>
           <Content>
             <View>
               <View
                 className="heading"
                 style={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  justifyContent: 'space-around',
-                  paddingBottom: 10,
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-around",
+                  paddingBottom: 10
                 }}
               >
-                <View style={{ width: '80%' }}>
+                <View style={{ width: "80%" }}>
                   <Form
                     style={{
                       margin: 5,
-                      borderColor: 'black',
+                      borderColor: "black",
                       borderWidth: 2,
                       borderRadius: 20,
-                      width: '50%',
+                      width: "50%"
                     }}
                   >
                     <Item picker>
@@ -100,7 +98,7 @@ class AllWalks extends React.Component {
                         placeholder="Filter by tag"
                         style={{
                           height: 30,
-                          width: undefined,
+                          width: undefined
                         }}
                         onValueChange={this.handlePicker}
                       >
@@ -116,8 +114,8 @@ class AllWalks extends React.Component {
                     </Item>
                   </Form>
                 </View>
-                <View style={{ width: '18%', margin: 5 }}>
-                  <SimpleLineIcons name="question" size={30} color="#4F8EF7" />
+                <View style={{ width: "18%", margin: 5 }}>
+                  <AntDesign name="questioncircleo" size={30} color="black" onPress={this.openModal} />
                 </View>
               </View>
               {this.props.walks.length ? (
@@ -128,55 +126,55 @@ class AllWalks extends React.Component {
                     <View
                       key={walk.id}
                       style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'center',
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "center",
                         height: 235,
-                        width: '100%',
+                        width: "100%"
                       }}
                     >
                       <View
                         className="cardTitle"
                         style={{
-                          display: 'flex',
-                          flexDirection: 'row',
+                          display: "flex",
+                          flexDirection: "row",
                           borderWidth: 2,
                           borderTopLeftRadius: 20,
                           borderTopRightRadius: 20,
-                          borderColor: '#859F3C',
-                          justifyContent: 'space-around',
-                          alignContent: 'center',
-                          backgroundColor: '#859F3C',
+                          borderColor: "#859F3C",
+                          justifyContent: "space-around",
+                          alignContent: "center",
+                          backgroundColor: "#859F3C"
                         }}
                       >
                         <View
                           style={{
-                            display: 'flex',
-                            flexDirection: 'row',
-                            justifyContent: 'space-around',
-                            width: '100%',
+                            display: "flex",
+                            flexDirection: "row",
+                            justifyContent: "space-around",
+                            width: "100%",
                             paddingTop: 10,
                             paddingBottom: 10,
-                            paddingLeft: 20,
+                            paddingLeft: 20
                           }}
                         >
                           <View
                             style={{
-                              width: '80%',
-                              padding: 5,
+                              width: "80%",
+                              padding: 5
                             }}
                           >
                             <Text
                               style={{
-                                color: 'white',
+                                color: "white",
                                 fontSize: 18,
-                                fontFamily: 'Avenir-Heavy',
+                                fontFamily: "Avenir-Heavy"
                               }}
                             >
                               {walk.name}
                             </Text>
                           </View>
-                          <View style={{ width: '20%' }}>
+                          <View style={{ width: "20%" }}>
                             <SimpleLineIcons
                               name="info"
                               size={25}
@@ -189,30 +187,30 @@ class AllWalks extends React.Component {
                       <View
                         className="cardBody"
                         style={{
-                          display: 'flex',
-                          flexDirection: 'column',
-                          margin: 10,
+                          display: "flex",
+                          flexDirection: "column",
+                          margin: 10
                         }}
                       >
                         <View
                           style={{
-                            display: 'flex',
-                            flexDirection: 'row',
-                            margin: 10,
+                            display: "flex",
+                            flexDirection: "row",
+                            margin: 10
                           }}
                         >
                           <View
                             className="cardText"
                             style={{
-                              display: 'flex',
-                              flexDirection: 'column',
-                              width: '65%',
+                              display: "flex",
+                              flexDirection: "column",
+                              width: "65%"
                             }}
                           >
                             <Text
                               style={{
                                 fontSize: 16,
-                                fontFamily: 'Avenir-Heavy',
+                                fontFamily: "Avenir-Heavy"
                               }}
                             >
                               {walk.description}
@@ -220,7 +218,7 @@ class AllWalks extends React.Component {
                             <Text
                               style={{
                                 fontSize: 16,
-                                fontFamily: 'Avenir-Heavy',
+                                fontFamily: "Avenir-Heavy"
                               }}
                             >
                               Distance:
@@ -228,10 +226,10 @@ class AllWalks extends React.Component {
                           </View>
                           <View>
                             <Image
-                              source={require('../public/thumbnails/fountain.png')}
+                              source={require("../public/thumbnails/fountain.png")}
                               style={{
                                 height: 80,
-                                width: 80,
+                                width: 80
                               }}
                             />
                           </View>
@@ -239,28 +237,28 @@ class AllWalks extends React.Component {
                         <View
                           className="buttonPanel"
                           style={{
-                            display: 'flex',
-                            flexDirection: 'row',
-                            justifyContent: 'space-between',
-                            marginTop: 10,
+                            display: "flex",
+                            flexDirection: "row",
+                            justifyContent: "space-between",
+                            marginTop: 10
                           }}
                         >
                           <View
                             style={{
-                              width: '35%',
+                              width: "35%",
                               borderRadius: 20,
-                              backgroundColor: '#FFA614',
-                              alignContent: 'center',
-                              justifyContent: 'center',
+                              backgroundColor: "#FFA614",
+                              alignContent: "center",
+                              justifyContent: "center"
                             }}
                           >
                             <View
                               style={{
-                                display: 'flex',
-                                flexDirection: 'row',
-                                alignContent: 'center',
-                                justifyContent: 'space-evenly',
-                                padding: 5,
+                                display: "flex",
+                                flexDirection: "row",
+                                alignContent: "center",
+                                justifyContent: "space-evenly",
+                                padding: 5
                               }}
                             >
                               <View>
@@ -272,18 +270,18 @@ class AllWalks extends React.Component {
                               </View>
                               <View
                                 style={{
-                                  alignContent: 'center',
-                                  justifyContent: 'center',
+                                  alignContent: "center",
+                                  justifyContent: "center"
                                 }}
                               >
                                 <Text
                                   style={{
-                                    alignSelf: 'center',
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    color: 'white',
+                                    alignSelf: "center",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    color: "white",
                                     fontSize: 14,
-                                    fontFamily: 'Avenir-Heavy',
+                                    fontFamily: "Avenir-Heavy"
                                   }}
                                 >
                                   {tag}
@@ -293,20 +291,20 @@ class AllWalks extends React.Component {
                           </View>
                           <View
                             style={{
-                              width: '28%',
+                              width: "28%",
                               borderRadius: 20,
-                              backgroundColor: 'tomato',
-                              alignContent: 'center',
-                              justifyContent: 'center',
+                              backgroundColor: "tomato",
+                              alignContent: "center",
+                              justifyContent: "center"
                             }}
                           >
                             <View
                               style={{
-                                display: 'flex',
-                                flexDirection: 'row',
-                                alignContent: 'center',
-                                justifyContent: 'space-evenly',
-                                padding: 5,
+                                display: "flex",
+                                flexDirection: "row",
+                                alignContent: "center",
+                                justifyContent: "space-evenly",
+                                padding: 5
                               }}
                             >
                               <View>
@@ -318,16 +316,16 @@ class AllWalks extends React.Component {
                               </View>
                               <View
                                 style={{
-                                  justifyContent: 'center',
-                                  alignContent: 'center',
+                                  justifyContent: "center",
+                                  alignContent: "center"
                                 }}
                               >
                                 <Text
                                   style={{
-                                    alignContent: 'center',
-                                    color: 'white',
+                                    alignContent: "center",
+                                    color: "white",
                                     fontSize: 14,
-                                    fontFamily: 'Avenir-Heavy',
+                                    fontFamily: "Avenir-Heavy"
                                   }}
                                 >
                                   Save
@@ -337,20 +335,20 @@ class AllWalks extends React.Component {
                           </View>
                           <View
                             style={{
-                              justifyContent: 'center',
-                              alignContent: 'center',
-                              width: '28%',
+                              justifyContent: "center",
+                              alignContent: "center",
+                              width: "28%",
                               borderRadius: 20,
-                              backgroundColor: '#417dc1',
+                              backgroundColor: "#417dc1"
                             }}
                           >
                             <View
                               style={{
-                                display: 'flex',
-                                flexDirection: 'row',
+                                display: "flex",
+                                flexDirection: "row",
                                 padding: 5,
-                                alignContent: 'center',
-                                justifyContent: 'space-evenly',
+                                alignContent: "center",
+                                justifyContent: "space-evenly"
                               }}
                             >
                               <View>
@@ -362,17 +360,17 @@ class AllWalks extends React.Component {
                               </View>
                               <View
                                 style={{
-                                  justifyContent: 'center',
-                                  alignContent: 'center',
+                                  justifyContent: "center",
+                                  alignContent: "center"
                                 }}
                               >
                                 <Text
                                   style={{
-                                    alignContent: 'center',
-                                    color: 'white',
+                                    alignContent: "center",
+                                    color: "white",
                                     fontSize: 14,
-                                    fontFamily: 'Avenir-Heavy',
-                                    marginLeft: 5,
+                                    fontFamily: "Avenir-Heavy",
+                                    marginLeft: 5
                                   }}
                                 >
                                   Start!

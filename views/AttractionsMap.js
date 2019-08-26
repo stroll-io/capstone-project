@@ -1,14 +1,16 @@
-import React, { useEffect } from 'react';
-import { View, SafeAreaView } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, SafeAreaView, Modal, Text} from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { connect } from 'react-redux';
-import { Button, Text, Form, Item, Input, Picker, Icon } from 'native-base';
+import { Form, Item, Picker, Icon, Button } from 'native-base';
+import { AntDesign } from 'react-native-vector-icons';
 import {
   getAllAttractionsThunk,
   getAttractionsByTagThunk,
 } from '../store/attractions';
 
 function AttractionsMap(props) {
+  const [isModalVisible, setIsModalVisible] = useState(false);
   useEffect(() => {
     props.getAllAttractions();
   }, []);
@@ -17,6 +19,13 @@ function AttractionsMap(props) {
     // console.log('location changed')
   };
 
+  const openModal = () => {
+    setIsModalVisible(true)
+  }
+
+  const closeModal = () => {
+    setIsModalVisible(false)
+  }
   // const handleBack = () => {
   //   setIsModalVisible(false);
   //   setTitle('');
@@ -38,16 +47,47 @@ function AttractionsMap(props) {
   //   setDescription('');
   // };
 
+  // let filter = 'Filter by tag';
   const handlePicker = e => {
     if (e === 'All Tags') {
+      // filter = 'All Tags';
       props.getAllAttractions();
     } else {
       props.getAttractionsByTag(e);
+      // filter = 'e[0].toUpperCase() + e.slice(1)';
+    }
+  };
+
+  const pinColor = coord => {
+    if (coord.category === 'architecture') {
+      return '#478FCD';
+    }
+    if (coord.category === 'nature') {
+      return '#5fAD46';
+    }
+    if (coord.category === 'art and museums') {
+      return 'violet';
+    }
+    if (coord.category === 'historical') {
+      return 'tomato';
     }
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
+      <Modal
+        animationType="slide"
+        transparent={false}
+        visible={isModalVisible}
+      >
+        <Text style={{marginTop: 50}}>Here is some text in the modal</Text>
+        <Button
+          large info
+          onPress={closeModal}
+        >
+          <Text>This closes the modal</Text>
+        </Button>
+      </Modal>
       <MapView
         //initial region should be stateful based on users current location
         provider="google"
@@ -58,7 +98,7 @@ function AttractionsMap(props) {
           latitude: 41.895442,
           longitude: -87.638957,
           latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
+          longitudeDelta: 0.0421
         }}
         // onPress={e => {
         //   const newCoord = {
@@ -73,8 +113,8 @@ function AttractionsMap(props) {
       >
         <View
           style={{
-            position: 'absolute',
-            backgroundColor: 'white',
+            position: "absolute",
+            backgroundColor: "white"
           }}
         >
           <Form>
@@ -83,7 +123,7 @@ function AttractionsMap(props) {
                 mode="dropdown"
                 iosIcon={<Icon name="arrow-down" />}
                 iosHeader="Filter"
-                placeholder="Filter by tag"
+                placeholder="Filter by Tag"
                 style={{ width: undefined }}
                 onValueChange={handlePicker}
               >
@@ -96,6 +136,21 @@ function AttractionsMap(props) {
               </Picker>
             </Item>
           </Form>
+          <AntDesign
+            name="questioncircleo"
+            size={27}
+            color="black"
+            style={{
+              position: "absolute",
+              backgroundColor: "white",
+              width: 300,
+              paddingTop: 8,
+              paddingBottom: 8,
+              paddingLeft: 190,
+              left: 150
+            }}
+            onPress={openModal}
+          />
         </View>
 
         {props.attractions.length
@@ -105,32 +160,16 @@ function AttractionsMap(props) {
                   key={coord.id}
                   title={coord.name}
                   description={coord.description}
+                  pinColor={pinColor(coord)}
                   coordinate={{
                     longitude: coord.location.coordinates[1],
-                    latitude: coord.location.coordinates[0],
+                    latitude: coord.location.coordinates[0]
                   }}
                 />
               );
             })
           : null}
       </MapView>
-      <View
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          position: 'absolute',
-          bottom: 40,
-          // left: 120,
-          // right: 120,
-        }}
-      >
-        <Button large primary style={{ margin: 0 }}>
-          <Text style={{ textAlign: 'center' }}>More Info</Text>
-        </Button>
-        <Button large primary style={{ margin: 0 }}>
-          <Text style={{ textAlign: 'center' }}>Legend</Text>
-        </Button>
-      </View>
     </SafeAreaView>
   );
 }

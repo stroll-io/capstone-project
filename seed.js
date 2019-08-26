@@ -379,7 +379,7 @@ const seed = async () => {
         },
         name: `America's Courtyard`,
         description: '',
-        category: 'scenic',
+        category: 'historical',
       }),
       Attraction.create({
         id: 13,
@@ -728,7 +728,7 @@ const seed = async () => {
         },
         name: 'The Windy of Chicago',
         description: 'A boat',
-        category: 'scenic',
+        category: 'historical',
       }),
       Attraction.create({
         id: 43,
@@ -738,7 +738,7 @@ const seed = async () => {
         },
         name: 'Navy Pier Observation Deck',
         description: '',
-        category: 'scenic',
+        category: 'nature',
       }),
     ]);
 

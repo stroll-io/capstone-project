@@ -43,9 +43,19 @@ function WalkingMap(props) {
 
   const getDirections = async () => {
     const res = await axios.get(
-      `https://maps.googleapis.com/maps/api/directions/json?${navPoints[0]}`
+      `https://maps.googleapis.com/maps/api/directions/json?origin=${navPoints[0]}&destination=${navPoints[navPoints.length-1]}&key=${googleSecret}&waypoints=${navPoints.slice(1, -1)}`
     );
-    console.log("res :", res);
+
+    console.log(
+      `https://maps.googleapis.com/maps/api/directions/json?origin=${
+        navPoints[0]
+      }&destination=${
+        navPoints[navPoints.length - 1]
+      }&key=${googleSecret}&waypoints=${navPoints.slice(1, -1)}`
+    );
+    //less
+    //save this as json
+    console.log('res :', res);
   };
 
   const handleOnReady = e => {
