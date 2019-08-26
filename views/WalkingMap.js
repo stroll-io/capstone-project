@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { Button, Text } from 'native-base';
 import { getAllPinsThunk } from '../store/userpins';
 import { getAttractionsThunk } from '../store/attractions';
-import { addStarredWalkThunk } from '../store/starredWalks';
+import { addSavedWalkThunk } from '../store/savedWalks';
 import { addPastWalkThunk } from '../store/pastWalks';
 import MapViewDirections from 'react-native-maps-directions';
 import { googleSecret } from '../secrets';
@@ -32,8 +32,8 @@ function WalkingMap(props) {
     });
   });
 
-  const handleFavorite = () => {
-    props.addFavoriteWalk(props.user.id, props.activeWalk.id);
+  const handleSave = () => {
+    props.saveWalk(props.user.id, props.activeWalk.id);
   };
 
   const handleHome = () => {
@@ -54,8 +54,8 @@ function WalkingMap(props) {
     this.map.animateCamera({
       center: {
         latitude: e.coordinates[0].latitude,
-        longitude: e.coordinates[0].longitude
-      }
+        longitude: e.coordinates[0].longitude,
+      },
     });
     getDirections();
   };
@@ -93,40 +93,35 @@ function WalkingMap(props) {
     }
   };
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
       <Modal
         animationType="slide"
         transparent={false}
         visible={isWalkComplete}
         onRequestClose={() => {
-          console.log("onRequestClose");
+          console.log('onRequestClose');
         }}
       >
         <View style={{ marginTop: 250 }}>
           <Text
             style={{
-              fontWeight: "bold",
+              fontWeight: 'bold',
               fontSize: 30,
-              textAlign: "center"
+              textAlign: 'center',
             }}
           >
             Congratulations, you completed your walk!
           </Text>
           <View
             style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "center",
-              marginTop: 50
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'center',
+              marginTop: 50,
             }}
           >
-            <Button
-              large
-              primary
-              onPress={handleFavorite}
-              style={{ margin: 20 }}
-            >
-              <Text>Add to Favorites</Text>
+            <Button large primary onPress={handleSave} style={{ margin: 20 }}>
+              <Text>Save</Text>
             </Button>
             <Button large success onPress={handleHome} style={{ margin: 20 }}>
               <Text>Go to Dashboard</Text>
@@ -157,7 +152,7 @@ function WalkingMap(props) {
           latitude: 41.895442,
           longitude: -87.638957,
           latitudeDelta: 0.01,
-          longitudeDelta: 0.01
+          longitudeDelta: 0.01,
         }}
       >
         <MapViewDirections
@@ -180,24 +175,24 @@ function WalkingMap(props) {
                   description={coord.description}
                   coordinate={{
                     longitude: coord.location.coordinates[1],
-                    latitude: coord.location.coordinates[0]
+                    latitude: coord.location.coordinates[0],
                   }}
                 />
               );
             })
           : null}
         {navPoints.length ? (
-          <Marker title={"Start"} coordinate={navPoints[0]} pinColor="green" />
+          <Marker title={'Start'} coordinate={navPoints[0]} pinColor="green" />
         ) : null}
       </MapView>
       <View
         style={{
-          display: "flex",
-          position: "absolute",
+          display: 'flex',
+          position: 'absolute',
           bottom: 40,
           left: 50,
-          flexDirection: "row",
-          justifyContent: "center"
+          flexDirection: 'row',
+          justifyContent: 'center',
         }}
       />
     </SafeAreaView>
@@ -218,8 +213,8 @@ const mapDispatch = dispatch => {
     getAllPins: () => {
       dispatch(getAllPinsThunk());
     },
-    addFavoriteWalk: (userId, walkId) => {
-      dispatch(addStarredWalkThunk(userId, walkId));
+    saveWalk: (userId, walkId) => {
+      dispatch(addSavedWalkThunk(userId, walkId));
     },
     addPastWalk: (userId, walkId) => {
       dispatch(addPastWalkThunk(userId, walkId));

@@ -19,14 +19,14 @@ Attraction.belongsTo(Walk);
 Walk.hasMany(Attraction);
 
 User.belongsToMany(Walk, {
-  through: 'favorite_walks',
-  as: 'favoritedByUser',
-  foreignKey: 'favoritedByUser',
+  through: 'saved_walks',
+  as: 'savedByUser',
+  foreignKey: 'savedByUser',
 });
 Walk.belongsToMany(User, {
-  through: 'favorite_walks',
-  as: 'favoriteWalk',
-  foreignKey: 'favoriteWalk',
+  through: 'saved_walks',
+  as: 'savedWalk',
+  foreignKey: 'savedWalk',
 });
 
 User.hasMany(UserPin);

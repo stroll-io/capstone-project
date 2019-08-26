@@ -91,7 +91,7 @@ for (let i = 1; i < 6; i++) {
 }
 
 for (let i = 1; i < 4; i++) {
-  madi.setFavoritedByUser(i);
+  madi.setSavedByUser(i);
 }
 
 //making helper function

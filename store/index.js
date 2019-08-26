@@ -6,14 +6,14 @@ import userpins from './userpins';
 import walks from './walks';
 import activeWalk from './activeWalk';
 import allPastWalks from './pastWalks';
-import starredWalks from './starredWalks';
+import savedWalks from './savedWalks';
 import attractions from './attractions';
 
 const reducer = combineReducers({
   user,
   userpins,
   allPastWalks,
-  starredWalks,
+  savedWalks,
   walks,
   activeWalk,
   attractions,
