@@ -10,6 +10,8 @@ import {
   Picker,
   Icon,
 } from 'native-base';
+import { getAttractionsThunk } from '../store/attractions';
+import { setActiveWalkThunk } from '../store/activeWalk';
 import { getAllWalksThunk, getWalksByTagThunk } from '../store/walks';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
@@ -18,10 +20,12 @@ import { AntDesign, SimpleLineIcons } from 'react-native-vector-icons';
 class AllWalks extends React.Component {
   constructor() {
     super();
-    this.state = {
-      walks: [],
-    };
+    // this.state = {
+    //   walks: [],
+    // };
     this.handlePicker = this.handlePicker.bind(this);
+    this.handleWalkNavigation = this.handleWalkNavigation.bind(this);
+    this.handleWalkInfo = this.handleWalkInfo.bind(this);
   }
 
   static navigationOptions = {
@@ -40,6 +44,19 @@ class AllWalks extends React.Component {
     }
   }
 
+  handleWalkNavigation(walkId) {
+    this.props.setActiveWalk(walkId);
+    setTimeout(() => {
+      this.props.navigation.navigate('Walking Map');
+    }, 200);
+  }
+
+  handleWalkInfo(walkId) {
+    this.props.setActiveWalk(walkId);
+    this.props.getAttractions(walkId);
+    this.props.navigation.navigate('WalkInfo');
+  }
+
   render() {
     return (
       <SafeAreaView style={{ flex: 1 }}>
@@ -52,7 +69,7 @@ class AllWalks extends React.Component {
                   display: 'flex',
                   flexDirection: 'row',
                   justifyContent: 'space-around',
-                  paddingBottom: 10,
+                  paddingBottom: 8,
                 }}
               >
                 <View style={{ width: '80%' }}>
@@ -104,7 +121,7 @@ class AllWalks extends React.Component {
                         display: 'flex',
                         flexDirection: 'column',
                         justifyContent: 'center',
-                        height: 235,
+                        height: 245,
                         width: '100%',
                       }}
                     >
@@ -149,14 +166,24 @@ class AllWalks extends React.Component {
                               {walk.name}
                             </Text>
                           </View>
-                          <View style={{ width: '20%' }}>
+                          <Button
+                            onPress={() => {
+                              this.handleWalkInfo(walk.id);
+                            }}
+                            style={{
+                              width: '10%',
+                              height: 38,
+                              backgroundColor: 'tomato',
+                              borderRadius: 100,
+                              justifyContent: 'center',
+                            }}
+                          >
                             <SimpleLineIcons
                               name="info"
                               size={25}
                               color="white"
-                              style={{ padding: 2 }}
                             />
-                          </View>
+                          </Button>
                         </View>
                       </View>
                       <View
@@ -243,28 +270,21 @@ class AllWalks extends React.Component {
                                   color="white"
                                 />
                               </View>
-                              <View
+                              <Text
                                 style={{
-                                  alignContent: 'center',
+                                  alignSelf: 'center',
                                   justifyContent: 'center',
+                                  alignItems: 'center',
+                                  color: 'white',
+                                  fontSize: 14,
+                                  fontFamily: 'Avenir-Heavy',
                                 }}
                               >
-                                <Text
-                                  style={{
-                                    alignSelf: 'center',
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    color: 'white',
-                                    fontSize: 14,
-                                    fontFamily: 'Avenir-Heavy',
-                                  }}
-                                >
-                                  {tag}
-                                </Text>
-                              </View>
+                                {tag}
+                              </Text>
                             </View>
                           </View>
-                          <View
+                          <Button
                             style={{
                               width: '28%',
                               borderRadius: 20,
@@ -273,42 +293,28 @@ class AllWalks extends React.Component {
                               justifyContent: 'center',
                             }}
                           >
-                            <View
+                            <View style={{ marginLeft: 8, marginRight: 5 }}>
+                              <SimpleLineIcons
+                                name="heart"
+                                size={25}
+                                color="white"
+                              />
+                            </View>
+                            <Text
                               style={{
-                                display: 'flex',
-                                flexDirection: 'row',
-                                alignContent: 'center',
-                                justifyContent: 'space-evenly',
-                                padding: 5,
+                                justifyContent: 'center',
+                                color: 'white',
+                                fontSize: 14,
+                                fontFamily: 'Avenir-Heavy',
                               }}
                             >
-                              <View>
-                                <SimpleLineIcons
-                                  name="heart"
-                                  size={25}
-                                  color="white"
-                                />
-                              </View>
-                              <View
-                                style={{
-                                  justifyContent: 'center',
-                                  alignContent: 'center',
-                                }}
-                              >
-                                <Text
-                                  style={{
-                                    alignContent: 'center',
-                                    color: 'white',
-                                    fontSize: 14,
-                                    fontFamily: 'Avenir-Heavy',
-                                  }}
-                                >
-                                  Save
-                                </Text>
-                              </View>
-                            </View>
-                          </View>
-                          <View
+                              Save
+                            </Text>
+                          </Button>
+                          <Button
+                            onPress={() => {
+                              this.handleWalkNavigation(walk.id);
+                            }}
                             style={{
                               justifyContent: 'center',
                               alignContent: 'center',
@@ -317,42 +323,24 @@ class AllWalks extends React.Component {
                               backgroundColor: '#417dc1',
                             }}
                           >
-                            <View
+                            <View style={{ marginLeft: 8, marginRight: 5 }}>
+                              <SimpleLineIcons
+                                name="cursor"
+                                size={20}
+                                color="white"
+                              />
+                            </View>
+                            <Text
                               style={{
-                                display: 'flex',
-                                flexDirection: 'row',
-                                padding: 5,
                                 alignContent: 'center',
-                                justifyContent: 'space-evenly',
+                                color: 'white',
+                                fontSize: 14,
+                                fontFamily: 'Avenir-Heavy',
                               }}
                             >
-                              <View>
-                                <SimpleLineIcons
-                                  name="cursor"
-                                  size={20}
-                                  color="white"
-                                />
-                              </View>
-                              <View
-                                style={{
-                                  justifyContent: 'center',
-                                  alignContent: 'center',
-                                }}
-                              >
-                                <Text
-                                  style={{
-                                    alignContent: 'center',
-                                    color: 'white',
-                                    fontSize: 14,
-                                    fontFamily: 'Avenir-Heavy',
-                                    marginLeft: 5,
-                                  }}
-                                >
-                                  Start!
-                                </Text>
-                              </View>
-                            </View>
-                          </View>
+                              Start!
+                            </Text>
+                          </Button>
                         </View>
                       </View>
                     </View>
@@ -369,6 +357,12 @@ class AllWalks extends React.Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    walks: state.walks,
+  };
+};
+
 const mapDispatchToProps = dispatch => {
   return {
     getAllWalks: () => {
@@ -377,18 +371,19 @@ const mapDispatchToProps = dispatch => {
     getWalksByTag: tag => {
       dispatch(getWalksByTagThunk(tag));
     },
-  };
-};
-
-const mapStateToProps = state => {
-  return {
-    walks: state.walks,
+    setActiveWalk: walkId => {
+      dispatch(setActiveWalkThunk(walkId));
+    },
+    getAttractions: walkId => {
+      dispatch(getAttractionsThunk(walkId));
+    },
   };
 };
 
 AllWalks.propTypes = {
   getAllWalks: propTypes.func,
   getWalksByTag: propTypes.func,
+  setActiveWalk: propTypes.func,
 };
 
 export default connect(
