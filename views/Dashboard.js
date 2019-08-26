@@ -17,9 +17,9 @@ import WalkingMap from './WalkingMap';
 import EditAccount from './EditAccount';
 import PasswordReset from './PasswordReset';
 import DeleteAccount from './DeleteAccount';
-import { SimpleLineIcons } from 'react-native-vector-icons';
+import { AntDesign, SimpleLineIcons } from 'react-native-vector-icons';
 import Login from './Login';
-import WalkInfo from './WalkInfo'
+import WalkInfo from './WalkInfo';
 
 class Dashboard extends React.Component {
   render() {
@@ -141,7 +141,7 @@ class Dashboard extends React.Component {
                     </Text>
                   </View>
                   <View>
-                    <SimpleLineIcons name="question" size={25} color="black" />
+                    <AntDesign name="questioncircleo" size={25} color="black" />
                   </View>
                 </View>
                 {/* <View>
@@ -344,7 +344,7 @@ const DashboardStackNavigator = createStackNavigator(
     EditAccount: EditAccount,
     PasswordReset: PasswordReset,
     DeleteAccount: DeleteAccount,
-    WalkInfo: WalkInfo
+    WalkInfo: WalkInfo,
   },
   {
     initialRouteName: 'Dashboard',

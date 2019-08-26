@@ -13,7 +13,7 @@ import {
 import { getAllWalksThunk, getWalksByTagThunk } from '../store/walks';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
-import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
+import { AntDesign, SimpleLineIcons } from 'react-native-vector-icons';
 
 class AllWalks extends React.Component {
   constructor() {
@@ -41,33 +41,6 @@ class AllWalks extends React.Component {
   }
 
   render() {
-    // let list = this.props.walks;
-    // const colors = [
-    //   '#D4FCFF',
-    //   '#A9ECF2',
-    //   '#89D8E5',
-    //   '#4FA3C6',
-    //   '#206098',
-    //   '#4FA3C6',
-    //   '#89D8E5',
-    //   '#A9ECF2',
-    // ];
-
-    // if (this.props.walks.length) {
-    //   let counter = 0;
-    //   for (let i = 0; i < list.length; i++) {
-    //     let item = list[i];
-    //     if (counter < colors.length) {
-    //       item.color = colors[counter];
-    //       counter++;
-    //     } else {
-    //       counter = 0;
-    //       item.color = colors[counter];
-    //       counter++;
-    //     }
-    //   }
-    // }
-
     return (
       <SafeAreaView style={{ flex: 1 }}>
         <Container>
@@ -117,7 +90,7 @@ class AllWalks extends React.Component {
                   </Form>
                 </View>
                 <View style={{ width: '18%', margin: 5 }}>
-                  <SimpleLineIcons name="question" size={30} color="#4F8EF7" />
+                  <AntDesign name="questioncircleo" size={30} color="black" />
                 </View>
               </View>
               {this.props.walks.length ? (
