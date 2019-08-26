@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
 import { View, SafeAreaView, Modal } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
@@ -39,9 +40,14 @@ function WalkingMap(props) {
   };
 
   const handleOnReady = e => {
-    console.log('Walk Metadata : ', e);
     setWalkData(e);
     setDestination(e.coordinates[e.coordinates.length - 1]);
+    this.map.animateCamera({
+      center: {
+        latitude: e.coordinates[0].latitude,
+        longitude: e.coordinates[0].longitude
+      }
+    });
   };
 
   const handleUserLocationChange = async e => {
@@ -77,31 +83,31 @@ function WalkingMap(props) {
     }
   };
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
       <Modal
         animationType="slide"
         transparent={false}
         visible={isWalkComplete}
         onRequestClose={() => {
-          console.log('onRequestClose');
+          console.log("onRequestClose");
         }}
       >
         <View style={{ marginTop: 250 }}>
           <Text
             style={{
-              fontWeight: 'bold',
+              fontWeight: "bold",
               fontSize: 30,
-              textAlign: 'center',
+              textAlign: "center"
             }}
           >
             Congratulations, you completed your walk!
           </Text>
           <View
             style={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'center',
-              marginTop: 50,
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+              marginTop: 50
             }}
           >
             <Button
@@ -141,7 +147,7 @@ function WalkingMap(props) {
           latitude: 41.895442,
           longitude: -87.638957,
           latitudeDelta: 0.01,
-          longitudeDelta: 0.01,
+          longitudeDelta: 0.01
         }}
       >
         <MapViewDirections
@@ -154,6 +160,7 @@ function WalkingMap(props) {
           onReady={handleOnReady}
           mode="WALKING"
         />
+
         {props.attractions.length
           ? props.attractions.map(coord => {
               return (
@@ -163,24 +170,24 @@ function WalkingMap(props) {
                   description={coord.description}
                   coordinate={{
                     longitude: coord.location.coordinates[1],
-                    latitude: coord.location.coordinates[0],
+                    latitude: coord.location.coordinates[0]
                   }}
                 />
               );
             })
           : null}
         {navPoints.length ? (
-          <Marker title={'Start'} coordinate={navPoints[0]} pinColor="green" />
+          <Marker title={"Start"} coordinate={navPoints[0]} pinColor="green" />
         ) : null}
       </MapView>
       <View
         style={{
-          display: 'flex',
-          position: 'absolute',
+          display: "flex",
+          position: "absolute",
           bottom: 40,
           left: 50,
-          flexDirection: 'row',
-          justifyContent: 'center',
+          flexDirection: "row",
+          justifyContent: "center"
         }}
       />
     </SafeAreaView>
