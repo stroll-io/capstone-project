@@ -43,7 +43,7 @@ function WalkingMap(props) {
 
   const getDirections = async () => {
     const res = await axios.get(
-      `https://api.mapbox.com/directions/v5/walking/${navPoints.join(";")}`
+      `https://maps.googleapis.com/maps/api/directions/json?${navPoints[0]}`
     );
     console.log("res :", res);
   };
