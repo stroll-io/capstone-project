@@ -11,10 +11,11 @@ import { AntDesign } from 'react-native-vector-icons';
 
 function CreateWalk(props) {
   const [coords, setCoords] = useState([]);
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isCreateModalVisible, setIsCreateModalVisible] = useState(false);
   const [walkTitle, setWalkTitle] = useState('');
   const [walkDescription, setWalkDescription] = useState('');
   const [walkTag, setWalkTag] = useState('');
+  const [isQuestionModalVisible, setIsQuestionModalVisible] = useState(false);
 
   const handleUndo = () => {
     const coordsCopy = coords.slice();
@@ -23,11 +24,11 @@ function CreateWalk(props) {
   };
 
   const handleCreate = () => {
-    setIsModalVisible(true);
+    setIsCreateModalVisible(true);
   };
 
   const handleCancel = () => {
-    setIsModalVisible(false);
+    setIsCreateModalVisible(false);
     setWalkTitle('');
     setWalkDescription('');
   };
@@ -40,7 +41,7 @@ function CreateWalk(props) {
       walkTag,
     });
     props.navigation.navigate('Explore');
-    setIsModalVisible(false);
+    setIsCreateModalVisible(false);
   };
 
   const handleStart = async () => {
@@ -53,12 +54,30 @@ function CreateWalk(props) {
     props.setActiveWalkThunk(data.id);
     setTimeout(() => {
       props.navigation.navigate('Walking Map');
-      setIsModalVisible(false);
+      setIsCreateModalVisible(false);
     }, 200);
+  };
+
+  const openQuestionModal = () => {
+    setIsQuestionModalVisible(true);
+  };
+
+  const closeQuestionModal = () => {
+    setIsQuestionModalVisible(false);
   };
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
+      <Modal
+        animationType="slide"
+        transparent={false}
+        visible={isQuestionModalVisible}
+      >
+        <Text style={{ marginTop: 50 }}>Here is some text in the modal</Text>
+        <Button large info onPress={closeQuestionModal}>
+          <Text>This closes the modal</Text>
+        </Button>
+      </Modal>
       <View style={{ flex: 1 }}>
         <View style={{ display: 'flex', flexDirection: 'row' }}>
           <View style={{ width: '80%' }}>
@@ -84,6 +103,7 @@ function CreateWalk(props) {
                 backgroundColor: 'white',
                 padding: 10,
               }}
+              onPress={openQuestionModal}
             />
           </View>
         </View>
@@ -144,10 +164,10 @@ function CreateWalk(props) {
       <Modal
         animationType="slide"
         transparent={false}
-        visible={isModalVisible}
-        onRequestClose={() => {
-          console.log('onRequestClose');
-        }}
+        visible={isCreateModalVisible}
+        // onRequestClose={() => {
+        //   console.log('onRequestClose');
+        // }}
       >
         <View style={{ marginTop: 22 }}>
           <View>

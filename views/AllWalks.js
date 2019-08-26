@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, View, SafeAreaView } from 'react-native';
+import { Image, View, SafeAreaView, Modal } from 'react-native';
 import {
   Button,
   Text,
@@ -20,12 +20,14 @@ import { AntDesign, SimpleLineIcons } from 'react-native-vector-icons';
 class AllWalks extends React.Component {
   constructor() {
     super();
-    // this.state = {
-    //   walks: [],
-    // };
+    this.state = {
+      isModalVisible: false,
+    };
     this.handlePicker = this.handlePicker.bind(this);
     this.handleWalkNavigation = this.handleWalkNavigation.bind(this);
     this.handleWalkInfo = this.handleWalkInfo.bind(this);
+    this.openModal = this.openModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
   }
 
   static navigationOptions = {
@@ -34,6 +36,18 @@ class AllWalks extends React.Component {
 
   async componentDidMount() {
     await this.props.getAllWalks();
+  }
+
+  openModal() {
+    this.setState({
+      isModalVisible: true,
+    });
+  }
+
+  closeModal() {
+    this.setState({
+      isModalVisible: false,
+    });
   }
 
   handlePicker(e) {
@@ -60,6 +74,16 @@ class AllWalks extends React.Component {
   render() {
     return (
       <SafeAreaView style={{ flex: 1 }}>
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={this.state.isModalVisible}
+        >
+          <Text style={{ marginTop: 50 }}>Here is some text in the modal</Text>
+          <Button large info onPress={this.closeModal}>
+            <Text>This closes the modal</Text>
+          </Button>
+        </Modal>
         <Container>
           <Content>
             <View>
@@ -107,7 +131,12 @@ class AllWalks extends React.Component {
                   </Form>
                 </View>
                 <View style={{ width: '18%', margin: 5 }}>
-                  <AntDesign name="questioncircleo" size={30} color="black" />
+                  <AntDesign
+                    name="questioncircleo"
+                    size={30}
+                    color="black"
+                    onPress={this.openModal}
+                  />
                 </View>
               </View>
               {this.props.walks.length ? (
