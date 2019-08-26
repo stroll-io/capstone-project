@@ -70,7 +70,7 @@ class HomeScreen extends React.Component {
   }
 }
 
-const HomeNavigator = createSwitchNavigator(
+export const HomeNavigator = createSwitchNavigator(
   {
     Home: HomeScreen,
     Login: Login,
