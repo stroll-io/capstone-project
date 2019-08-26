@@ -15,6 +15,7 @@ const WalkInfo = (props) => {
     console.log('props.activeWalk :', props.activeWalk);
 
   useEffect(() => {
+    //set start for active walk in state, if it's different than props.activeWalk.start change it.
     const navArr = [];
     if (props.activeWalk.navPoints) {
       props.activeWalk.navPoints.forEach(navPoint => {

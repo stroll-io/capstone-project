@@ -7,10 +7,9 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
 } from 'react-native';
-// import { createSwitchNavigator, createAppContainer } from 'react-navigation';
 import { Button, Text } from 'native-base';
-// import DashboardContainer from './Dashboard';
 import { fetchUser } from '../store/user';
+import * as Haptics from 'expo-haptics';
 
 const DismissKeyboard = ({ children }) => (
   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -26,10 +25,12 @@ class Login extends React.Component {
       password: '',
     };
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.easyLogin = this.easyLogin.bind(this);
   }
 
   static navigationOptions = {
     header: null,
+    gesturesEnabled: false,
   };
 
   async handleSubmit(event) {
@@ -39,7 +40,13 @@ class Login extends React.Component {
       this.props.navigation.navigate('Dashboard');
     } catch (err) {
       //this was handled in the thunk creator and rethrown here
+      Haptics.notificationAsync();
     }
+  }
+
+  easyLogin() {
+    this.props.fetchUser('test@test.com', 'test');
+    this.props.navigation.navigate('Dashboard');
   }
 
   render() {
@@ -61,6 +68,7 @@ class Login extends React.Component {
                   fontSize: 35,
                   marginBottom: 100,
                 }}
+                onPress={this.easyLogin}
               >
                 Sign into your account
               </Text>
@@ -158,20 +166,6 @@ class Login extends React.Component {
     );
   }
 }
-// const LoginNavigator = createSwitchNavigator(
-//   {
-//     Login: Login,
-//     Dashboard: DashboardContainer,
-//   },
-//   {
-//     initialRouteName: 'Login',
-//     headerStyle: {
-//       headerMode: 'none',
-//     },
-//   }
-// );
-
-// const LoginContainer = createAppContainer(LoginNavigator);
 
 const mapState = state => {
   return {

@@ -1,17 +1,29 @@
 import React from 'react';
 import { Image, View } from 'react-native';
-import { Text, Content, Container } from 'native-base';
+import { Text, Content, Container, Button } from 'native-base';
 import { fetchStarredWalks } from '../store/starredWalks';
+import { setActiveWalkThunk } from '../store/activeWalk';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
 
 class StarredWalks extends React.Component {
+  constructor() {
+    super();
+    this.handleWalkNavigation = this.handleWalkNavigation.bind(this);
+  }
   static navigationOptions = {
     title: 'Starred Walks',
   };
 
   async componentDidMount() {
-    await this.props.fetchStarredWalks(2);
+    await this.props.fetchStarredWalks(this.props.user.id);
+  }
+
+  handleWalkNavigation(walkId) {
+    this.props.setActiveWalkThunk(walkId);
+    setTimeout(() => {
+      this.props.navigation.navigate('Walking Map');
+    }, 200);
   }
 
   render() {
@@ -124,6 +136,12 @@ class StarredWalks extends React.Component {
                             >
                               Walked: {walk.favorite_walks.createdAt}
                             </Text>
+                            <Button
+                              onPress={() => this.handleWalkNavigation(walk.id)}
+                              style={{ borderRadius: '20px', width: '60%' }}
+                            >
+                              <Text>Start this Walk</Text>
+                            </Button>
                           </View>
                         </View>
                       </View>
@@ -147,12 +165,16 @@ const mapDispatchToProps = dispatch => {
     fetchStarredWalks: userId => {
       dispatch(fetchStarredWalks(userId));
     },
+    setActiveWalkThunk: walkId => {
+      dispatch(setActiveWalkThunk(walkId));
+    },
   };
 };
 
 const mapStateToProps = state => {
   return {
     starredWalks: state.starredWalks,
+    user: state.user,
   };
 };
 

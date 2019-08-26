@@ -10,11 +10,12 @@ import {
   Text,
   Input,
 } from 'native-base';
+import { View } from 'react-native';
 import { fetchUpdatedUser } from '../store';
 
 const EditAccount = props => {
-  const [nameInput, setNameInput] = useState(props.loggedInUser.firstName);
-  const [emailInput, setEmailInput] = useState(props.loggedInUser.email);
+  const [nameInput, setNameInput] = useState(props.user.firstName);
+  const [emailInput, setEmailInput] = useState(props.user.email);
 
   const handleSubmit = async event => {
     if (event) {
@@ -46,9 +47,11 @@ const EditAccount = props => {
               />
             </Item>
           </Form>
-          <Button onPress={handleSubmit}>
-            <Text>Update Info</Text>
-          </Button>
+          <View style={{ justifyContent: 'center' }}>
+            <Button onPress={handleSubmit} style={{ width: 150 }}>
+              <Text>Update Info</Text>
+            </Button>
+          </View>
         </Content>
       </Container>
     </>
