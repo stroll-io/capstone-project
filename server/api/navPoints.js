@@ -16,6 +16,7 @@ navPointRouter.post('/', async (req, res, next) => {
           req.body.coords[0].longitude,
         ],
       },
+      distance: req.body.distance,
     };
     const walk = await Walk.create(walkInfo);
 

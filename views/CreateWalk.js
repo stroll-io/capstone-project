@@ -8,12 +8,15 @@ import { connect } from 'react-redux';
 import { getAllWalksThunk } from '../store/walks';
 import { setActiveWalkThunk } from '../store/activeWalk';
 import { AntDesign } from 'react-native-vector-icons';
+import MapViewDirections from 'react-native-maps-directions';
+import { googleSecret } from '../secrets';
 
 function CreateWalk(props) {
   const [coords, setCoords] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [walkTitle, setWalkTitle] = useState('');
   const [walkDescription, setWalkDescription] = useState('');
+  const [distance, setDistance] = useState(0);
   const [walkTag, setWalkTag] = useState('');
 
   const handleUndo = () => {
@@ -38,6 +41,7 @@ function CreateWalk(props) {
       walkTitle,
       walkDescription,
       walkTag,
+      distance,
     });
     props.navigation.navigate('Explore');
     setIsModalVisible(false);
@@ -49,12 +53,17 @@ function CreateWalk(props) {
       walkTitle,
       walkDescription,
       walkTag,
+      distance,
     });
     props.setActiveWalkThunk(data.id);
     setTimeout(() => {
       props.navigation.navigate('Walking Map');
       setIsModalVisible(false);
     }, 200);
+  };
+
+  const handleOnReady = event => {
+    setDistance((event.distance * 0.621371).toFixed(2));
   };
 
   return (
@@ -90,7 +99,7 @@ function CreateWalk(props) {
       </View>
       <MapView
         provider="google"
-        style={{ flex: 18 }}
+        style={{ flex: 16 }}
         initialRegion={{
           latitude: 41.895442,
           longitude: -87.638957,
@@ -105,6 +114,16 @@ function CreateWalk(props) {
           setCoords([...coords, newCord]);
         }}
       >
+        <MapViewDirections
+          origin={coords[0]}
+          waypoints={coords.length > 2 ? coords.slice(1, -1) : null}
+          destination={coords[coords.length - 1]}
+          apikey={googleSecret}
+          strokeWidth={4}
+          strokeColor="blue"
+          onReady={handleOnReady}
+          mode="WALKING"
+        />
         {coords.length
           ? coords.map(coord => {
               return (
@@ -141,6 +160,7 @@ function CreateWalk(props) {
           </Text>
         </Button>
       </View>
+      <Text>Current Distance: {distance} mi</Text>
       <Modal
         animationType="slide"
         transparent={false}
