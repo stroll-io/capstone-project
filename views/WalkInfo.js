@@ -8,6 +8,7 @@ import { googleSecret } from "../secrets";
 
 
 
+
 const WalkInfo = (props) => {
     const [navPoints, setNavPoints] = useState([])
     const [distance, setDistance] = useState(0);
@@ -33,7 +34,6 @@ const WalkInfo = (props) => {
       setStart(props.activeWalk.start);
       animateCamera(props.activeWalk);
     }
-
   }, [props.activeWalk]);
 
 
@@ -41,7 +41,7 @@ const WalkInfo = (props) => {
     const roundedDuration = parseFloat(e.duration).toFixed(1);
     setDistance(parseFloat(e.distance / 1.609).toFixed(2));
     setDuration(roundedDuration);
-
+    animateCamera(props.activeWalk);
   };
 
   const animateCamera = (activeWalk) => {

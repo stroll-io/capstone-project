@@ -11,6 +11,7 @@ import { addPastWalkThunk } from '../store/pastWalks';
 import MapViewDirections from 'react-native-maps-directions';
 import { googleSecret } from '../secrets';
 import * as Haptics from 'expo-haptics';
+import axios from 'axios'
 
 function WalkingMap(props) {
   const [isWalkComplete, setIsWalkComplete] = useState(false);
@@ -39,6 +40,14 @@ function WalkingMap(props) {
     props.navigation.navigate('Dashboard');
   };
 
+
+  const getDirections = async () => {
+    const res = await axios.get(
+      `https://api.mapbox.com/directions/v5/walking/${navPoints.join(";")}`
+    );
+    console.log("res :", res);
+  };
+
   const handleOnReady = e => {
     setWalkData(e);
     setDestination(e.coordinates[e.coordinates.length - 1]);
@@ -48,6 +57,7 @@ function WalkingMap(props) {
         longitude: e.coordinates[0].longitude
       }
     });
+    getDirections();
   };
 
   const handleUserLocationChange = async e => {
