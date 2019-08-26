@@ -2,7 +2,8 @@ import React, { useEffect } from 'react';
 import { View, SafeAreaView } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { connect } from 'react-redux';
-import { Button, Text, Form, Item, Input, Picker, Icon } from 'native-base';
+import { Form, Item, Picker, Icon } from 'native-base';
+import { AntDesign } from 'react-native-vector-icons';
 import {
   getAllAttractionsThunk,
   getAttractionsByTagThunk,
@@ -38,11 +39,29 @@ function AttractionsMap(props) {
   //   setDescription('');
   // };
 
+  // let filter = 'Filter by tag';
   const handlePicker = e => {
     if (e === 'All Tags') {
+      // filter = 'All Tags';
       props.getAllAttractions();
     } else {
       props.getAttractionsByTag(e);
+      // filter = 'e[0].toUpperCase() + e.slice(1)';
+    }
+  };
+
+  const pinColor = coord => {
+    if (coord.category === 'architecture') {
+      return '#478FCD';
+    }
+    if (coord.category === 'nature') {
+      return '#5fAD46';
+    }
+    if (coord.category === 'art and museums') {
+      return 'violet';
+    }
+    if (coord.category === 'historical') {
+      return 'tomato';
     }
   };
 
@@ -83,7 +102,7 @@ function AttractionsMap(props) {
                 mode="dropdown"
                 iosIcon={<Icon name="arrow-down" />}
                 iosHeader="Filter"
-                placeholder="Filter by tag"
+                placeholder="Filter by Tag"
                 style={{ width: undefined }}
                 onValueChange={handlePicker}
               >
@@ -96,6 +115,20 @@ function AttractionsMap(props) {
               </Picker>
             </Item>
           </Form>
+          <AntDesign
+            name="questioncircleo"
+            size={27}
+            color="black"
+            style={{
+              position: 'absolute',
+              backgroundColor: 'white',
+              width: 300,
+              paddingTop: 8,
+              paddingBottom: 8,
+              paddingLeft: 190,
+              left: 150,
+            }}
+          />
         </View>
 
         {props.attractions.length
@@ -105,6 +138,7 @@ function AttractionsMap(props) {
                   key={coord.id}
                   title={coord.name}
                   description={coord.description}
+                  pinColor={pinColor(coord)}
                   coordinate={{
                     longitude: coord.location.coordinates[1],
                     latitude: coord.location.coordinates[0],
@@ -114,23 +148,6 @@ function AttractionsMap(props) {
             })
           : null}
       </MapView>
-      <View
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          position: 'absolute',
-          bottom: 40,
-          // left: 120,
-          // right: 120,
-        }}
-      >
-        <Button large primary style={{ margin: 0 }}>
-          <Text style={{ textAlign: 'center' }}>More Info</Text>
-        </Button>
-        <Button large primary style={{ margin: 0 }}>
-          <Text style={{ textAlign: 'center' }}>Legend</Text>
-        </Button>
-      </View>
     </SafeAreaView>
   );
 }

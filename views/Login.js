@@ -10,6 +10,7 @@ import {
 import { Button, Text } from 'native-base';
 import { fetchUser } from '../store/user';
 import * as Haptics from 'expo-haptics';
+import { AntDesign } from 'react-native-vector-icons';
 
 const DismissKeyboard = ({ children }) => (
   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -25,7 +26,7 @@ class Login extends React.Component {
       password: '',
     };
     this.handleSubmit = this.handleSubmit.bind(this);
-    // this.easyLogin = this.easyLogin.bind(this);
+    this.easyLogin = this.easyLogin.bind(this);
   }
 
   static navigationOptions = {
@@ -155,9 +156,23 @@ class Login extends React.Component {
                 <Text style={{ fontFamily: 'Avenir-Heavy' }}>Login</Text>
               </Button>
               {this.props.error && (
-                <Text style={{ color: 'red' }}>
-                  Incorrect email or password
-                </Text>
+                <View
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignContent: 'center',
+                    margin: 10,
+                  }}
+                >
+                  <View style={{ justifyContent: 'center' }}>
+                    <Text style={{ fontFamily: 'Avenir-Heavy', color: 'red' }}>
+                      Incorrect email or password
+                    </Text>
+                  </View>
+                  <View style={{ padding: 5, justifyContent: 'center' }}>
+                    <AntDesign name="frown" size={25} color="red" />
+                  </View>
+                </View>
               )}
             </View>
           </View>

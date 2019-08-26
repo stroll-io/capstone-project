@@ -140,6 +140,7 @@ const seed = async () => {
           type: 'Point',
           coordinates: [41.884278, -87.624225],
         },
+        distance: 1.86,
       }),
       Walk.create({
         name: `Grant Park`,
@@ -150,6 +151,7 @@ const seed = async () => {
           type: 'Point',
           coordinates: [41.882289, -87.619441],
         },
+        distance: 3.04,
       }),
       Walk.create({
         name: `Museum Campus`,
@@ -160,6 +162,7 @@ const seed = async () => {
           type: 'Point',
           coordinates: [41.867492, -87.619216],
         },
+        distance: 2.57,
       }),
       Walk.create({
         name: `Michigan Ave`,
@@ -170,6 +173,7 @@ const seed = async () => {
           type: 'Point',
           coordinates: [41.888909, -87.624261],
         },
+        distance: 2.34,
       }),
       Walk.create({
         name: `The Loop Architectural Walk`,
@@ -180,6 +184,7 @@ const seed = async () => {
           type: 'Point',
           coordinates: [41.884567, -87.632226],
         },
+        distance: 1.09,
       }),
       Walk.create({
         name: 'Sculpture in the Loop',
@@ -190,6 +195,7 @@ const seed = async () => {
           type: 'Point',
           coordinates: [41.884567, -87.632226],
         },
+        distance: 4.88,
       }),
       Walk.create({
         name: 'Navy Pier',
@@ -200,6 +206,7 @@ const seed = async () => {
           type: 'Point',
           coordinates: [41.891353, -87.609756],
         },
+        distance: 3.05,
       }),
       Walk.create({
         name: 'Magnificent Mile',
@@ -211,6 +218,7 @@ const seed = async () => {
           type: 'Point',
           coordinates: [41.88895, -87.624381],
         },
+        distance: 2.0,
       }),
       Walk.create({
         name: 'Lincoln Park Zoo',
@@ -221,6 +229,7 @@ const seed = async () => {
           type: 'Point',
           coordinates: [41.930322, -87.637067],
         },
+        distance: 3.09,
       }),
     ]);
 
@@ -370,7 +379,7 @@ const seed = async () => {
         },
         name: `America's Courtyard`,
         description: '',
-        category: 'scenic',
+        category: 'historical',
       }),
       Attraction.create({
         id: 13,
@@ -719,7 +728,7 @@ const seed = async () => {
         },
         name: 'The Windy of Chicago',
         description: 'A boat',
-        category: 'scenic',
+        category: 'historical',
       }),
       Attraction.create({
         id: 43,
@@ -729,7 +738,7 @@ const seed = async () => {
         },
         name: 'Navy Pier Observation Deck',
         description: '',
-        category: 'scenic',
+        category: 'nature',
       }),
     ]);
 
@@ -881,7 +890,7 @@ const seed = async () => {
     }
 
     for (let i = 1; i < 4; i++) {
-      madi.setFavoritedByUser(i);
+      madi.setSavedByUser(i);
     }
 
     for (let i = 1; i < 10; i++) {
@@ -891,7 +900,7 @@ const seed = async () => {
     }
 
     for (let j = 1; j < 10; j++) {
-      test.setFavoritedByUser(j);
+      test.setSavedByUser(j);
     }
 
     milleniumPark.setAttractions([1, 2, 3, 4, 5, 6]);

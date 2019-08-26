@@ -6,9 +6,9 @@ router.use('/navPoints', require('./navPoints'));
 router.use('/walks', require('./walks'));
 router.use('/userPins', require('./userPins'));
 router.use('/walks', require('./walks'));
-router.use('/favorites', require('./favorites'));
+router.use('/savedWalks', require('./savedWalks'));
 router.use('/pastWalks', require('./pastWalks'));
-router.use('/attractions', require('./attractions'))
+router.use('/attractions', require('./attractions'));
 
 router.use((req, res, next) => {
   const error = new Error('Not Found');

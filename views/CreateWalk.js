@@ -7,6 +7,7 @@ import { ngrokSecret } from '../secrets';
 import { connect } from 'react-redux';
 import { getAllWalksThunk } from '../store/walks';
 import { setActiveWalkThunk } from '../store/activeWalk';
+import { AntDesign } from 'react-native-vector-icons';
 
 function CreateWalk(props) {
   const [coords, setCoords] = useState([]);
@@ -59,16 +60,33 @@ function CreateWalk(props) {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
       <View style={{ flex: 1 }}>
-        <Text
-          style={{
-            fontWeight: 'bold',
-            fontSize: 15,
-            textAlign: 'center',
-            marginTop: 10,
-          }}
-        >
-          Tap the map to start adding points to your walk
-        </Text>
+        <View style={{ display: 'flex', flexDirection: 'row' }}>
+          <View style={{ width: '80%' }}>
+            <Text
+              style={{
+                fontFamily: 'Avenir-Heavy',
+                fontSize: 16,
+                textAlign: 'center',
+                marginTop: 10,
+                marginBottom: 10,
+              }}
+            >
+              Tap the map to add points to your walk
+            </Text>
+          </View>
+          <View style={{ width: '20%', justifyContent: 'center' }}>
+            <AntDesign
+              name="questioncircleo"
+              size={25}
+              color="black"
+              style={{
+                position: 'absolute',
+                backgroundColor: 'white',
+                padding: 10,
+              }}
+            />
+          </View>
+        </View>
       </View>
       <MapView
         provider="google"
@@ -111,11 +129,16 @@ function CreateWalk(props) {
           justifyContent: 'center',
         }}
       >
-        <Button large warning onPress={handleUndo} style={{ margin: 20 }}>
-          <Text>Undo</Text>
+        <Button
+          onPress={handleUndo}
+          style={{ backgroundColor: 'tomato', borderRadius: 20, margin: 20 }}
+        >
+          <Text style={{ fontFamily: 'Avenir-Heavy', fontSize: 18 }}>Undo</Text>
         </Button>
-        <Button large primary onPress={handleCreate} style={{ margin: 20 }}>
-          <Text>Create</Text>
+        <Button onPress={handleCreate} style={{ borderRadius: 20, margin: 20 }}>
+          <Text style={{ fontFamily: 'Avenir-Heavy', fontSize: 18 }}>
+            Create Walk
+          </Text>
         </Button>
       </View>
       <Modal
@@ -130,6 +153,7 @@ function CreateWalk(props) {
           <View>
             <Text
               style={{
+                fontFamily: 'Avenir-Heavy',
                 marginTop: 150,
                 marginBottom: 40,
                 textAlign: 'center',
@@ -188,32 +212,39 @@ function CreateWalk(props) {
                   small
                   success
                   onPress={handleSubmit}
-                  style={{ margin: 10 }}
+                  style={{ margin: 10, borderRadius: 20 }}
                 >
-                  <Text>Create and Save</Text>
+                  <Text style={{ fontFamily: 'Avenir-Heavy' }}>
+                    Create and Save Walk
+                  </Text>
                 </Button>
                 <Button
                   small
                   success
                   onPress={handleStart}
-                  style={{ margin: 10 }}
+                  style={{ margin: 10, borderRadius: 20 }}
                 >
-                  <Text>Create and Start Walk</Text>
+                  <Text style={{ fontFamily: 'Avenir-Heavy' }}>
+                    Create and Start Walk
+                  </Text>
                 </Button>
               </View>
-              <View style={{ justifyContent: 'center' }}>
+              <View
+                style={{ alignItems: 'flex-start', justifyContent: 'center' }}
+              >
                 <Button
                   small
                   danger
                   style={{
-                    margin: 10,
+                    margin: 20,
                     width: 100,
                     justifyContent: 'center',
-                    marginLeft: 5,
+
+                    borderRadius: 20,
                   }}
                   onPress={handleCancel}
                 >
-                  <Text>Cancel</Text>
+                  <Text style={{ fontFamily: 'Avenir-Heavy' }}>Cancel</Text>
                 </Button>
               </View>
             </Form>

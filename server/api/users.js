@@ -48,16 +48,4 @@ userRouter.get('/:userId/past-walks', async (req, res, next) => {
   }
 });
 
-userRouter.get('/:userId/starred-walks', async (req, res, next) => {
-  try {
-    const singleUser = await User.findByPk(req.params.userId);
-    const starredWalks = await singleUser.getFavoritedByUser({
-      order: [['createdAt', 'ASC']],
-    });
-    res.send(starredWalks);
-  } catch (err) {
-    next(err);
-  }
-});
-
 module.exports = userRouter;

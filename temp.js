@@ -80,3 +80,30 @@
 //   [41.92327, -87.63337],
 //   [41.924136, -87.635296],
 // ];
+
+// let list = this.props.walks;
+// const colors = [
+//   '#D4FCFF',
+//   '#A9ECF2',
+//   '#89D8E5',
+//   '#4FA3C6',
+//   '#206098',
+//   '#4FA3C6',
+//   '#89D8E5',
+//   '#A9ECF2',
+// ];
+
+// if (this.props.walks.length) {
+//   let counter = 0;
+//   for (let i = 0; i < list.length; i++) {
+//     let item = list[i];
+//     if (counter < colors.length) {
+//       item.color = colors[counter];
+//       counter++;
+//     } else {
+//       counter = 0;
+//       item.color = colors[counter];
+//       counter++;
+//     }
+//   }
+// }
