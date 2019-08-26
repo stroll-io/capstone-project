@@ -6,11 +6,11 @@ import { setActiveWalkThunk } from '../store/activeWalk';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
 
-//TODO need to be able to dynamically get the userId
 class PastWalks extends React.Component {
   constructor() {
     super();
     this.handleWalkNavigation = this.handleWalkNavigation.bind(this);
+    this.totalDistanceReducer = this.totalDistanceReducer.bind(this);
   }
   static navigationOptions = {
     title: 'Past Walks',
@@ -27,10 +27,25 @@ class PastWalks extends React.Component {
     }, 200);
   }
 
+  totalDistanceReducer(walkArray) {
+    return walkArray.reduce((accum, currVal) => {
+      return accum + currVal.distance;
+    }, 0);
+  }
+
   render() {
     return (
       <Container>
         <Content>
+          <View style={{ justifyContent: 'center' }}>
+            <Text style={{ fontWeight: '700', textAlign: 'center' }}>
+              {this.props.pastWalks.length
+                ? `You've walked ${this.totalDistanceReducer(
+                    this.props.pastWalks
+                  )} miles so far - great job!`
+                : ''}
+            </Text>
+          </View>
           <View
             style={{
               display: 'flex',
@@ -129,6 +144,18 @@ class PastWalks extends React.Component {
                               {walk.description}
                             </Text>
                           </View>
+                          <View
+                            style={{ display: 'flex', flexFlow: 'row-wrap' }}
+                          >
+                            <Text
+                              style={{
+                                fontSize: 16,
+                                fontFamily: 'Avenir-Heavy',
+                              }}
+                            >
+                              Distance: {walk.distance} mi
+                            </Text>
+                          </View>
                           <View>
                             <Text
                               style={{
@@ -136,7 +163,7 @@ class PastWalks extends React.Component {
                                 fontFamily: 'Avenir-Heavy',
                               }}
                             >
-                              Date:{' '}
+                              Walked:{' '}
                               {new Date(
                                 walk.past_walks.createdAt
                               ).toDateString()}
