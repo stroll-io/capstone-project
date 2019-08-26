@@ -18,6 +18,7 @@ import EditAccount from './EditAccount';
 import PasswordReset from './PasswordReset';
 import DeleteAccount from './DeleteAccount';
 import { SimpleLineIcons } from 'react-native-vector-icons';
+import Login from './Login';
 
 class Dashboard extends React.Component {
   render() {
@@ -342,6 +343,7 @@ const DashboardStackNavigator = createStackNavigator(
     EditAccount: EditAccount,
     PasswordReset: PasswordReset,
     DeleteAccount: DeleteAccount,
+    Logout: Login,
   },
   {
     initialRouteName: 'Dashboard',
@@ -379,6 +381,7 @@ const DashboardNavigator = createDrawerNavigator(
     'Past Walks': PastWalks,
     'Starred Walks': StarredWalks,
     'Account Info': AccountInfo,
+    Logout: Login,
   },
   {
     initialRouteName: 'Dashboard',

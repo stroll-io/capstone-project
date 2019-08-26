@@ -23,8 +23,13 @@ authRouter.post('/login', async (req, res, next) => {
 authRouter.post('/register', async (req, res, next) => {
   try {
     const { firstName, email, password } = req.body;
-    const user = await User.create({ firstName, email, password });
-    res.send(user);
+    const existingUser = await User.findOne({ where: { email } });
+    if (existingUser) {
+      res.status(401).send('Email already registered');
+    } else {
+      const user = await User.create({ firstName, email, password });
+      res.send(user);
+    }
   } catch (err) {
     next(err);
   }
