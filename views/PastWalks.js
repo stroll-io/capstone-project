@@ -136,7 +136,10 @@ class PastWalks extends React.Component {
                                 fontFamily: 'Avenir-Heavy',
                               }}
                             >
-                              Date: {walk.past_walks.createdAt}
+                              Date:{' '}
+                              {new Date(
+                                walk.past_walks.createdAt
+                              ).toDateString()}
                             </Text>
                             <Button
                               onPress={() => this.handleWalkNavigation(walk.id)}
