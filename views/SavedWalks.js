@@ -47,8 +47,10 @@ class SavedWalks extends React.Component {
           <View>
             {this.props.savedWalks.length ? (
               this.props.savedWalks.map(walk => {
-                const tag =
-                  walk.category[0].toUpperCase() + walk.category.slice(1);
+                let tag;
+                if (walk.category) {
+                  tag = walk.category[0].toUpperCase() + walk.category.slice(1);
+                }
                 return (
                   <View
                     key={walk.id}

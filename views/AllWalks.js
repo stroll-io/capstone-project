@@ -149,8 +149,11 @@ class AllWalks extends React.Component {
               </View>
               {this.props.walks.length ? (
                 this.props.walks.map(walk => {
-                  const tag =
-                    walk.category[0].toUpperCase() + walk.category.slice(1);
+                  let tag;
+                  if (walk.category) {
+                    tag =
+                      walk.category[0].toUpperCase() + walk.category.slice(1);
+                  }
                   return (
                     <View
                       key={walk.id}
