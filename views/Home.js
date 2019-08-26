@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Image } from 'react-native';
+import { View, Image, SafeAreaView } from 'react-native';
 import { Text, Button } from 'native-base';
 import { createSwitchNavigator, createAppContainer } from 'react-navigation';
 import Login from './Login';
@@ -11,7 +11,7 @@ import DashboardContainer from './Dashboard';
 class HomeScreen extends React.Component {
   render() {
     return (
-      <View
+      <SafeAreaView
         style={{
           flex: 1,
           display: 'flex',
@@ -75,7 +75,7 @@ class HomeScreen extends React.Component {
             </Button>
           </View>
         </View>
-      </View>
+      </SafeAreaView>
     );
   }
 }
