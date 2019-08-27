@@ -197,7 +197,6 @@ function AttractionsMap(props) {
                 <Picker.Item label="Art and Museums" value="art and museums" />
                 <Picker.Item label="Historical" value="historical" />
                 <Picker.Item label="Nature" value="nature" />
-                <Picker.Item label="Scenic" value="scenic" />
               </Picker>
             </Item>
           </Form>
