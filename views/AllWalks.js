@@ -1,5 +1,6 @@
 import React from 'react';
 import { Image, View, SafeAreaView, Modal } from 'react-native';
+// import { Modal } from 'react-native-modal';
 import {
   Button,
   Text,
@@ -12,6 +13,7 @@ import {
 } from 'native-base';
 import { getAttractionsThunk } from '../store/attractions';
 import { setActiveWalkThunk } from '../store/activeWalk';
+import { addSavedWalkThunk } from '../store/savedWalks';
 import { getAllWalksThunk, getWalksByTagThunk } from '../store/walks';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
@@ -26,6 +28,7 @@ class AllWalks extends React.Component {
     this.handlePicker = this.handlePicker.bind(this);
     this.handleWalkNavigation = this.handleWalkNavigation.bind(this);
     this.handleWalkInfo = this.handleWalkInfo.bind(this);
+    this.handleSaveWalk = this.handleSaveWalk.bind(this);
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
   }
@@ -71,6 +74,10 @@ class AllWalks extends React.Component {
     this.props.navigation.navigate('WalkInfo');
   }
 
+  handleSaveWalk(userId, walkId) {
+    this.props.addSavedWalk(userId, walkId);
+  }
+
   render() {
     return (
       <SafeAreaView style={{ flex: 1 }}>
@@ -78,6 +85,7 @@ class AllWalks extends React.Component {
           animationType="slide"
           transparent={false}
           visible={this.state.isModalVisible}
+          style={{ height: 300, justifyContent: 'flex-end' }}
         >
           <Text style={{ marginTop: 50 }}>Here is some text in the modal</Text>
           <Button large info onPress={this.closeModal}>
@@ -141,8 +149,11 @@ class AllWalks extends React.Component {
               </View>
               {this.props.walks.length ? (
                 this.props.walks.map(walk => {
-                  const tag =
-                    walk.category[0].toUpperCase() + walk.category.slice(1);
+                  let tag;
+                  if (walk.category) {
+                    tag =
+                      walk.category[0].toUpperCase() + walk.category.slice(1);
+                  }
                   return (
                     <View
                       key={walk.id}
@@ -252,7 +263,7 @@ class AllWalks extends React.Component {
                                 fontFamily: 'Avenir-Heavy',
                               }}
                             >
-                              Distance:
+                              Distance: {walk.distance} mi
                             </Text>
                           </View>
                           <View>
@@ -314,6 +325,9 @@ class AllWalks extends React.Component {
                             </View>
                           </View>
                           <Button
+                            onPress={() => {
+                              this.handleSaveWalk(this.props.user.id, walk.id);
+                            }}
                             style={{
                               width: '28%',
                               borderRadius: 20,
@@ -388,6 +402,7 @@ class AllWalks extends React.Component {
 
 const mapStateToProps = state => {
   return {
+    user: state.user,
     walks: state.walks,
   };
 };
@@ -405,6 +420,9 @@ const mapDispatchToProps = dispatch => {
     },
     getAttractions: walkId => {
       dispatch(getAttractionsThunk(walkId));
+    },
+    addSavedWalk: (userId, walkId) => {
+      dispatch(addSavedWalkThunk(userId, walkId));
     },
   };
 };
