@@ -56,6 +56,8 @@ const WalkInfo = (props) => {
     }, 600);
   };
 
+
+
   if (props.activeWalk.start) {
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>

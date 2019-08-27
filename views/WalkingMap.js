@@ -108,6 +108,7 @@ function WalkingMap(props) {
 
   const htmlStyles = { p: { fontSize: 30 } };
 
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
       <Modal animationType="slide" transparent={false} visible={isWalkComplete}>
