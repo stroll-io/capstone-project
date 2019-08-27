@@ -301,7 +301,7 @@ class AllWalks extends React.Component {
                           </View>
                           <View>
                             <Image
-                              source={require('../public/thumbnails/fountain.png')}
+                              source={require('../public/thumbnails/scenic.png')}
                               style={{
                                 height: 80,
                                 width: 80,

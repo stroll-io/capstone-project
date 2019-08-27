@@ -54,6 +54,8 @@ const WalkInfo = props => {
     }, 600);
   };
 
+
+
   if (props.activeWalk.start) {
     const tag =
       props.activeWalk.category[0].toUpperCase() +
