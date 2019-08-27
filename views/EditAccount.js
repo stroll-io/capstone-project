@@ -31,7 +31,7 @@ const EditAccount = props => {
         <Content>
           <Form>
             <Item>
-              <Text style={{ fontWeight: '700' }}>First Name:</Text>
+              <Text style={{ fontFamily: 'Avenir-Heavy' }}>First Name:</Text>
               <Input
                 placeholder={nameInput}
                 onChangeText={text => setNameInput(text)}
@@ -39,7 +39,7 @@ const EditAccount = props => {
               />
             </Item>
             <Item>
-              <Text style={{ fontWeight: '700' }}>Email:</Text>
+              <Text style={{ fontFamily: 'Avenir-Heavy' }}>Email:</Text>
               <Input
                 placeholder={emailInput}
                 onChangeText={text => setEmailInput(text)}
@@ -47,9 +47,24 @@ const EditAccount = props => {
               />
             </Item>
           </Form>
-          <View style={{ justifyContent: 'center' }}>
-            <Button onPress={handleSubmit} style={{ width: 150 }}>
-              <Text>Update Info</Text>
+          <View
+            style={{
+              display: 'flex',
+              alignContent: 'center',
+              justifyContent: 'center',
+              margin: 10,
+            }}
+          >
+            <Button
+              onPress={handleSubmit}
+              style={{
+                width: 150,
+                borderRadius: 20,
+                justifyContent: 'center',
+                alignSelf: 'center',
+              }}
+            >
+              <Text style={{ fontFamily: 'Avenir-Heavy' }}>Update Info</Text>
             </Button>
           </View>
         </Content>

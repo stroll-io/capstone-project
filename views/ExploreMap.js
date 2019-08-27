@@ -68,10 +68,37 @@ function ExploreMap(props) {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
       <Modal animationType="slide" transparent={false} visible={isModalVisible}>
-        <Text style={{ marginTop: 50 }}>Here is some text in the modal</Text>
-        <Button large info onPress={closeModal}>
-          <Text>This closes the modal</Text>
-        </Button>
+        <View style={{ display: 'flex', flexDirection: 'column', margin: 50 }}>
+          <View>
+            <Text
+              style={{
+                fontSize: 18,
+                fontFamily: 'Avenir-Heavy',
+                justifyContent: 'center',
+                marginTop: 50,
+              }}
+            >
+              Here is some text in the modal
+            </Text>
+          </View>
+          <View style={{ justifyContent: 'center' }}>
+            <Button
+              style={{ justifyContent: 'center', borderRadius: 20 }}
+              onPress={closeModal}
+            >
+              <Text
+                style={{
+                  textAlign: 'center',
+                  fontSize: 16,
+                  color: 'white',
+                  fontFamily: 'Avenir-Heavy',
+                }}
+              >
+                Close
+              </Text>
+            </Button>
+          </View>
+        </View>
       </Modal>
       <MapView
         provider="google"

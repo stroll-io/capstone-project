@@ -19,7 +19,7 @@ class AccountInfo extends React.Component {
             <Text
               style={{
                 fontSize: 24,
-                fontWeight: '700',
+                fontFamily: 'Avenir-Heavy',
                 marginBottom: 20,
                 marginTop: 40,
               }}
@@ -31,10 +31,10 @@ class AccountInfo extends React.Component {
             <View>
               {this.props.user.firstName ? (
                 <>
-                  <Text style={{ fontWeight: '700', marginBottom: 2 }}>
+                  <Text style={{ fontFamily: 'Avenir-Heavy', marginBottom: 2 }}>
                     First Name: {this.props.user.firstName}
                   </Text>
-                  <Text style={{ fontWeight: '700' }}>
+                  <Text style={{ fontFamily: 'Avenir-Heavy' }}>
                     Email: {this.props.user.email}
                   </Text>
                   <Button
@@ -45,7 +45,9 @@ class AccountInfo extends React.Component {
                       this.props.navigation.navigate('EditAccount')
                     }
                   >
-                    <Text>Edit Info</Text>
+                    <Text style={{ fontFamily: 'Avenir-Heavy' }}>
+                      Edit Info
+                    </Text>
                   </Button>
                   <Button
                     rounded
@@ -55,11 +57,13 @@ class AccountInfo extends React.Component {
                       this.props.navigation.navigate('PasswordReset')
                     }
                   >
-                    <Text>Request password reset</Text>
+                    <Text style={{ fontFamily: 'Avenir-Heavy' }}>
+                      Request password reset
+                    </Text>
                   </Button>
                 </>
               ) : (
-                <Text>Loading...</Text>
+                <Text style={{ fontFamily: 'Avenir-Heavy' }}>Loading...</Text>
               )}
             </View>
             <Button
@@ -68,7 +72,9 @@ class AccountInfo extends React.Component {
               style={{ marginTop: 300, justifyContent: 'center' }}
               onPress={() => this.props.navigation.navigate('DeleteAccount')}
             >
-              <Text style={{ alignSelf: 'center' }}>Delete account</Text>
+              <Text style={{ fontFamily: 'Avenir-Heavy', alignSelf: 'center' }}>
+                Delete account
+              </Text>
             </Button>
           </View>
         </View>

@@ -31,7 +31,15 @@ export default function savedWalksReducer(savedState = [], action) {
     case GET_SAVED_WALKS:
       return action.savedWalks;
     case ADD_SAVED_WALK:
-      return [...savedState, action.walk];
+      if (
+        savedState.find(aWalk => {
+          return aWalk.id === action.walk.id;
+        })
+      ) {
+        return [...savedState];
+      } else {
+        return [...savedState, action.walk];
+      }
     case REMOVE_SAVED_WALK:
       return savedState.filter(walk => walk.id !== action.walkId);
     default:
@@ -52,6 +60,8 @@ export const addSavedWalkThunk = (userId, walkId) => {
       `${ngrokSecret}/api/savedWalks/${userId}/${walkId}`
     );
     dispatch(addSavedWalk(data));
+
+    // return previous;
   };
 };
 
