@@ -152,14 +152,19 @@ function WalkingMap(props) {
         transparent={false}
         visible={areDirectionsVisible}
       >
-      <View>
-        <AntDesign type="close" onPress={closeDirections} />
-       </View>
-        <WebView
-          style={{ marginTop: 50 }}
-          source={{ html: directions }}
-          scalePageToFit={false}
-        ></WebView>
+        <View style={{flex: 1}}>
+          <Button warning medium onPress={closeDirections} style={{position: 'absolute', marginTop: 50, zIndex: 100}}>
+            <Text>
+              Close
+            </Text>
+          </Button>
+
+          <WebView
+            style={{ marginTop: 100, flex: 20 }}
+            source={{ html: directions }}
+            scalePageToFit={false}
+          ></WebView>
+        </View>
       </Modal>
       <MapView
         //initial region should be stateful based on users current location
