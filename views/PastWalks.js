@@ -52,7 +52,6 @@ class PastWalks extends React.Component {
     return (
       <Container>
         <Content>
-<<<<<<< HEAD
           <View>
             <View style={{ justifyContent: 'center' }}>
               <Text style={{ fontFamily: 'Avenir-Heavy', textAlign: 'center' }}>
@@ -63,26 +62,6 @@ class PastWalks extends React.Component {
                   : ''}
               </Text>
             </View>
-=======
-          <View style={{ justifyContent: "center" }}>
-            <Text style={{ fontWeight: "700", textAlign: "center" }}>
-              {this.props.pastWalks.length
-                ? `You've walked ${this.totalDistanceReducer(
-                    this.props.pastWalks
-                  ).toFixed(2)} miles so far - great job!`
-                : ""}
-            </Text>
-          </View>
-          <View
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignContent: "center",
-              alignItems: "center"
-            }}
-          >
->>>>>>> 9d1dc5e6cfdc12d332f2730b235aced63cbb3ede
             {this.props.pastWalks.length ? (
               this.props.pastWalks.map(walk => {
                 let tag;
@@ -93,31 +72,16 @@ class PastWalks extends React.Component {
                   <View
                     key={walk.id}
                     style={{
-<<<<<<< HEAD
                       display: 'flex',
                       flexDirection: 'column',
                       justifyContent: 'center',
                       height: 245,
                       width: '100%',
-=======
-                      height: 200,
-                      width: "95%",
-                      borderStyle: "dashed",
-                      borderWidth: 5,
-                      borderColor: "#436904",
-                      borderRadius: 25,
-                      backgroundColor: "#b9cd74",
-                      marginTop: 10,
-                      marginBottom: 10,
-                      alignItems: "center",
-                      justifyContent: "center"
->>>>>>> 9d1dc5e6cfdc12d332f2730b235aced63cbb3ede
                     }}
                   >
                     <View
                       className="cardTitle"
                       style={{
-<<<<<<< HEAD
                         display: 'flex',
                         flexDirection: 'row',
                         borderWidth: 2,
@@ -197,19 +161,6 @@ class PastWalks extends React.Component {
                             display: 'flex',
                             flexDirection: 'column',
                             width: '65%',
-=======
-                        justifyContent: "center",
-                        padding: 10,
-                        textAlign: "center"
-                      }}
-                    >
-                      <View style={{ display: "flex", flexDirection: "row" }}>
-                        <View
-                          style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            justifyContent: "space-around"
->>>>>>> 9d1dc5e6cfdc12d332f2730b235aced63cbb3ede
                           }}
                         >
                           <Text
