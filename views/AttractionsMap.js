@@ -25,7 +25,6 @@ function AttractionsMap(props) {
 
   // let filter = 'Filter by tag';
   const handlePicker = e => {
-    console.log('e :', e);
     if (e === 'All Tags') {
       // filter = 'All Tags';
       props.getAllAttractions();
