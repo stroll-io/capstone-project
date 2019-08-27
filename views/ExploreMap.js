@@ -10,10 +10,8 @@ import { getAttractionsThunk } from '../store/attractions';
 import { AntDesign, SimpleLineIcons } from 'react-native-vector-icons';
 
 function ExploreMap(props) {
-
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [pickerPlaceholder, setPickerPlaceholder] = useState("Filter by tag");
-
+  const [pickerPlaceholder, setPickerPlaceholder] = useState('Filter by tag');
 
   if (!props.activeWalk.navPoints) {
     props.activeWalk.navPoints = [];
@@ -22,10 +20,9 @@ function ExploreMap(props) {
     props.getAllWalks();
   }, [props.activeWalk.navPoints]);
 
-
   const handlePicker = e => {
     setPickerPlaceholder(e);
-    e = e.toLowerCase()
+    e = e.toLowerCase();
     if (e === 'all walks') {
       props.getAllWalks();
     } else {
@@ -42,26 +39,26 @@ function ExploreMap(props) {
   };
 
   const pinColor = walk => {
-    if (walk.category === "architecture") {
-      return "#478FCD";
+    if (walk.category === 'architecture') {
+      return '#478FCD';
     }
-    if (walk.category === "nature") {
-      return "#5fAD46";
+    if (walk.category === 'nature') {
+      return '#5fAD46';
     }
-    if (walk.category === "Street art") {
-      return "violet";
+    if (walk.category === 'Street art') {
+      return 'violet';
     }
-    if (walk.category === "historical") {
-      return "tomato";
+    if (walk.category === 'historical') {
+      return 'tomato';
     }
     if (walk.category === 'Scenic"') {
-      return "blue";
+      return 'blue';
     }
-    if (walk.category === "Dog") {
-      return "orange";
+    if (walk.category === 'Dog') {
+      return 'orange';
     }
-    if (walk.category === "Hiking") {
-      return "brown";
+    if (walk.category === 'Hiking') {
+      return 'brown';
     }
   };
 
@@ -149,9 +146,9 @@ function ExploreMap(props) {
             style={{
               position: 'absolute',
               backgroundColor: 'white',
-              width: 300,
+              width: 325,
               paddingTop: 8,
-              paddingBottom: 8,
+              paddingBottom: 7,
               paddingLeft: 250,
               left: 90,
             }}
@@ -172,11 +169,11 @@ function ExploreMap(props) {
                   onPress={() => {
                     props.setActiveWalk(walk.id);
                     props.getAllAttractions(walk.id);
-                    props.navigation.navigate("WalkInfo");
+                    props.navigation.navigate('WalkInfo');
                   }}
                   coordinate={{
                     longitude: walk.start.coordinates[1],
-                    latitude: walk.start.coordinates[0]
+                    latitude: walk.start.coordinates[0],
                   }}
                   pinColor={pinColor(walk)}
                 >

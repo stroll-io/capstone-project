@@ -210,9 +210,9 @@ function AttractionsMap(props) {
             style={{
               position: 'absolute',
               backgroundColor: 'white',
-              width: 300,
+              width: 325,
               paddingTop: 8,
-              paddingBottom: 8,
+              paddingBottom: 7,
               paddingLeft: 250,
               left: 90,
             }}
