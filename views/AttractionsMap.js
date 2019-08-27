@@ -195,12 +195,20 @@ function AttractionsMap(props) {
                 style={{ width: undefined }}
                 onValueChange={handlePicker}
               >
+<<<<<<< HEAD
                 <Picker.Item label="All Attractions" value="All Attractions" />
                 <Picker.Item label="Architecture" value="Architecture" />
                 <Picker.Item label="Art and Museums" value="Art and Museums" />
                 <Picker.Item label="Historical" value="Historical" />
                 <Picker.Item label="Nature" value="Nature" />
                 <Picker.Item label="Scenic" value="Scenic" />
+=======
+                <Picker.Item label="All Tags" value="All Tags" />
+                <Picker.Item label="Architecture" value="architecture" />
+                <Picker.Item label="Art and Museums" value="art and museums" />
+                <Picker.Item label="Historical" value="historical" />
+                <Picker.Item label="Nature" value="nature" />
+>>>>>>> ab98fa8a1c02922cc3eee69c5a35cd47736acdc4
               </Picker>
             </Item>
           </Form>
