@@ -23,7 +23,7 @@ function ExploreMap(props) {
 
 
   const handlePicker = e => {
-    if (e === 'none') {
+    if (e === 'All Walks') {
       props.getAllWalks();
     } else {
       props.getWalksByTag(e);
@@ -68,7 +68,7 @@ function ExploreMap(props) {
                 style={{ width: undefined }}
                 onValueChange={handlePicker}
               >
-                <Picker.Item label="none" value="none" />
+                <Picker.Item label="All Walks" value="All Walks" />
                 <Picker.Item label="Nature" value="nature" />
                 <Picker.Item label="Scenic" value="scenic" />
                 <Picker.Item label="Architecture" value="architecture" />

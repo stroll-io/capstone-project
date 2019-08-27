@@ -25,6 +25,7 @@ function AttractionsMap(props) {
 
   // let filter = 'Filter by tag';
   const handlePicker = e => {
+    console.log('e :', e);
     if (e === 'All Tags') {
       // filter = 'All Tags';
       props.getAllAttractions();
@@ -84,7 +85,7 @@ function AttractionsMap(props) {
                 style={{ width: undefined }}
                 onValueChange={handlePicker}
               >
-                <Picker.Item label="All Tags" value="none" />
+                <Picker.Item label="All Tags" value="All Tags" />
                 <Picker.Item label="Architecture" value="architecture" />
                 <Picker.Item label="Art and Museums" value="art and museums" />
                 <Picker.Item label="Historical" value="historical" />
