@@ -22,26 +22,6 @@ function AttractionsMap(props) {
   const closeModal = () => {
     setIsModalVisible(false);
   };
-  // const handleBack = () => {
-  //   setIsModalVisible(false);
-  //   setTitle('');
-  //   setDescription('');
-  //   setIsPinBeingAdded(false);
-  //   setCoord(null);
-  // };
-
-  // const handleSubmit = async () => {
-  //   props.addPin({
-  //     coordinate: coord,
-  //     title,
-  //     description,
-  //   });
-  //   setIsPinBeingAdded(false);
-  //   setIsModalVisible(false);
-  //   setCoord(null);
-  //   setTitle('');
-  //   setDescription('');
-  // };
 
   // let filter = 'Filter by tag';
   const handlePicker = e => {
@@ -78,7 +58,6 @@ function AttractionsMap(props) {
         </Button>
       </Modal>
       <MapView
-        //initial region should be stateful based on users current location
         provider="google"
         showsUserLocation={true}
         style={{ flex: 1 }}
@@ -88,16 +67,6 @@ function AttractionsMap(props) {
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
-        // onPress={e => {
-        //   const newCoord = {
-        //     latitude: e.nativeEvent.coordinate.latitude,
-        //     longitude: e.nativeEvent.coordinate.longitude,
-        //   };
-        //   setCoord(newCoord);
-        //   if (isPinBeingAdded) {
-        //     setIsModalVisible(true);
-        //   }
-        // }}
       >
         <View
           style={{

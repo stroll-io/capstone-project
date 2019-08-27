@@ -147,7 +147,7 @@ function WalkingMap(props) {
             warning
             medium
             onPress={closeDirections}
-            style={{ position: "absolute", marginTop: 50, zIndex: 100 }}
+            style={{ position: "absolute", marginTop: 50, zIndex: 1000 }}
           >
             <Text>Close</Text>
           </Button>

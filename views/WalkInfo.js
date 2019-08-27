@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, SafeAreaView } from "react-native";
+import { View, SafeAreaView, ActivityIndicator } from "react-native";
 import MapView, {Marker} from "react-native-maps";
 import { Button, Text } from "native-base";
 import { connect } from "react-redux";
@@ -148,9 +148,9 @@ const WalkInfo = (props) => {
   } else {
     return (
       <View>
-        <Text>Loading</Text>
+        <ActivityIndicator size="large" color="#417dc1"></ActivityIndicator>
       </View>
-    )
+    );
   }
 }
 

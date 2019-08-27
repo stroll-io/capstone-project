@@ -16,10 +16,6 @@ function DiscoverMap(props) {
     props.getAllPins();
   }, []);
 
-  const logLocationChange = e => {
-    // console.log('location changed')
-  };
-
   const addPin = () => {
     setIsPinBeingAdded(true);
   };
@@ -104,9 +100,7 @@ function DiscoverMap(props) {
         </View>
       </Modal>
       <MapView
-        //initial region should be stateful based on users current location
         provider="google"
-        onUserLocationChange={logLocationChange()}
         showsUserLocation={true}
         style={{ flex: 1 }}
         initialRegion={{
