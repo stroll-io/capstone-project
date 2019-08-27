@@ -1,80 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import { View, SafeAreaView, Modal, Image } from 'react-native';
+import { View, SafeAreaView, Modal } from 'react-native';
 import MapView, { Marker, Callout } from 'react-native-maps';
 import { Button, Text } from 'native-base';
 import { connect } from 'react-redux';
 import { Form, Item, Picker, Icon } from 'native-base';
 import { getAllWalksThunk, getWalksByTagThunk } from '../store/walks';
 import { setActiveWalkThunk } from '../store/activeWalk';
-import MapViewDirections from 'react-native-maps-directions';
-import { googleSecret } from '../secrets';
 import { getAttractionsThunk } from '../store/attractions';
 import { AntDesign, SimpleLineIcons } from 'react-native-vector-icons';
 
 function ExploreMap(props) {
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-  const [coordinate, setCoordinate] = useState({
-    latitude: 41.88407,
-    longitude: -87.630634,
-  });
-  const [category, setCategory] = useState('');
+
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [currentMarker, setCurrentMarker] = useState(null);
-  const [id, setId] = useState(null);
-  const [navPoints, setNavPoints] = useState([]);
-  const [isMapReady, setIsMapReady] = useState(false);
-  const [isDirectionsReady, setIsDirectionsReady] = useState(false);
-  const [distance, setDistance] = useState(0);
-  const [duration, setDuration] = useState(0);
+
 
   if (!props.activeWalk.navPoints) {
     props.activeWalk.navPoints = [];
   }
   useEffect(() => {
     props.getAllWalks();
-    const navArr = [];
-    if (props.activeWalk.navPoints) {
-      props.activeWalk.navPoints.forEach(navPoint => {
-        navArr.push({
-          latitude: navPoint.location.coordinates[0],
-          longitude: navPoint.location.coordinates[1],
-        });
-      });
-      setNavPoints(navArr);
-    }
   }, [props.activeWalk.navPoints]);
 
-  const handleCancel = () => {
-    setIsModalVisible(false);
-    currentMarker.hideCallout();
-  };
-
-  const handleWalk = () => {
-    props.setActiveWalk(id);
-    setTimeout(() => {
-      setIsModalVisible(false);
-      props.navigation.navigate('Walking Map');
-    }, 1000);
-  };
 
   const handlePicker = e => {
-    if (e === 'none') {
+    if (e === 'All Walks') {
       props.getAllWalks();
     } else {
       props.getWalksByTag(e);
     }
-  };
-
-  const handleOnMapReady = e => {
-    if (!isMapReady) setIsMapReady(true);
-  };
-
-  const handleOnReady = e => {
-    const roundedDuration = parseFloat(e.duration).toFixed(2);
-    setDistance(e.distance / 1.609);
-    setDuration(roundedDuration);
-    if (!isDirectionsReady) setIsDirectionsReady(true);
   };
 
   const openModal = () => {
@@ -130,7 +83,6 @@ function ExploreMap(props) {
         </View>
       </Modal>
       <MapView
-        //initial region should be stateful based on users current location
         provider="google"
         showsUserLocation={true}
         style={{ flex: 1 }}
@@ -152,7 +104,7 @@ function ExploreMap(props) {
                 style={{ width: undefined }}
                 onValueChange={handlePicker}
               >
-                <Picker.Item label="none" value="none" />
+                <Picker.Item label="All Walks" value="All Walks" />
                 <Picker.Item label="Nature" value="nature" />
                 <Picker.Item label="Scenic" value="scenic" />
                 <Picker.Item label="Architecture" value="architecture" />
@@ -195,7 +147,6 @@ function ExploreMap(props) {
                     props.setActiveWalk(walk.id);
                     props.getAllAttractions(walk.id);
                     props.navigation.navigate('WalkInfo');
-                    setCurrentMarker(this.marker);
                   }}
                   coordinate={{
                     longitude: walk.start.coordinates[1],

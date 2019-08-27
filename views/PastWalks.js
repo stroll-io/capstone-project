@@ -4,6 +4,8 @@ import { Content, Container, Button } from 'native-base';
 import { fetchAllPastWalks } from '../store/pastWalks';
 import { setActiveWalkThunk } from '../store/activeWalk';
 import { addSavedWalkThunk } from '../store/savedWalks';
+import { getAttractionsThunk } from '../store/attractions';
+
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
 import { SimpleLineIcons } from 'react-native-vector-icons';
@@ -13,7 +15,7 @@ class PastWalks extends React.Component {
     super();
     this.handleWalkNavigation = this.handleWalkNavigation.bind(this);
     this.totalDistanceReducer = this.totalDistanceReducer.bind(this);
-    this.handleSave = this.handleSave.bind(this);
+    this.handleSaveWalk = this.handleSaveWalk.bind(this);
   }
   static navigationOptions = {
     title: 'Past Walks',
@@ -23,11 +25,17 @@ class PastWalks extends React.Component {
     await this.props.fetchAllPastWalks(this.props.user.id);
   }
 
+  handleWalkInfo(walkId) {
+    this.props.setActiveWalk(walkId);
+    this.props.getAttractions(walkId);
+    this.props.navigation.navigate('WalkInfo');
+  }
+
   handleWalkNavigation(walkId) {
-    this.props.setActiveWalkThunk(walkId);
+    this.props.setActiveWalk(walkId);
     setTimeout(() => {
       this.props.navigation.navigate('Walking Map');
-    }, 200);
+    }, 600);
   }
 
   totalDistanceReducer(walkArray) {
@@ -36,202 +44,270 @@ class PastWalks extends React.Component {
     }, 0);
   }
 
-  handleSave(userId, walkId) {
-    this.props.addSavedWalkThunk(userId, walkId);
+  handleSaveWalk(userId, walkId) {
+    this.props.addSavedWalk(userId, walkId);
   }
 
   render() {
     return (
       <Container>
         <Content>
-          <View style={{ justifyContent: 'center' }}>
-            <Text style={{ fontWeight: '700', textAlign: 'center' }}>
-              {this.props.pastWalks.length
-                ? `You've walked ${this.totalDistanceReducer(
-                    this.props.pastWalks
-                  )} miles so far - great job!`
-                : ''}
-            </Text>
-          </View>
-          <View
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignContent: 'center',
-              alignItems: 'center',
-            }}
-          >
+          <View>
+            <View style={{ justifyContent: 'center' }}>
+              <Text style={{ fontFamily: 'Avenir-Heavy', textAlign: 'center' }}>
+                {this.props.pastWalks.length
+                  ? `You've walked ${this.totalDistanceReducer(
+                      this.props.pastWalks
+                    )} miles so far - great job!`
+                  : ''}
+              </Text>
+            </View>
             {this.props.pastWalks.length ? (
               this.props.pastWalks.map(walk => {
-                const type =
-                  walk.category[0].toUpperCase() + walk.category.slice(1);
+                let tag;
+                if (walk.category) {
+                  tag = walk.category[0].toUpperCase() + walk.category.slice(1);
+                }
                 return (
                   <View
                     key={walk.id}
                     style={{
-                      height: 200,
-                      width: '95%',
-                      borderStyle: 'dashed',
-                      borderWidth: 5,
-                      borderColor: '#436904',
-                      borderRadius: 25,
-                      backgroundColor: '#b9cd74',
-                      marginTop: 10,
-                      marginBottom: 10,
-                      alignItems: 'center',
+                      display: 'flex',
+                      flexDirection: 'column',
                       justifyContent: 'center',
+                      height: 245,
+                      width: '100%',
                     }}
                   >
                     <View
+                      className="cardTitle"
                       style={{
-                        justifyContent: 'center',
-                        padding: 10,
-                        textAlign: 'center',
+                        display: 'flex',
+                        flexDirection: 'row',
+                        borderWidth: 2,
+                        borderTopLeftRadius: 20,
+                        borderTopRightRadius: 20,
+                        borderColor: '#859F3C',
+                        justifyContent: 'space-around',
+                        alignContent: 'center',
+                        backgroundColor: '#859F3C',
                       }}
                     >
-                      <View style={{ display: 'flex', flexDirection: 'row' }}>
+                      <View
+                        style={{
+                          display: 'flex',
+                          flexDirection: 'row',
+                          justifyContent: 'space-around',
+                          width: '100%',
+                          paddingTop: 10,
+                          paddingBottom: 10,
+                          paddingLeft: 20,
+                        }}
+                      >
                         <View
+                          style={{
+                            width: '80%',
+                            padding: 5,
+                          }}
+                        >
+                          <Text
+                            style={{
+                              color: 'white',
+                              fontSize: 18,
+                              fontFamily: 'Avenir-Heavy',
+                            }}
+                          >
+                            {walk.name}
+                          </Text>
+                        </View>
+                        <Button
+                          onPress={() => {
+                            this.handleWalkInfo(walk.id);
+                          }}
+                          style={{
+                            width: '10%',
+                            height: 38,
+                            backgroundColor: '#859F3C',
+                            borderRadius: 100,
+                            justifyContent: 'center',
+                          }}
+                        >
+                          <SimpleLineIcons
+                            name="info"
+                            size={25}
+                            color="white"
+                          />
+                        </Button>
+                      </View>
+                    </View>
+                    <View
+                      className="cardBody"
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        margin: 10,
+                      }}
+                    >
+                      <View
+                        style={{
+                          display: 'flex',
+                          flexDirection: 'row',
+                          margin: 10,
+                        }}
+                      >
+                        <View
+                          className="cardText"
                           style={{
                             display: 'flex',
                             flexDirection: 'column',
-                            justifyContent: 'space-around',
+                            width: '65%',
                           }}
                         >
+                          <Text
+                            style={{
+                              fontSize: 16,
+                              fontFamily: 'Avenir-Heavy',
+                            }}
+                          >
+                            {walk.description}
+                          </Text>
+                          <Text
+                            style={{
+                              fontSize: 16,
+                              fontFamily: 'Avenir-Heavy',
+                            }}
+                          >
+                            Distance: {walk.distance} mi
+                          </Text>
+                        </View>
+                        <View>
                           <Image
                             source={require('../public/thumbnails/leaf.png')}
                             style={{
                               display: 'flex',
-                              height: 100,
-                              width: 100,
+                              height: 80,
+                              width: 80,
                               marginRight: 10,
                             }}
                           />
                         </View>
+                      </View>
+                      <View
+                        key={walk.id}
+                        className="buttonPanel"
+                        style={{
+                          display: 'flex',
+                          flexDirection: 'row',
+                          justifyContent: 'space-between',
+                          marginTop: 10,
+                        }}
+                      >
                         <View
                           style={{
-                            display: 'flex',
-                            height: '90%',
-                            width: '70%',
-                            paddingTop: 5,
-                            paddingBottom: 5,
-                            flexDirection: 'column',
-                            justifyContent: 'space-between',
+                            width: '35%',
+                            borderRadius: 20,
+                            backgroundColor: '#FFA614',
+                            alignContent: 'center',
+                            justifyContent: 'center',
                           }}
                         >
-                          <View>
-                            <Text
-                              style={{
-                                fontSize: 16,
-                                fontFamily: 'Avenir-Heavy',
-                              }}
-                            >
-                              {walk.name}
-                            </Text>
-                          </View>
-                          <View>
-                            <Text
-                              style={{
-                                fontSize: 16,
-                                fontFamily: 'Avenir-Heavy',
-                              }}
-                            >
-                              Type: {type}
-                            </Text>
-                          </View>
                           <View
-                            style={{ display: 'flex', flexFlow: 'row-wrap' }}
+                            style={{
+                              display: 'flex',
+                              flexDirection: 'row',
+                              alignContent: 'center',
+                              justifyContent: 'space-evenly',
+                              padding: 5,
+                            }}
                           >
-                            <Text
-                              style={{
-                                fontSize: 16,
-                                fontFamily: 'Avenir-Heavy',
-                              }}
-                            >
-                              {walk.description}
-                            </Text>
-                          </View>
-                          <View
-                            style={{ display: 'flex', flexFlow: 'row-wrap' }}
-                          >
-                            <Text
-                              style={{
-                                fontSize: 16,
-                                fontFamily: 'Avenir-Heavy',
-                              }}
-                            >
-                              Distance: {walk.distance} mi
-                            </Text>
-                          </View>
-                          <View>
-                            <Text
-                              style={{
-                                fontSize: 16,
-                                fontFamily: 'Avenir-Heavy',
-                              }}
-                            >
-                              Walked:{' '}
-                              {new Date(
-                                walk.past_walks.createdAt
-                              ).toDateString()}
-                            </Text>
-                            <View style={{ flexDirection: 'row' }}>
-                              <Button
-                                style={{
-                                  width: '30%',
-                                  borderRadius: 20,
-                                  marginRight: 10,
-                                  backgroundColor: 'tomato',
-                                  alignContent: 'center',
-                                  justifyContent: 'center',
-                                }}
-                                onPress={() =>
-                                  this.handleSave(this.props.user.id, walk.id)
-                                }
-                              >
-                                <View style={{ marginLeft: 8, marginRight: 5 }}>
-                                  <SimpleLineIcons
-                                    name="heart"
-                                    size={25}
-                                    color="white"
-                                  />
-                                </View>
-                                <Text
-                                  style={{
-                                    justifyContent: 'center',
-                                    color: 'white',
-                                    fontSize: 14,
-                                    fontFamily: 'Avenir-Heavy',
-                                  }}
-                                >
-                                  Save
-                                </Text>
-                              </Button>
-                              <Button
-                                onPress={() =>
-                                  this.handleWalkNavigation(walk.id)
-                                }
-                                style={{
-                                  borderRadius: '20px',
-                                  width: '60%',
-                                  justifyContent: 'center',
-                                }}
-                              >
-                                <Text style={{ color: 'white' }}>
-                                  Start this Walk
-                                </Text>
-                              </Button>
+                            <View>
+                              <SimpleLineIcons
+                                name="tag"
+                                size={25}
+                                color="white"
+                              />
                             </View>
+                            <Text
+                              style={{
+                                alignSelf: 'center',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                color: 'white',
+                                fontSize: 14,
+                                fontFamily: 'Avenir-Heavy',
+                              }}
+                            >
+                              {tag}
+                            </Text>
                           </View>
                         </View>
+                        <Button
+                          onPress={() => {
+                            this.handleSaveWalk(this.props.user.id, walk.id);
+                          }}
+                          style={{
+                            width: '28%',
+                            borderRadius: 20,
+                            backgroundColor: 'tomato',
+                            alignContent: 'center',
+                            justifyContent: 'center',
+                          }}
+                        >
+                          <View style={{ marginLeft: 8, marginRight: 5 }}>
+                            <SimpleLineIcons
+                              name="heart"
+                              size={25}
+                              color="white"
+                            />
+                          </View>
+                          <Text
+                            style={{
+                              justifyContent: 'center',
+                              color: 'white',
+                              fontSize: 14,
+                              fontFamily: 'Avenir-Heavy',
+                            }}
+                          >
+                            Save
+                          </Text>
+                        </Button>
+                        <Button
+                          onPress={() => {
+                            this.handleWalkNavigation(walk.id);
+                          }}
+                          style={{
+                            justifyContent: 'center',
+                            alignContent: 'center',
+                            width: '28%',
+                            borderRadius: 20,
+                            backgroundColor: '#417dc1',
+                          }}
+                        >
+                          <View style={{ marginLeft: 8, marginRight: 5 }}>
+                            <SimpleLineIcons
+                              name="cursor"
+                              size={20}
+                              color="white"
+                            />
+                          </View>
+                          <Text
+                            style={{
+                              alignContent: 'center',
+                              color: 'white',
+                              fontSize: 14,
+                              fontFamily: 'Avenir-Heavy',
+                            }}
+                          >
+                            Start!
+                          </Text>
+                        </Button>
                       </View>
                     </View>
-                    <View />
                   </View>
                 );
               })
             ) : (
-              <Text />
+              <View />
             )}
           </View>
         </Content>
@@ -239,17 +315,19 @@ class PastWalks extends React.Component {
     );
   }
 }
-
 const mapDispatchToProps = dispatch => {
   return {
     fetchAllPastWalks: userId => {
       dispatch(fetchAllPastWalks(userId));
     },
-    setActiveWalkThunk: walkId => {
+    setActiveWalk: walkId => {
       dispatch(setActiveWalkThunk(walkId));
     },
-    addSavedWalkThunk: (userId, walkId) => {
+    addSavedWalk: (userId, walkId) => {
       dispatch(addSavedWalkThunk(userId, walkId));
+    },
+    getAttractions: walkId => {
+      dispatch(getAttractionsThunk(walkId));
     },
   };
 };

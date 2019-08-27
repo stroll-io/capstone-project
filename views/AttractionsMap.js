@@ -166,7 +166,6 @@ function AttractionsMap(props) {
         </View>
       </Modal>
       <MapView
-        //initial region should be stateful based on users current location
         provider="google"
         showsUserLocation={true}
         style={{ flex: 1 }}
@@ -193,7 +192,7 @@ function AttractionsMap(props) {
                 style={{ width: undefined }}
                 onValueChange={handlePicker}
               >
-                <Picker.Item label="All Tags" value="none" />
+                <Picker.Item label="All Tags" value="All Tags" />
                 <Picker.Item label="Architecture" value="architecture" />
                 <Picker.Item label="Art and Museums" value="art and museums" />
                 <Picker.Item label="Historical" value="historical" />

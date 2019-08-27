@@ -27,7 +27,7 @@ class SavedWalks extends React.Component {
     this.props.setActiveWalk(walkId);
     setTimeout(() => {
       this.props.navigation.navigate('Walking Map');
-    }, 200);
+    }, 600);
   }
 
   handleWalkInfo(walkId) {
@@ -53,7 +53,7 @@ class SavedWalks extends React.Component {
                 }
                 return (
                   <View
-                    key={walk.id}
+                    className="card"
                     style={{
                       display: 'flex',
                       flexDirection: 'column',
@@ -61,6 +61,7 @@ class SavedWalks extends React.Component {
                       height: 245,
                       width: '100%',
                     }}
+                    key={walk.id}
                   >
                     <View
                       className="cardTitle"
@@ -110,7 +111,7 @@ class SavedWalks extends React.Component {
                           style={{
                             width: '10%',
                             height: 38,
-                            backgroundColor: 'tomato',
+                            backgroundColor: '#859F3C',
                             borderRadius: 100,
                             justifyContent: 'center',
                           }}

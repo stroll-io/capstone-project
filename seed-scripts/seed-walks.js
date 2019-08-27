@@ -1,4 +1,4 @@
-const Walk = require('./server/db/models/walk');
+const Walk = require('../server/db/models/walk');
 
 const [fullstack, ogilvie, westTown, hydePark] = await Promise.all([
   Walk.create({

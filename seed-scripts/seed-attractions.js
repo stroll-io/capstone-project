@@ -1,5 +1,5 @@
 //creating attractions
-const Attraction = require('./server/db/models/attraction');
+const Attraction = require('../server/db/models/attraction');
 
 //millenium park
 const [

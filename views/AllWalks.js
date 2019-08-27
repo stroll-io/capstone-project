@@ -65,7 +65,7 @@ class AllWalks extends React.Component {
     this.props.setActiveWalk(walkId);
     setTimeout(() => {
       this.props.navigation.navigate('Walking Map');
-    }, 200);
+    }, 600);
   }
 
   handleWalkInfo(walkId) {
@@ -246,7 +246,7 @@ class AllWalks extends React.Component {
                             style={{
                               width: '10%',
                               height: 38,
-                              backgroundColor: 'tomato',
+                              backgroundColor: '#859F3C',
                               borderRadius: 100,
                               justifyContent: 'center',
                             }}
@@ -310,6 +310,7 @@ class AllWalks extends React.Component {
                           </View>
                         </View>
                         <View
+                          key={walk.id}
                           className="buttonPanel"
                           style={{
                             display: 'flex',
@@ -464,6 +465,7 @@ AllWalks.propTypes = {
   getAllWalks: propTypes.func,
   getWalksByTag: propTypes.func,
   setActiveWalk: propTypes.func,
+  addSavedWalk: propTypes.func,
 };
 
 export default connect(

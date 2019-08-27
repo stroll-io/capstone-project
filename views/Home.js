@@ -4,8 +4,6 @@ import { Text, Button } from 'native-base';
 import { createSwitchNavigator, createAppContainer } from 'react-navigation';
 import Login from './Login';
 import Register from './Register';
-import PastWalks from './PastWalks';
-import SavedWalks from './SavedWalks';
 import DashboardContainer from './Dashboard';
 
 class HomeScreen extends React.Component {
