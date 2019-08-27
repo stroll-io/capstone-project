@@ -58,7 +58,7 @@ class PastWalks extends React.Component {
                 {this.props.pastWalks.length
                   ? `You've walked ${this.totalDistanceReducer(
                       this.props.pastWalks
-                    )} miles so far - great job!`
+                    ).toFixed(2)} miles so far - great job!`
                   : ''}
               </Text>
             </View>

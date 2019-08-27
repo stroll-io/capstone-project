@@ -11,6 +11,7 @@ import {
 
 function AttractionsMap(props) {
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [pickerPlaceholder, setPickerPlaceholder] = useState('Filter by tag');
   useEffect(() => {
     props.getAllAttractions();
   }, []);
@@ -25,7 +26,9 @@ function AttractionsMap(props) {
 
   // let filter = 'Filter by tag';
   const handlePicker = e => {
-    if (e === 'All Tags') {
+    setPickerPlaceholder(e);
+    e = e.toLowerCase();
+    if (e === 'all attractions') {
       // filter = 'All Tags';
       props.getAllAttractions();
     } else {
@@ -188,7 +191,7 @@ function AttractionsMap(props) {
                 mode="dropdown"
                 iosIcon={<Icon name="arrow-down" />}
                 iosHeader="Filter"
-                placeholder="Filter by Tag"
+                placeholder={pickerPlaceholder}
                 style={{ width: undefined }}
                 onValueChange={handlePicker}
               >
@@ -197,7 +200,6 @@ function AttractionsMap(props) {
                 <Picker.Item label="Art and Museums" value="art and museums" />
                 <Picker.Item label="Historical" value="historical" />
                 <Picker.Item label="Nature" value="nature" />
-                <Picker.Item label="Scenic" value="scenic" />
               </Picker>
             </Item>
           </Form>
@@ -208,11 +210,11 @@ function AttractionsMap(props) {
             style={{
               position: 'absolute',
               backgroundColor: 'white',
-              width: 300,
+              width: 325,
               paddingTop: 8,
-              paddingBottom: 8,
-              paddingLeft: 190,
-              left: 150,
+              paddingBottom: 7,
+              paddingLeft: 250,
+              left: 90,
             }}
             onPress={openModal}
           />

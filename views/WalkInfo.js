@@ -54,6 +54,8 @@ const WalkInfo = props => {
     }, 600);
   };
 
+
+
   if (props.activeWalk.start) {
     const tag =
       props.activeWalk.category[0].toUpperCase() +
@@ -182,7 +184,6 @@ const WalkInfo = props => {
                 fontSize: 14,
                 fontFamily: 'Avenir-Heavy',
                 marginTop: 30,
-                flex: 1,
               }}
             >
               Description: {props.activeWalk.description}

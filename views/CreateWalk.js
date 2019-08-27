@@ -82,7 +82,14 @@ function CreateWalk(props) {
         transparent={false}
         visible={isQuestionModalVisible}
       >
-        <View style={{ display: 'flex', flexDirection: 'column', margin: 50 }}>
+        <View
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            margin: 50,
+            marginTop: 100,
+          }}
+        >
           <View style={{ display: 'flex', flexDirection: 'row' }}>
             <Text
               style={{
@@ -108,6 +115,7 @@ function CreateWalk(props) {
                 fontSize: 18,
                 fontFamily: 'Avenir-Heavy',
                 justifyContent: 'center',
+                marginTop: 10,
                 marginBottom: 20,
                 paddingLeft: 10,
               }}
@@ -135,29 +143,46 @@ function CreateWalk(props) {
         </View>
       </Modal>
       <View style={{ flex: 1 }}>
-        <View style={{ display: 'flex', flexDirection: 'row' }}>
-          <View style={{ width: '80%' }}>
+        <View
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+          }}
+        >
+          <View
+            style={{
+              width: '88%',
+              justifyContent: 'center',
+              alignContent: 'center',
+            }}
+          >
             <Text
               style={{
                 fontFamily: 'Avenir-Heavy',
-                fontSize: 16,
+                fontSize: 18,
                 textAlign: 'center',
-                marginTop: 10,
-                marginBottom: 10,
+                paddingTop: 10,
               }}
             >
-              Tap the map to add points to your walk
+              Tap to add points to your walk
             </Text>
           </View>
-          <View style={{ width: '20%', justifyContent: 'center' }}>
+          <View
+            style={{
+              width: '12%',
+              justifyContent: 'center',
+              alignContent: 'center',
+            }}
+          >
             <AntDesign
               name="questioncircleo"
-              size={25}
+              size={27}
               color="black"
               style={{
                 position: 'absolute',
                 backgroundColor: 'white',
-                padding: 10,
+                paddingTop: 10,
               }}
               onPress={openQuestionModal}
             />
