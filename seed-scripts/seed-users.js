@@ -1,4 +1,4 @@
-const User = require('./server/db/models/user');
+const User = require('../server/db/models/user');
 
 //admin users
 const [ben, madi, michelle] = await Promise.all([

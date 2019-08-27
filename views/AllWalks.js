@@ -246,7 +246,7 @@ class AllWalks extends React.Component {
                             style={{
                               width: '10%',
                               height: 38,
-                              backgroundColor: 'tomato',
+                              backgroundColor: '#859F3C',
                               borderRadius: 100,
                               justifyContent: 'center',
                             }}
@@ -310,6 +310,7 @@ class AllWalks extends React.Component {
                           </View>
                         </View>
                         <View
+                          key={walk.id}
                           className="buttonPanel"
                           style={{
                             display: 'flex',

@@ -104,13 +104,14 @@ class SavedWalks extends React.Component {
                           </Text>
                         </View>
                         <Button
+                          key={walk.id}
                           onPress={() => {
                             this.handleWalkInfo(walk.id);
                           }}
                           style={{
                             width: '10%',
                             height: 38,
-                            backgroundColor: 'tomato',
+                            backgroundColor: '#859F3C',
                             borderRadius: 100,
                             justifyContent: 'center',
                           }}
@@ -174,6 +175,7 @@ class SavedWalks extends React.Component {
                         </View>
                       </View>
                       <View
+                        key={walk.id}
                         className="buttonPanel"
                         style={{
                           display: 'flex',
