@@ -12,6 +12,7 @@ import { AntDesign, SimpleLineIcons } from 'react-native-vector-icons';
 function ExploreMap(props) {
 
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [pickerPlaceholder, setPickerPlaceholder] = useState("Filter by tag");
 
 
   if (!props.activeWalk.navPoints) {
@@ -23,7 +24,9 @@ function ExploreMap(props) {
 
 
   const handlePicker = e => {
-    if (e === 'All Walks') {
+    setPickerPlaceholder(e);
+    e = e.toLowerCase()
+    if (e === 'all walks') {
       props.getAllWalks();
     } else {
       props.getWalksByTag(e);
@@ -36,6 +39,30 @@ function ExploreMap(props) {
 
   const closeModal = () => {
     setIsModalVisible(false);
+  };
+
+  const pinColor = walk => {
+    if (walk.category === "architecture") {
+      return "#478FCD";
+    }
+    if (walk.category === "nature") {
+      return "#5fAD46";
+    }
+    if (walk.category === "Street art") {
+      return "violet";
+    }
+    if (walk.category === "historical") {
+      return "tomato";
+    }
+    if (walk.category === 'Scenic"') {
+      return "blue";
+    }
+    if (walk.category === "Dog") {
+      return "orange";
+    }
+    if (walk.category === "Hiking") {
+      return "brown";
+    }
   };
 
   return (
@@ -100,18 +127,18 @@ function ExploreMap(props) {
                 mode="dropdown"
                 iosIcon={<Icon name="arrow-down" />}
                 iosHeader="Filter"
-                placeholder="Filter by Tag"
+                placeholder={pickerPlaceholder}
                 style={{ width: undefined }}
                 onValueChange={handlePicker}
               >
                 <Picker.Item label="All Walks" value="All Walks" />
-                <Picker.Item label="Nature" value="nature" />
-                <Picker.Item label="Scenic" value="scenic" />
-                <Picker.Item label="Architecture" value="architecture" />
-                <Picker.Item label="Dog" value="dog" />
-                <Picker.Item label="Historical" value="historical" />
-                <Picker.Item label="Hiking" value="hiking" />
-                <Picker.Item label="Street art" value="street art" />
+                <Picker.Item label="Nature" value="Nature" />
+                <Picker.Item label="Scenic" value="Scenic" />
+                <Picker.Item label="Architecture" value="Architecture" />
+                <Picker.Item label="Dog" value="Dog" />
+                <Picker.Item label="Historical" value="Historical" />
+                <Picker.Item label="Hiking" value="Hiking" />
+                <Picker.Item label="Street art" value="Street Art" />
               </Picker>
             </Item>
           </Form>
@@ -125,8 +152,8 @@ function ExploreMap(props) {
               width: 300,
               paddingTop: 8,
               paddingBottom: 8,
-              paddingLeft: 190,
-              left: 150,
+              paddingLeft: 250,
+              left: 90,
             }}
             onPress={openModal}
           />
@@ -141,17 +168,17 @@ function ExploreMap(props) {
                   }}
                   key={walk.name}
                   title={walk.name}
-                  pinColor="#006aff"
                   description={walk.description}
                   onPress={() => {
                     props.setActiveWalk(walk.id);
                     props.getAllAttractions(walk.id);
-                    props.navigation.navigate('WalkInfo');
+                    props.navigation.navigate("WalkInfo");
                   }}
                   coordinate={{
                     longitude: walk.start.coordinates[1],
-                    latitude: walk.start.coordinates[0],
+                    latitude: walk.start.coordinates[0]
                   }}
+                  pinColor={pinColor(walk)}
                 >
                   <Callout>
                     <View>
