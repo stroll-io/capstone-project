@@ -14,6 +14,7 @@ class SavedWalks extends React.Component {
     this.handleWalkNavigation = this.handleWalkNavigation.bind(this);
     this.handleWalkInfo = this.handleWalkInfo.bind(this);
     this.handleRemove = this.handleRemove.bind(this);
+    this.handleImageRender = this.handleImageRender.bind(this);
   }
   static navigationOptions = {
     title: 'Saved Walks',
@@ -38,6 +39,19 @@ class SavedWalks extends React.Component {
 
   handleRemove(userId, walkId) {
     this.props.removeSavedWalk(userId, walkId);
+  }
+
+  handleImageRender(category) {
+    switch (category) {
+      case 'architecture':
+        return '../public/thumbnails/architecture.png';
+      case 'dog':
+        return '../public/thumbnails/dog.png';
+      case 'fountain':
+        return '../public/thumbnails/fountain.png';
+      case 'historical':
+    }
+    return require(`../public/thumbnails/architecture.png`);
   }
 
   render() {
@@ -166,7 +180,7 @@ class SavedWalks extends React.Component {
                         </View>
                         <View>
                           <Image
-                            source={require('../public/thumbnails/fountain.png')}
+                            source={this.handleImageRender}
                             style={{
                               height: 80,
                               width: 80,
