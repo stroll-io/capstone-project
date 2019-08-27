@@ -25,7 +25,7 @@ const StackNavigator = createStackNavigator(
 const AppContainer = createAppContainer(StackNavigator);
 
 // disables expo warning message for demo purposes + recording
-// console.disableYellowBox = true;
+console.disableYellowBox = true;
 
 export default class App extends React.Component {
   render() {
