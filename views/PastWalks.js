@@ -185,8 +185,8 @@ class PastWalks extends React.Component {
                             source={require('../public/thumbnails/leaf.png')}
                             style={{
                               display: 'flex',
-                              height: 100,
-                              width: 100,
+                              height: 80,
+                              width: 80,
                               marginRight: 10,
                             }}
                           />

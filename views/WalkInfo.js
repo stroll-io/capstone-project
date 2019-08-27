@@ -60,26 +60,41 @@ const WalkInfo = props => {
       props.activeWalk.category.slice(1);
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
-        <View style={{ marginTop: 20, flex: 1 }}>
-          <View style={{ alignContent: 'center', justifyContent: 'center' }}>
-            <Text
-              style={{
-                fontFamily: 'Avenir-Heavy',
-                fontWeight: 'bold',
-                fontSize: 30,
-                textAlign: 'center',
-                marginBottom: 5,
-              }}
-            >
-              {props.activeWalk.name}
-            </Text>
+        <View
+          style={{
+            marginTop: 20,
+            flex: 1,
+          }}
+        >
+          <View
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignContent: 'center',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <View>
+              <Text
+                style={{
+                  fontFamily: 'Avenir-Heavy',
+                  fontWeight: 'bold',
+                  fontSize: 30,
+                  textAlign: 'center',
+                  marginBottom: 5,
+                }}
+              >
+                {props.activeWalk.name}
+              </Text>
+            </View>
+
             <View
               style={{
                 width: '35%',
                 borderRadius: 20,
                 backgroundColor: '#FFA614',
-                alignContent: 'center',
-                justifyContent: 'center',
+                marginBottom: 5,
               }}
             >
               <View
@@ -155,15 +170,20 @@ const WalkInfo = props => {
                 : null}
             </MapView>
           </View>
-          <View style={{ marginTop: 5, flex: 1 }}>
-            <Text style={{ fontFamily: 'Avenir-Heavy' }}>
+          <View style={{ margin: 10, flex: 1 }}>
+            <Text style={{ fontSize: 14, fontFamily: 'Avenir-Heavy' }}>
               Total Distance: {distance} miles
             </Text>
-            <Text style={{ fontFamily: 'Avenir-Heavy' }}>
+            <Text style={{ fontSize: 14, fontFamily: 'Avenir-Heavy' }}>
               Average Time: {duration} minutes
             </Text>
             <Text
-              style={{ fontFamily: 'Avenir-Heavy', marginTop: 30, flex: 1 }}
+              style={{
+                fontSize: 14,
+                fontFamily: 'Avenir-Heavy',
+                marginTop: 30,
+                flex: 1,
+              }}
             >
               Description: {props.activeWalk.description}
             </Text>
