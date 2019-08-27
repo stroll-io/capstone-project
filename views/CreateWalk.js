@@ -82,11 +82,36 @@ function CreateWalk(props) {
         transparent={false}
         visible={isQuestionModalVisible}
       >
-        <View style={{ margin: 50 }}>
-          <Text style={{ marginTop: 50 }}>Here is some text in the modal</Text>
-          <Button large info onPress={closeQuestionModal}>
-            <Text>This closes the modal</Text>
-          </Button>
+        <View style={{ display: 'flex', flexDirection: 'column', margin: 50 }}>
+          <View>
+            <Text
+              style={{
+                fontSize: 18,
+                fontFamily: 'Avenir-Heavy',
+                justifyContent: 'center',
+                marginTop: 50,
+              }}
+            >
+              Here is some text in the modal
+            </Text>
+          </View>
+          <View style={{ justifyContent: 'center' }}>
+            <Button
+              style={{ justifyContent: 'center', borderRadius: 20 }}
+              onPress={closeQuestionModal}
+            >
+              <Text
+                style={{
+                  textAlign: 'center',
+                  fontSize: 16,
+                  color: 'white',
+                  fontFamily: 'Avenir-Heavy',
+                }}
+              >
+                Close
+              </Text>
+            </Button>
+          </View>
         </View>
       </Modal>
       <View style={{ flex: 1 }}>
@@ -164,7 +189,7 @@ function CreateWalk(props) {
         style={{
           display: 'flex',
           position: 'absolute',
-          bottom: 40,
+          bottom: 60,
           left: 50,
           flexDirection: 'row',
           justifyContent: 'center',
@@ -182,7 +207,16 @@ function CreateWalk(props) {
           </Text>
         </Button>
       </View>
-      <Text>Current Distance: {distance} mi</Text>
+      <Text
+        style={{
+          paddingTop: 10,
+          paddingBottom: 5,
+          textAlign: 'center',
+          fontFamily: 'Avenir-Heavy',
+        }}
+      >
+        Current Distance: {distance} mi
+      </Text>
       <Modal
         animationType="slide"
         transparent={false}
