@@ -299,6 +299,7 @@ class Dashboard extends React.Component {
                     backgroundColor: '#859F3C',
                     borderRadius: '20px',
                     marginBottom: 20,
+                    justifyContent: 'center',
                   }}
                   onPress={() =>
                     this.props.navigation.navigate('Recommended Walks')
