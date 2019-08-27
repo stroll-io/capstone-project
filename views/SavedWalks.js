@@ -44,14 +44,20 @@ class SavedWalks extends React.Component {
   handleImageRender(category) {
     switch (category) {
       case 'architecture':
-        return '../public/thumbnails/architecture.png';
+        return require('../public/thumbnails/architecture.png');
       case 'dog':
-        return '../public/thumbnails/dog.png';
+        return require('../public/thumbnails/dog.png');
       case 'fountain':
-        return '../public/thumbnails/fountain.png';
+        return require('../public/thumbnails/fountain.png');
       case 'historical':
+        return require('../public/thumbnails/historical.png');
+      case 'nature':
+        return require('../public/thumbnails/nature.png');
+      case 'scenic':
+        return require('../public/thumbnails/scenic.png');
+      default:
+        return require('../public/sky.png');
     }
-    return require(`../public/thumbnails/architecture.png`);
   }
 
   render() {
@@ -180,7 +186,7 @@ class SavedWalks extends React.Component {
                         </View>
                         <View>
                           <Image
-                            source={this.handleImageRender}
+                            source={this.handleImageRender(walk.category)}
                             style={{
                               height: 80,
                               width: 80,
