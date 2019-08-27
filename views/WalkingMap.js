@@ -53,7 +53,6 @@ function WalkingMap(props) {
 
     for(let i = 0; i < formattedNavPoints.length - 1; i++) {
       const res = await axios.get(`https://maps.googleapis.com/maps/api/directions/json?origin=${formattedNavPoints[i]}&destination=${formattedNavPoints[i + 1]}&mode=walking&key=${googleSecret}`)
-      console.log('res.data :', res.data);
       res.data.routes[0].legs[0].steps.forEach(step => {
       directionsArr.push(step.html_instructions)
       });
