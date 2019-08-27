@@ -9,7 +9,7 @@ import { setActiveWalkThunk } from '../store/activeWalk';
 import MapViewDirections from 'react-native-maps-directions';
 import { googleSecret } from '../secrets';
 import { getAttractionsThunk } from '../store/attractions';
-import { AntDesign } from 'react-native-vector-icons';
+import { AntDesign, SimpleLineIcons } from 'react-native-vector-icons';
 
 function ExploreMap(props) {
   const [name, setName] = useState('');
@@ -88,20 +88,29 @@ function ExploreMap(props) {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
       <Modal animationType="slide" transparent={false} visible={isModalVisible}>
-        <View style={{ display: 'flex', flexDirection: 'column', margin: 50 }}>
-          <View>
+        <View
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            margin: 50,
+            marginTop: 100,
+          }}
+        >
+          <View style={{ display: 'flex', flexDirection: 'row' }}>
+            <SimpleLineIcons name="map" size={25} />
             <Text
               style={{
                 fontSize: 18,
                 fontFamily: 'Avenir-Heavy',
                 justifyContent: 'center',
-                marginTop: 50,
+                marginLeft: 10,
               }}
             >
-              Here is some text in the modal
+              Filter by tag to see the types of walks nearby. Tap on a walk to
+              learn more about it.
             </Text>
           </View>
-          <View style={{ justifyContent: 'center' }}>
+          <View style={{ justifyContent: 'center', marginTop: 30 }}>
             <Button
               style={{ justifyContent: 'center', borderRadius: 20 }}
               onPress={closeModal}
