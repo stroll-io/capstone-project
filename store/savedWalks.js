@@ -48,10 +48,15 @@ export const fetchSavedWalks = userId => {
 
 export const addSavedWalkThunk = (userId, walkId) => {
   return async dispatch => {
-    const { data } = await axios.post(
-      `${ngrokSecret}/api/savedWalks/${userId}/${walkId}`
+    const { previous } = await axios.get(
+      `${ngrokSecret}/api/savedWalks/${userId}`
     );
-    dispatch(addSavedWalk(data));
+    if (!previous) {
+      const { data } = await axios.post(
+        `${ngrokSecret}/api/savedWalks/${userId}/${walkId}`
+      );
+      dispatch(addSavedWalk(data));
+    }
   };
 };
 
