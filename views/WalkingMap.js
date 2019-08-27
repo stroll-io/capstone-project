@@ -1,6 +1,5 @@
-/* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
-import { View, SafeAreaView, Modal, WebView } from 'react-native';
+import { View, SafeAreaView, Modal, ScrollView } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { connect } from 'react-redux';
 import { Button, Text } from 'native-base';
@@ -12,11 +11,10 @@ import MapViewDirections from 'react-native-maps-directions';
 import { googleSecret } from '../secrets';
 import * as Haptics from 'expo-haptics';
 import axios from 'axios'
-import { AntDesign } from "react-native-vector-icons";
+import HTML from "react-native-render-html";
 
 function WalkingMap(props) {
   const [isWalkComplete, setIsWalkComplete] = useState(false);
-  const [walkData, setWalkData] = useState(false);
   const [destination, setDestination] = useState(null);
   const [userLocation, setUserLocation] = useState(null);
   const [hapticHasTriggered, setHapticHasTriggered] = useState(false);
@@ -45,7 +43,6 @@ function WalkingMap(props) {
 
 
   const getDirections = async () => {
-    //format the navPoints in the correct way for api call
     let formattedNavPoints = [];
     for (let i = 0; i < navPoints.length; i++) {
       let currentPoint = `${navPoints[i].latitude}, ${navPoints[i].longitude}`;
@@ -56,16 +53,15 @@ function WalkingMap(props) {
 
     for(let i = 0; i < formattedNavPoints.length - 1; i++) {
       const res = await axios.get(`https://maps.googleapis.com/maps/api/directions/json?origin=${formattedNavPoints[i]}&destination=${formattedNavPoints[i + 1]}&mode=walking&key=${googleSecret}`)
+      console.log('res.data :', res.data);
       res.data.routes[0].legs[0].steps.forEach(step => {
       directionsArr.push(step.html_instructions)
       });
     }
-    console.log('directionsArr[0] :', directionsArr[0]);
     setDirections(directionsArr.join('<br>'))
   }
 
   const handleOnReady = e => {
-    setWalkData(e);
     setDestination(e.coordinates[e.coordinates.length - 1]);
     this.map.animateCamera({
       center: {
@@ -110,21 +106,16 @@ function WalkingMap(props) {
   const closeDirections = () => {
     setDirectionsVisible(false);
   }
+
+  const htmlStyles = { p: { fontSize: 30, margin: 3} };
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
-      <Modal
-        animationType="slide"
-        transparent={false}
-        visible={isWalkComplete}
-        onRequestClose={() => {
-          console.log("onRequestClose");
-        }}
-      >
+      <Modal animationType="slide" transparent={false} visible={isWalkComplete}>
         <View style={{ marginTop: 250 }}>
           <Text
             style={{
               fontWeight: "bold",
-              fontSize: 30,
               textAlign: "center"
             }}
           >
@@ -152,37 +143,30 @@ function WalkingMap(props) {
         transparent={false}
         visible={areDirectionsVisible}
       >
-        <View style={{flex: 1}}>
-          <Button warning medium onPress={closeDirections} style={{position: 'absolute', marginTop: 50, zIndex: 100}}>
-            <Text>
-              Close
-            </Text>
+        <View style={{ flex: 1 }}>
+          <Button
+            warning
+            medium
+            onPress={closeDirections}
+            style={{ position: "absolute", marginTop: 50, zIndex: 100 }}
+          >
+            <Text>Close</Text>
           </Button>
-
-          <WebView
-            style={{ marginTop: 100, flex: 20 }}
-            source={{ html: directions }}
-            scalePageToFit={false}
-          ></WebView>
+          <ScrollView style={{ marginTop: 100, marginBottom: 40, flex: 1, zIndex: 1 }}>
+            <HTML
+              html={directions}
+              scalePageToFit={false}
+              tagsStyles={htmlStyles}
+            ></HTML>
+          </ScrollView>
         </View>
       </Modal>
       <MapView
-        //initial region should be stateful based on users current location
         provider="google"
         ref={_map => {
           this.map = _map;
         }}
         onUserLocationChange={handleUserLocationChange}
-        //e.nativeEvent is like this {target: 215, coordinate {
-        // accuracy: 65
-        // altitude: 182.97296142578125
-        // altitudeAccuracy: 10
-        // latitude: 41.89551621857361
-        // longitude: -87.63895419445778
-        // speed: -1
-        // timestamp: 588017852300.918
-        // }
-        // }
         showsUserLocation={true}
         style={{ flex: 1 }}
         initialRegion={{
@@ -227,14 +211,14 @@ function WalkingMap(props) {
           display: "flex",
           position: "absolute",
           bottom: 40,
-          left: 50,
+          left: 110,
           flexDirection: "row",
           justifyContent: "center"
         }}
       >
         <Button
           onPress={handleDirections}
-          style={{ backgroundColor: "tomato", borderRadius: 20, margin: 20 }}
+          style={{ backgroundColor: "#417dc1", borderRadius: 20, margin: 20 }}
         >
           <Text>Directions</Text>
         </Button>

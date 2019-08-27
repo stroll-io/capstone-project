@@ -44,22 +44,22 @@ class PastWalks extends React.Component {
     return (
       <Container>
         <Content>
-          <View style={{ justifyContent: 'center' }}>
-            <Text style={{ fontWeight: '700', textAlign: 'center' }}>
+          <View style={{ justifyContent: "center" }}>
+            <Text style={{ fontWeight: "700", textAlign: "center" }}>
               {this.props.pastWalks.length
                 ? `You've walked ${this.totalDistanceReducer(
                     this.props.pastWalks
-                  )} miles so far - great job!`
-                : ''}
+                  ).toFixed(2)} miles so far - great job!`
+                : ""}
             </Text>
           </View>
           <View
             style={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignContent: 'center',
-              alignItems: 'center',
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignContent: "center",
+              alignItems: "center"
             }}
           >
             {this.props.pastWalks.length ? (
@@ -71,59 +71,59 @@ class PastWalks extends React.Component {
                     key={walk.id}
                     style={{
                       height: 200,
-                      width: '95%',
-                      borderStyle: 'dashed',
+                      width: "95%",
+                      borderStyle: "dashed",
                       borderWidth: 5,
-                      borderColor: '#436904',
+                      borderColor: "#436904",
                       borderRadius: 25,
-                      backgroundColor: '#b9cd74',
+                      backgroundColor: "#b9cd74",
                       marginTop: 10,
                       marginBottom: 10,
-                      alignItems: 'center',
-                      justifyContent: 'center',
+                      alignItems: "center",
+                      justifyContent: "center"
                     }}
                   >
                     <View
                       style={{
-                        justifyContent: 'center',
+                        justifyContent: "center",
                         padding: 10,
-                        textAlign: 'center',
+                        textAlign: "center"
                       }}
                     >
-                      <View style={{ display: 'flex', flexDirection: 'row' }}>
+                      <View style={{ display: "flex", flexDirection: "row" }}>
                         <View
                           style={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'space-around',
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "space-around"
                           }}
                         >
                           <Image
-                            source={require('../public/thumbnails/leaf.png')}
+                            source={require("../public/thumbnails/leaf.png")}
                             style={{
-                              display: 'flex',
+                              display: "flex",
                               height: 100,
                               width: 100,
-                              marginRight: 10,
+                              marginRight: 10
                             }}
                           />
                         </View>
                         <View
                           style={{
-                            display: 'flex',
-                            height: '90%',
-                            width: '70%',
+                            display: "flex",
+                            height: "90%",
+                            width: "70%",
                             paddingTop: 5,
                             paddingBottom: 5,
-                            flexDirection: 'column',
-                            justifyContent: 'space-between',
+                            flexDirection: "column",
+                            justifyContent: "space-between"
                           }}
                         >
                           <View>
                             <Text
                               style={{
                                 fontSize: 16,
-                                fontFamily: 'Avenir-Heavy',
+                                fontFamily: "Avenir-Heavy"
                               }}
                             >
                               {walk.name}
@@ -133,31 +133,31 @@ class PastWalks extends React.Component {
                             <Text
                               style={{
                                 fontSize: 16,
-                                fontFamily: 'Avenir-Heavy',
+                                fontFamily: "Avenir-Heavy"
                               }}
                             >
                               Type: {type}
                             </Text>
                           </View>
                           <View
-                            style={{ display: 'flex', flexFlow: 'row-wrap' }}
+                            style={{ display: "flex", flexFlow: "row-wrap" }}
                           >
                             <Text
                               style={{
                                 fontSize: 16,
-                                fontFamily: 'Avenir-Heavy',
+                                fontFamily: "Avenir-Heavy"
                               }}
                             >
                               {walk.description}
                             </Text>
                           </View>
                           <View
-                            style={{ display: 'flex', flexFlow: 'row-wrap' }}
+                            style={{ display: "flex", flexFlow: "row-wrap" }}
                           >
                             <Text
                               style={{
                                 fontSize: 16,
-                                fontFamily: 'Avenir-Heavy',
+                                fontFamily: "Avenir-Heavy"
                               }}
                             >
                               Distance: {walk.distance} mi
@@ -167,23 +167,23 @@ class PastWalks extends React.Component {
                             <Text
                               style={{
                                 fontSize: 16,
-                                fontFamily: 'Avenir-Heavy',
+                                fontFamily: "Avenir-Heavy"
                               }}
                             >
-                              Walked:{' '}
+                              Walked:{" "}
                               {new Date(
                                 walk.past_walks.createdAt
                               ).toDateString()}
                             </Text>
-                            <View style={{ flexDirection: 'row' }}>
+                            <View style={{ flexDirection: "row" }}>
                               <Button
                                 style={{
-                                  width: '30%',
+                                  width: "30%",
                                   borderRadius: 20,
                                   marginRight: 10,
-                                  backgroundColor: 'tomato',
-                                  alignContent: 'center',
-                                  justifyContent: 'center',
+                                  backgroundColor: "tomato",
+                                  alignContent: "center",
+                                  justifyContent: "center"
                                 }}
                                 onPress={() =>
                                   this.handleSave(this.props.user.id, walk.id)
@@ -198,10 +198,10 @@ class PastWalks extends React.Component {
                                 </View>
                                 <Text
                                   style={{
-                                    justifyContent: 'center',
-                                    color: 'white',
+                                    justifyContent: "center",
+                                    color: "white",
                                     fontSize: 14,
-                                    fontFamily: 'Avenir-Heavy',
+                                    fontFamily: "Avenir-Heavy"
                                   }}
                                 >
                                   Save
@@ -212,12 +212,12 @@ class PastWalks extends React.Component {
                                   this.handleWalkNavigation(walk.id)
                                 }
                                 style={{
-                                  borderRadius: '20px',
-                                  width: '60%',
-                                  justifyContent: 'center',
+                                  borderRadius: "20px",
+                                  width: "60%",
+                                  justifyContent: "center"
                                 }}
                               >
-                                <Text style={{ color: 'white' }}>
+                                <Text style={{ color: "white" }}>
                                   Start this Walk
                                 </Text>
                               </Button>

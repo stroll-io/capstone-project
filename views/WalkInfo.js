@@ -6,9 +6,6 @@ import { connect } from "react-redux";
 import MapViewDirections from "react-native-maps-directions";
 import { googleSecret } from "../secrets";
 
-
-
-
 const WalkInfo = (props) => {
     const [navPoints, setNavPoints] = useState([])
     const [distance, setDistance] = useState(0);
@@ -17,7 +14,6 @@ const WalkInfo = (props) => {
       latitude: 41.884061,
       longitude: -87.633389
     });
-
 
   useEffect(() => {
     const navArr = [];
@@ -142,9 +138,6 @@ const WalkInfo = (props) => {
               flex: 1
             }}
           >
-            {/* <Button large warning onPress={handleCancel} style={{ margin: 20 }}>
-              <Text>Back</Text>
-            </Button> */}
             <Button large primary onPress={handleWalk} style={{ margin: 20 }}>
               <Text>Start Walk</Text>
             </Button>
@@ -159,7 +152,6 @@ const WalkInfo = (props) => {
       </View>
     )
   }
-
 }
 
 const mapState = state => {
@@ -168,7 +160,6 @@ const mapState = state => {
     attractions: state.attractions
   };
 };
-
 
 export default connect(
   mapState
