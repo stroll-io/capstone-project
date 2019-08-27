@@ -176,16 +176,6 @@ function AttractionsMap(props) {
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
-        // onPress={e => {
-        //   const newCoord = {
-        //     latitude: e.nativeEvent.coordinate.latitude,
-        //     longitude: e.nativeEvent.coordinate.longitude,
-        //   };
-        //   setCoord(newCoord);
-        //   if (isPinBeingAdded) {
-        //     setIsModalVisible(true);
-        //   }
-        // }}
       >
         <View
           style={{
