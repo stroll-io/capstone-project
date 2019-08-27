@@ -11,7 +11,7 @@ import {
 
 function AttractionsMap(props) {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [pickerPlaceholder, setPickerPlaceholder] = useState("Filter by tag");
+  const [pickerPlaceholder, setPickerPlaceholder] = useState('Filter by tag');
   useEffect(() => {
     props.getAllAttractions();
   }, []);
@@ -26,8 +26,8 @@ function AttractionsMap(props) {
 
   // let filter = 'Filter by tag';
   const handlePicker = e => {
-    setPickerPlaceholder(e)
-    e = e.toLowerCase()
+    setPickerPlaceholder(e);
+    e = e.toLowerCase();
     if (e === 'all attractions') {
       // filter = 'All Tags';
       props.getAllAttractions();
@@ -53,7 +53,7 @@ function AttractionsMap(props) {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
       <Modal animationType="slide" transparent={false} visible={isModalVisible}>
         <View style={{ display: 'flex', flexDirection: 'column', margin: 50 }}>
           <View>
@@ -176,13 +176,13 @@ function AttractionsMap(props) {
           latitude: 41.895442,
           longitude: -87.638957,
           latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421
+          longitudeDelta: 0.0421,
         }}
       >
         <View
           style={{
-            position: "absolute",
-            backgroundColor: "white"
+            position: 'absolute',
+            backgroundColor: 'white',
           }}
         >
           <Form>
@@ -195,20 +195,11 @@ function AttractionsMap(props) {
                 style={{ width: undefined }}
                 onValueChange={handlePicker}
               >
-<<<<<<< HEAD
-                <Picker.Item label="All Attractions" value="All Attractions" />
-                <Picker.Item label="Architecture" value="Architecture" />
-                <Picker.Item label="Art and Museums" value="Art and Museums" />
-                <Picker.Item label="Historical" value="Historical" />
-                <Picker.Item label="Nature" value="Nature" />
-                <Picker.Item label="Scenic" value="Scenic" />
-=======
                 <Picker.Item label="All Tags" value="All Tags" />
                 <Picker.Item label="Architecture" value="architecture" />
                 <Picker.Item label="Art and Museums" value="art and museums" />
                 <Picker.Item label="Historical" value="historical" />
                 <Picker.Item label="Nature" value="nature" />
->>>>>>> ab98fa8a1c02922cc3eee69c5a35cd47736acdc4
               </Picker>
             </Item>
           </Form>
@@ -217,13 +208,13 @@ function AttractionsMap(props) {
             size={27}
             color="black"
             style={{
-              position: "absolute",
-              backgroundColor: "white",
+              position: 'absolute',
+              backgroundColor: 'white',
               width: 300,
               paddingTop: 8,
               paddingBottom: 8,
               paddingLeft: 250,
-              left: 90
+              left: 90,
             }}
             onPress={openModal}
           />
@@ -239,7 +230,7 @@ function AttractionsMap(props) {
                   pinColor={pinColor(coord)}
                   coordinate={{
                     longitude: coord.location.coordinates[1],
-                    latitude: coord.location.coordinates[0]
+                    latitude: coord.location.coordinates[0],
                   }}
                 />
               );
