@@ -7,7 +7,7 @@ import { Form, Item, Picker, Icon } from 'native-base';
 import { getAllWalksThunk, getWalksByTagThunk } from '../store/walks';
 import { setActiveWalkThunk } from '../store/activeWalk';
 import { getAttractionsThunk } from '../store/attractions';
-import { AntDesign } from 'react-native-vector-icons';
+import { AntDesign, SimpleLineIcons } from 'react-native-vector-icons';
 
 function ExploreMap(props) {
 
@@ -41,20 +41,29 @@ function ExploreMap(props) {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
       <Modal animationType="slide" transparent={false} visible={isModalVisible}>
-        <View style={{ display: 'flex', flexDirection: 'column', margin: 50 }}>
-          <View>
+        <View
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            margin: 50,
+            marginTop: 100,
+          }}
+        >
+          <View style={{ display: 'flex', flexDirection: 'row' }}>
+            <SimpleLineIcons name="map" size={25} />
             <Text
               style={{
                 fontSize: 18,
                 fontFamily: 'Avenir-Heavy',
                 justifyContent: 'center',
-                marginTop: 50,
+                marginLeft: 10,
               }}
             >
-              Here is some text in the modal
+              Filter by tag to see the types of walks nearby. Tap on a walk to
+              learn more about it.
             </Text>
           </View>
-          <View style={{ justifyContent: 'center' }}>
+          <View style={{ justifyContent: 'center', marginTop: 30 }}>
             <Button
               style={{ justifyContent: 'center', borderRadius: 20 }}
               onPress={closeModal}
@@ -91,7 +100,7 @@ function ExploreMap(props) {
                 mode="dropdown"
                 iosIcon={<Icon name="arrow-down" />}
                 iosHeader="Filter"
-                placeholder="Filter by tag"
+                placeholder="Filter by Tag"
                 style={{ width: undefined }}
                 onValueChange={handlePicker}
               >
