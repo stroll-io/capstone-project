@@ -7,7 +7,7 @@ import { ngrokSecret } from '../secrets';
 import { connect } from 'react-redux';
 import { getAllWalksThunk } from '../store/walks';
 import { setActiveWalkThunk } from '../store/activeWalk';
-import { AntDesign } from 'react-native-vector-icons';
+import { AntDesign, SimpleLineIcons } from 'react-native-vector-icons';
 import MapViewDirections from 'react-native-maps-directions';
 import { googleSecret } from '../secrets';
 
@@ -83,16 +83,36 @@ function CreateWalk(props) {
         visible={isQuestionModalVisible}
       >
         <View style={{ display: 'flex', flexDirection: 'column', margin: 50 }}>
+          <View style={{ display: 'flex', flexDirection: 'row' }}>
+            <Text
+              style={{
+                justifyContent: 'center',
+                fontSize: 18,
+                fontFamily: 'Avenir-Heavy',
+                paddingLeft: 10,
+              }}
+            >
+              To create a walk, start by touching the map where you would like
+              to put down a pin.{' '}
+            </Text>
+            <SimpleLineIcons
+              name="location-pin"
+              size={25}
+              color="tomato"
+              style={{ paddingTop: 43, paddingLeft: 5 }}
+            />
+          </View>
           <View>
             <Text
               style={{
                 fontSize: 18,
                 fontFamily: 'Avenir-Heavy',
                 justifyContent: 'center',
-                marginTop: 50,
+                marginBottom: 20,
+                paddingLeft: 10,
               }}
             >
-              Here is some text in the modal
+              Each pin acts as a point of navigation or interest along the walk.
             </Text>
           </View>
           <View style={{ justifyContent: 'center' }}>
@@ -146,7 +166,7 @@ function CreateWalk(props) {
       </View>
       <MapView
         provider="google"
-        style={{ flex: 16 }}
+        style={{ flex: 12 }}
         initialRegion={{
           latitude: 41.895442,
           longitude: -87.638957,

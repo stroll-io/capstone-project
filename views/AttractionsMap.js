@@ -3,7 +3,7 @@ import { View, SafeAreaView, Modal, Text } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { connect } from 'react-redux';
 import { Form, Item, Picker, Icon, Button } from 'native-base';
-import { AntDesign } from 'react-native-vector-icons';
+import { AntDesign, SimpleLineIcons } from 'react-native-vector-icons';
 import {
   getAllAttractionsThunk,
   getAttractionsByTagThunk,
@@ -65,8 +65,89 @@ function AttractionsMap(props) {
                 marginTop: 50,
               }}
             >
-              Here is some text in the modal
+              Filter by tag to see the types of attractions nearby.
             </Text>
+            <View
+              style={{ display: 'flex', flexDirection: 'row', marginTop: 10 }}
+            >
+              <SimpleLineIcons
+                name="location-pin"
+                size={25}
+                color="#478FCD"
+                style={{ padding: 5 }}
+              />
+              <Text
+                style={{
+                  fontSize: 18,
+                  fontFamily: 'Avenir-Heavy',
+                  paddingTop: 5,
+                }}
+              >
+                Architecture
+              </Text>
+            </View>
+            <View
+              style={{ display: 'flex', flexDirection: 'row', marginTop: 10 }}
+            >
+              <SimpleLineIcons
+                name="location-pin"
+                size={25}
+                color="#5fAD46"
+                style={{ padding: 5 }}
+              />
+              <Text
+                style={{
+                  fontSize: 18,
+                  fontFamily: 'Avenir-Heavy',
+                  paddingTop: 5,
+                }}
+              >
+                Nature
+              </Text>
+            </View>
+            <View
+              style={{ display: 'flex', flexDirection: 'row', marginTop: 10 }}
+            >
+              <SimpleLineIcons
+                name="location-pin"
+                size={25}
+                color="violet"
+                style={{ padding: 5 }}
+              />
+              <Text
+                style={{
+                  fontSize: 18,
+                  fontFamily: 'Avenir-Heavy',
+                  paddingTop: 5,
+                }}
+              >
+                Art and Museums
+              </Text>
+            </View>
+            <View
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                marginTop: 10,
+                marginBottom: 20,
+              }}
+            >
+              <SimpleLineIcons
+                name="location-pin"
+                size={25}
+                color="tomato"
+                style={{ padding: 5 }}
+              />
+              <Text
+                style={{
+                  fontSize: 18,
+                  fontFamily: 'Avenir-Heavy',
+                  paddingTop: 5,
+                }}
+              >
+                Historical
+              </Text>
+            </View>
           </View>
           <View style={{ justifyContent: 'center' }}>
             <Button
