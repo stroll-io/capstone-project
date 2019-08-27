@@ -35,7 +35,7 @@ class PastWalks extends React.Component {
     this.props.setActiveWalk(walkId);
     setTimeout(() => {
       this.props.navigation.navigate('Walking Map');
-    }, 200);
+    }, 600);
   }
 
   totalDistanceReducer(walkArray) {
@@ -52,6 +52,7 @@ class PastWalks extends React.Component {
     return (
       <Container>
         <Content>
+<<<<<<< HEAD
           <View>
             <View style={{ justifyContent: 'center' }}>
               <Text style={{ fontFamily: 'Avenir-Heavy', textAlign: 'center' }}>
@@ -62,6 +63,26 @@ class PastWalks extends React.Component {
                   : ''}
               </Text>
             </View>
+=======
+          <View style={{ justifyContent: "center" }}>
+            <Text style={{ fontWeight: "700", textAlign: "center" }}>
+              {this.props.pastWalks.length
+                ? `You've walked ${this.totalDistanceReducer(
+                    this.props.pastWalks
+                  ).toFixed(2)} miles so far - great job!`
+                : ""}
+            </Text>
+          </View>
+          <View
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignContent: "center",
+              alignItems: "center"
+            }}
+          >
+>>>>>>> 9d1dc5e6cfdc12d332f2730b235aced63cbb3ede
             {this.props.pastWalks.length ? (
               this.props.pastWalks.map(walk => {
                 let tag;
@@ -72,16 +93,31 @@ class PastWalks extends React.Component {
                   <View
                     key={walk.id}
                     style={{
+<<<<<<< HEAD
                       display: 'flex',
                       flexDirection: 'column',
                       justifyContent: 'center',
                       height: 245,
                       width: '100%',
+=======
+                      height: 200,
+                      width: "95%",
+                      borderStyle: "dashed",
+                      borderWidth: 5,
+                      borderColor: "#436904",
+                      borderRadius: 25,
+                      backgroundColor: "#b9cd74",
+                      marginTop: 10,
+                      marginBottom: 10,
+                      alignItems: "center",
+                      justifyContent: "center"
+>>>>>>> 9d1dc5e6cfdc12d332f2730b235aced63cbb3ede
                     }}
                   >
                     <View
                       className="cardTitle"
                       style={{
+<<<<<<< HEAD
                         display: 'flex',
                         flexDirection: 'row',
                         borderWidth: 2,
@@ -161,6 +197,19 @@ class PastWalks extends React.Component {
                             display: 'flex',
                             flexDirection: 'column',
                             width: '65%',
+=======
+                        justifyContent: "center",
+                        padding: 10,
+                        textAlign: "center"
+                      }}
+                    >
+                      <View style={{ display: "flex", flexDirection: "row" }}>
+                        <View
+                          style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "space-around"
+>>>>>>> 9d1dc5e6cfdc12d332f2730b235aced63cbb3ede
                           }}
                         >
                           <Text
@@ -182,10 +231,19 @@ class PastWalks extends React.Component {
                         </View>
                         <View>
                           <Image
+<<<<<<< HEAD
                             source={require('../public/thumbnails/fountain.png')}
                             style={{
                               height: 80,
                               width: 80,
+=======
+                            source={require("../public/thumbnails/leaf.png")}
+                            style={{
+                              display: "flex",
+                              height: 100,
+                              width: 100,
+                              marginRight: 10
+>>>>>>> 9d1dc5e6cfdc12d332f2730b235aced63cbb3ede
                             }}
                           />
                         </View>
@@ -202,6 +260,7 @@ class PastWalks extends React.Component {
                       >
                         <View
                           style={{
+<<<<<<< HEAD
                             width: '35%',
                             borderRadius: 20,
                             backgroundColor: '#FFA614',
@@ -217,6 +276,39 @@ class PastWalks extends React.Component {
                               justifyContent: 'space-evenly',
                               padding: 5,
                             }}
+=======
+                            display: "flex",
+                            height: "90%",
+                            width: "70%",
+                            paddingTop: 5,
+                            paddingBottom: 5,
+                            flexDirection: "column",
+                            justifyContent: "space-between"
+                          }}
+                        >
+                          <View>
+                            <Text
+                              style={{
+                                fontSize: 16,
+                                fontFamily: "Avenir-Heavy"
+                              }}
+                            >
+                              {walk.name}
+                            </Text>
+                          </View>
+                          <View>
+                            <Text
+                              style={{
+                                fontSize: 16,
+                                fontFamily: "Avenir-Heavy"
+                              }}
+                            >
+                              Type: {type}
+                            </Text>
+                          </View>
+                          <View
+                            style={{ display: "flex", flexFlow: "row-wrap" }}
+>>>>>>> 9d1dc5e6cfdc12d332f2730b235aced63cbb3ede
                           >
                             <View>
                               <SimpleLineIcons
@@ -227,17 +319,23 @@ class PastWalks extends React.Component {
                             </View>
                             <Text
                               style={{
+<<<<<<< HEAD
                                 alignSelf: 'center',
                                 justifyContent: 'center',
                                 alignItems: 'center',
                                 color: 'white',
                                 fontSize: 14,
                                 fontFamily: 'Avenir-Heavy',
+=======
+                                fontSize: 16,
+                                fontFamily: "Avenir-Heavy"
+>>>>>>> 9d1dc5e6cfdc12d332f2730b235aced63cbb3ede
                               }}
                             >
                               {tag}
                             </Text>
                           </View>
+<<<<<<< HEAD
                         </View>
                         <Button
                           onPress={() => {
@@ -287,6 +385,79 @@ class PastWalks extends React.Component {
                               size={20}
                               color="white"
                             />
+=======
+                          <View
+                            style={{ display: "flex", flexFlow: "row-wrap" }}
+                          >
+                            <Text
+                              style={{
+                                fontSize: 16,
+                                fontFamily: "Avenir-Heavy"
+                              }}
+                            >
+                              Distance: {walk.distance} mi
+                            </Text>
+                          </View>
+                          <View>
+                            <Text
+                              style={{
+                                fontSize: 16,
+                                fontFamily: "Avenir-Heavy"
+                              }}
+                            >
+                              Walked:{" "}
+                              {new Date(
+                                walk.past_walks.createdAt
+                              ).toDateString()}
+                            </Text>
+                            <View style={{ flexDirection: "row" }}>
+                              <Button
+                                style={{
+                                  width: "30%",
+                                  borderRadius: 20,
+                                  marginRight: 10,
+                                  backgroundColor: "tomato",
+                                  alignContent: "center",
+                                  justifyContent: "center"
+                                }}
+                                onPress={() =>
+                                  this.handleSave(this.props.user.id, walk.id)
+                                }
+                              >
+                                <View style={{ marginLeft: 8, marginRight: 5 }}>
+                                  <SimpleLineIcons
+                                    name="heart"
+                                    size={25}
+                                    color="white"
+                                  />
+                                </View>
+                                <Text
+                                  style={{
+                                    justifyContent: "center",
+                                    color: "white",
+                                    fontSize: 14,
+                                    fontFamily: "Avenir-Heavy"
+                                  }}
+                                >
+                                  Save
+                                </Text>
+                              </Button>
+                              <Button
+                                onPress={() =>
+                                  this.handleWalkNavigation(walk.id)
+                                }
+                                style={{
+                                  borderRadius: "20px",
+                                  width: "60%",
+                                  justifyContent: "center"
+                                }}
+                              >
+                                <Text style={{ color: "white" }}>
+                                  Start this Walk
+                                </Text>
+                              </Button>
+                            </View>
+>>>>>>> 9d1dc5e6cfdc12d332f2730b235aced63cbb3ede
                           </View>
                           <Text
                             style={{

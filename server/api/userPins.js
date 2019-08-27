@@ -16,7 +16,7 @@ userPinsRouter.post('/', async(req, res, next) => {
     res.send(newPin);
   }
   catch(err) {
-    console.error(err);
+    next(err);
   }
 })
 
@@ -25,7 +25,7 @@ userPinsRouter.get('/', async(req, res, next) => {
     const allUserPins = await UserPin.findAll();
     res.send(allUserPins);
   } catch(err) {
-    console.error(err);
+    next(err);
   }
 });
 

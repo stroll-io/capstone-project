@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useEffect, useState } from 'react';
 import { View, SafeAreaView } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
@@ -16,6 +17,25 @@ const WalkInfo = props => {
     longitude: -87.633389,
   });
 
+=======
+import React, { useEffect, useState } from "react";
+import { View, SafeAreaView, ActivityIndicator } from "react-native";
+import MapView, {Marker} from "react-native-maps";
+import { Button, Text } from "native-base";
+import { connect } from "react-redux";
+import MapViewDirections from "react-native-maps-directions";
+import { googleSecret } from "../secrets";
+
+const WalkInfo = (props) => {
+    const [navPoints, setNavPoints] = useState([])
+    const [distance, setDistance] = useState(0);
+    const [duration, setDuration] = useState(0);
+    const [start, setStart] = useState({
+      latitude: 41.884061,
+      longitude: -87.633389
+    });
+
+>>>>>>> 9d1dc5e6cfdc12d332f2730b235aced63cbb3ede
   useEffect(() => {
     const navArr = [];
     if (props.activeWalk.navPoints) {
@@ -51,8 +71,13 @@ const WalkInfo = props => {
 
   const handleWalk = () => {
     setTimeout(() => {
+<<<<<<< HEAD
       props.navigation.navigate('Walking Map');
     }, 1000);
+=======
+      props.navigation.navigate("Walking Map");
+    }, 600);
+>>>>>>> 9d1dc5e6cfdc12d332f2730b235aced63cbb3ede
   };
 
   if (props.activeWalk.start) {
@@ -156,12 +181,18 @@ const WalkInfo = props => {
                 : null}
             </MapView>
           </View>
+<<<<<<< HEAD
           <View style={{ marginTop: 5, flex: 1 }}>
             <Text style={{ fontFamily: 'Avenir-Heavy' }}>
               Total Distance: {distance} miles
             </Text>
             <Text style={{ fontFamily: 'Avenir-Heavy' }}>
               Average Time: {duration} minutes
+=======
+          <View style={{ marginTop: 5, flex: 1, marginLeft: 10 }}>
+            <Text>
+              {distance} miles {duration} minutes
+>>>>>>> 9d1dc5e6cfdc12d332f2730b235aced63cbb3ede
             </Text>
             <Text
               style={{ fontFamily: 'Avenir-Heavy', marginTop: 30, flex: 1 }}
@@ -179,6 +210,7 @@ const WalkInfo = props => {
             }}
           >
             <Button
+<<<<<<< HEAD
               onPress={handleWalk}
               style={{
                 justifyContent: 'center',
@@ -201,6 +233,13 @@ const WalkInfo = props => {
               >
                 Start!
               </Text>
+=======
+              large
+              onPress={handleWalk}
+              style={{ margin: 20, backgroundColor: "#417dc1" }}
+            >
+              <Text>Start Walk</Text>
+>>>>>>> 9d1dc5e6cfdc12d332f2730b235aced63cbb3ede
             </Button>
           </View>
         </View>
@@ -209,11 +248,19 @@ const WalkInfo = props => {
   } else {
     return (
       <View>
-        <Text>Loading</Text>
+        <ActivityIndicator
+          style={{ marginTop: 300 }}
+          size="large"
+          color="#417dc1"
+        ></ActivityIndicator>
       </View>
     );
   }
+<<<<<<< HEAD
 };
+=======
+}
+>>>>>>> 9d1dc5e6cfdc12d332f2730b235aced63cbb3ede
 
 const mapState = state => {
   return {
@@ -222,4 +269,10 @@ const mapState = state => {
   };
 };
 
+<<<<<<< HEAD
 export default connect(mapState)(WalkInfo);
+=======
+export default connect(
+  mapState
+)(WalkInfo);
+>>>>>>> 9d1dc5e6cfdc12d332f2730b235aced63cbb3ede
