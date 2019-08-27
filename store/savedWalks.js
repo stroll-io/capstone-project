@@ -31,7 +31,15 @@ export default function savedWalksReducer(savedState = [], action) {
     case GET_SAVED_WALKS:
       return action.savedWalks;
     case ADD_SAVED_WALK:
-      return [...savedState, action.walk];
+      if (
+        savedState.find(aWalk => {
+          return aWalk.id === action.walk.id;
+        })
+      ) {
+        return [...savedState];
+      } else {
+        return [...savedState, action.walk];
+      }
     case REMOVE_SAVED_WALK:
       return savedState.filter(walk => walk.id !== action.walkId);
     default:
@@ -48,15 +56,12 @@ export const fetchSavedWalks = userId => {
 
 export const addSavedWalkThunk = (userId, walkId) => {
   return async dispatch => {
-    const { previous } = await axios.get(
-      `${ngrokSecret}/api/savedWalks/${userId}`
+    const { data } = await axios.post(
+      `${ngrokSecret}/api/savedWalks/${userId}/${walkId}`
     );
-    if (!previous) {
-      const { data } = await axios.post(
-        `${ngrokSecret}/api/savedWalks/${userId}/${walkId}`
-      );
-      dispatch(addSavedWalk(data));
-    }
+    dispatch(addSavedWalk(data));
+
+    // return previous;
   };
 };
 

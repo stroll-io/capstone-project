@@ -53,7 +53,7 @@ class SavedWalks extends React.Component {
                 }
                 return (
                   <View
-                    key={walk.id}
+                    className="card"
                     style={{
                       display: 'flex',
                       flexDirection: 'column',
@@ -61,6 +61,7 @@ class SavedWalks extends React.Component {
                       height: 245,
                       width: '100%',
                     }}
+                    key={walk.id}
                   >
                     <View
                       className="cardTitle"
@@ -104,7 +105,6 @@ class SavedWalks extends React.Component {
                           </Text>
                         </View>
                         <Button
-                          key={walk.id}
                           onPress={() => {
                             this.handleWalkInfo(walk.id);
                           }}
@@ -175,7 +175,6 @@ class SavedWalks extends React.Component {
                         </View>
                       </View>
                       <View
-                        key={walk.id}
                         className="buttonPanel"
                         style={{
                           display: 'flex',

@@ -465,6 +465,7 @@ AllWalks.propTypes = {
   getAllWalks: propTypes.func,
   getWalksByTag: propTypes.func,
   setActiveWalk: propTypes.func,
+  addSavedWalk: propTypes.func,
 };
 
 export default connect(
