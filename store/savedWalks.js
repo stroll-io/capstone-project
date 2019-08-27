@@ -23,7 +23,7 @@ export default function savedWalksReducer(savedState = [], action) {
     case GET_SAVED_WALKS:
       return action.savedWalks;
     case ADD_SAVED_WALK:
-      return [...savedState, action.walk];
+      return [...savedState, ...action.walk];
     default:
       return savedState;
   }

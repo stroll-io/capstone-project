@@ -19,7 +19,12 @@ savedRouter.post('/:userId/:walkId', async (req, res, next) => {
     const user = await User.findByPk(req.params.userId);
     const walk = await Walk.findByPk(req.params.walkId);
     await user.addSavedByUser(walk);
-    res.send(walk);
+    const newWalk = await user.getSavedByUser({
+      where: {
+        id: walk.id,
+      },
+    });
+    res.send(newWalk);
   } catch (err) {
     next(err);
   }
