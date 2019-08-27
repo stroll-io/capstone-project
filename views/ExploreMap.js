@@ -79,14 +79,14 @@ function ExploreMap(props) {
 
   const openModal = () => {
     setIsModalVisible(true);
-  }
+  };
 
   const closeModal = () => {
-    setIsModalVisible(false)
-  }
+    setIsModalVisible(false);
+  };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
       <Modal animationType="slide" transparent={false} visible={isModalVisible}>
         <Text style={{ marginTop: 50 }}>Here is some text in the modal</Text>
         <Button large info onPress={closeModal}>
@@ -102,10 +102,10 @@ function ExploreMap(props) {
           latitude: 41.895442,
           longitude: -87.638957,
           latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421
+          longitudeDelta: 0.0421,
         }}
       >
-        <View style={{ position: "absolute", backgroundColor: "white" }}>
+        <View style={{ position: 'absolute', backgroundColor: 'white' }}>
           <Form>
             <Item picker>
               <Picker
@@ -132,13 +132,13 @@ function ExploreMap(props) {
             size={27}
             color="black"
             style={{
-              position: "absolute",
-              backgroundColor: "white",
+              position: 'absolute',
+              backgroundColor: 'white',
               width: 300,
               paddingTop: 8,
               paddingBottom: 8,
               paddingLeft: 190,
-              left: 150
+              left: 150,
             }}
             onPress={openModal}
           />
@@ -158,12 +158,12 @@ function ExploreMap(props) {
                   onPress={() => {
                     props.setActiveWalk(walk.id);
                     props.getAllAttractions(walk.id);
-                    props.navigation.navigate("WalkInfo");
+                    props.navigation.navigate('WalkInfo');
                     setCurrentMarker(this.marker);
                   }}
                   coordinate={{
                     longitude: walk.start.coordinates[1],
-                    latitude: walk.start.coordinates[0]
+                    latitude: walk.start.coordinates[0],
                   }}
                 >
                   <Callout>

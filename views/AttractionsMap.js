@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, SafeAreaView, Modal, Text} from 'react-native';
+import { View, SafeAreaView, Modal, Text } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { connect } from 'react-redux';
 import { Form, Item, Picker, Icon, Button } from 'native-base';
@@ -15,17 +15,13 @@ function AttractionsMap(props) {
     props.getAllAttractions();
   }, []);
 
-  const logLocationChange = e => {
-    // console.log('location changed')
+  const openModal = () => {
+    setIsModalVisible(true);
   };
 
-  const openModal = () => {
-    setIsModalVisible(true)
-  }
-
   const closeModal = () => {
-    setIsModalVisible(false)
-  }
+    setIsModalVisible(false);
+  };
   // const handleBack = () => {
   //   setIsModalVisible(false);
   //   setTitle('');
@@ -74,31 +70,23 @@ function AttractionsMap(props) {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
-      <Modal
-        animationType="slide"
-        transparent={false}
-        visible={isModalVisible}
-      >
-        <Text style={{marginTop: 50}}>Here is some text in the modal</Text>
-        <Button
-          large info
-          onPress={closeModal}
-        >
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
+      <Modal animationType="slide" transparent={false} visible={isModalVisible}>
+        <Text style={{ marginTop: 50 }}>Here is some text in the modal</Text>
+        <Button large info onPress={closeModal}>
           <Text>This closes the modal</Text>
         </Button>
       </Modal>
       <MapView
         //initial region should be stateful based on users current location
         provider="google"
-        onUserLocationChange={logLocationChange()}
         showsUserLocation={true}
         style={{ flex: 1 }}
         initialRegion={{
           latitude: 41.895442,
           longitude: -87.638957,
           latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421
+          longitudeDelta: 0.0421,
         }}
         // onPress={e => {
         //   const newCoord = {
@@ -113,8 +101,8 @@ function AttractionsMap(props) {
       >
         <View
           style={{
-            position: "absolute",
-            backgroundColor: "white"
+            position: 'absolute',
+            backgroundColor: 'white',
           }}
         >
           <Form>
@@ -141,13 +129,13 @@ function AttractionsMap(props) {
             size={27}
             color="black"
             style={{
-              position: "absolute",
-              backgroundColor: "white",
+              position: 'absolute',
+              backgroundColor: 'white',
               width: 300,
               paddingTop: 8,
               paddingBottom: 8,
               paddingLeft: 190,
-              left: 150
+              left: 150,
             }}
             onPress={openModal}
           />
@@ -163,7 +151,7 @@ function AttractionsMap(props) {
                   pinColor={pinColor(coord)}
                   coordinate={{
                     longitude: coord.location.coordinates[1],
-                    latitude: coord.location.coordinates[0]
+                    latitude: coord.location.coordinates[0],
                   }}
                 />
               );

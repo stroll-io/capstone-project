@@ -8,14 +8,17 @@ import { connect } from 'react-redux';
 import { getAllWalksThunk } from '../store/walks';
 import { setActiveWalkThunk } from '../store/activeWalk';
 import { AntDesign } from 'react-native-vector-icons';
+import MapViewDirections from 'react-native-maps-directions';
+import { googleSecret } from '../secrets';
 
 function CreateWalk(props) {
   const [coords, setCoords] = useState([]);
   const [isCreateModalVisible, setIsCreateModalVisible] = useState(false);
   const [walkTitle, setWalkTitle] = useState('');
   const [walkDescription, setWalkDescription] = useState('');
+  const [distance, setDistance] = useState(0);
   const [walkTag, setWalkTag] = useState('');
-  const [isQuestionModalVisible, setIsQuestionModalVisible] = useState(false)
+  const [isQuestionModalVisible, setIsQuestionModalVisible] = useState(false);
 
   const handleUndo = () => {
     const coordsCopy = coords.slice();
@@ -39,9 +42,10 @@ function CreateWalk(props) {
       walkTitle,
       walkDescription,
       walkTag,
+      distance,
     });
     props.navigation.navigate('Explore');
-    setIsModalVisible(false);
+    setIsCreateModalVisible(false);
   };
 
   const handleStart = async () => {
@@ -50,54 +54,63 @@ function CreateWalk(props) {
       walkTitle,
       walkDescription,
       walkTag,
+      distance,
     });
     props.setActiveWalkThunk(data.id);
     setTimeout(() => {
       props.navigation.navigate('Walking Map');
-      setIsModalVisible(false);
+      setIsCreateModalVisible(false);
     }, 200);
   };
 
   const openQuestionModal = () => {
-    setIsQuestionModalVisible(true)
-  }
+    setIsQuestionModalVisible(true);
+  };
 
   const closeQuestionModal = () => {
     setIsQuestionModalVisible(false);
-  }
+  };
+
+  const handleOnReady = event => {
+    setDistance((event.distance * 0.621371).toFixed(2));
+  };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
-      <Modal animationType="slide" transparent={false} visible={isQuestionModalVisible}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
+      <Modal
+        animationType="slide"
+        transparent={false}
+        visible={isQuestionModalVisible}
+      >
         <Text style={{ marginTop: 50 }}>Here is some text in the modal</Text>
         <Button large info onPress={closeQuestionModal}>
           <Text>This closes the modal</Text>
         </Button>
       </Modal>
       <View style={{ flex: 1 }}>
-        <View style={{ display: "flex", flexDirection: "row" }}>
-          <View style={{ width: "80%" }}>
+        <View style={{ display: 'flex', flexDirection: 'row' }}>
+          <View style={{ width: '80%' }}>
             <Text
               style={{
-                fontFamily: "Avenir-Heavy",
+                fontFamily: 'Avenir-Heavy',
                 fontSize: 16,
-                textAlign: "center",
+                textAlign: 'center',
                 marginTop: 10,
-                marginBottom: 10
+                marginBottom: 10,
               }}
             >
               Tap the map to add points to your walk
             </Text>
           </View>
-          <View style={{ width: "20%", justifyContent: "center" }}>
+          <View style={{ width: '20%', justifyContent: 'center' }}>
             <AntDesign
               name="questioncircleo"
               size={25}
               color="black"
               style={{
-                position: "absolute",
-                backgroundColor: "white",
-                padding: 10
+                position: 'absolute',
+                backgroundColor: 'white',
+                padding: 10,
               }}
               onPress={openQuestionModal}
             />
@@ -106,21 +119,31 @@ function CreateWalk(props) {
       </View>
       <MapView
         provider="google"
-        style={{ flex: 18 }}
+        style={{ flex: 16 }}
         initialRegion={{
           latitude: 41.895442,
           longitude: -87.638957,
           latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421
+          longitudeDelta: 0.0421,
         }}
         onPress={e => {
           const newCord = {
             latitude: e.nativeEvent.coordinate.latitude,
-            longitude: e.nativeEvent.coordinate.longitude
+            longitude: e.nativeEvent.coordinate.longitude,
           };
           setCoords([...coords, newCord]);
         }}
       >
+        <MapViewDirections
+          origin={coords[0]}
+          waypoints={coords.length > 2 ? coords.slice(1, -1) : null}
+          destination={coords[coords.length - 1]}
+          apikey={googleSecret}
+          strokeWidth={4}
+          strokeColor="blue"
+          onReady={handleOnReady}
+          mode="WALKING"
+        />
         {coords.length
           ? coords.map(coord => {
               return (
@@ -128,7 +151,7 @@ function CreateWalk(props) {
                   key={coord.latitude}
                   coordinate={{
                     longitude: coord.longitude,
-                    latitude: coord.latitude
+                    latitude: coord.latitude,
                   }}
                 />
               );
@@ -137,43 +160,44 @@ function CreateWalk(props) {
       </MapView>
       <View
         style={{
-          display: "flex",
-          position: "absolute",
+          display: 'flex',
+          position: 'absolute',
           bottom: 40,
           left: 50,
-          flexDirection: "row",
-          justifyContent: "center"
+          flexDirection: 'row',
+          justifyContent: 'center',
         }}
       >
         <Button
           onPress={handleUndo}
-          style={{ backgroundColor: "tomato", borderRadius: 20, margin: 20 }}
+          style={{ backgroundColor: 'tomato', borderRadius: 20, margin: 20 }}
         >
-          <Text style={{ fontFamily: "Avenir-Heavy", fontSize: 18 }}>Undo</Text>
+          <Text style={{ fontFamily: 'Avenir-Heavy', fontSize: 18 }}>Undo</Text>
         </Button>
         <Button onPress={handleCreate} style={{ borderRadius: 20, margin: 20 }}>
-          <Text style={{ fontFamily: "Avenir-Heavy", fontSize: 18 }}>
+          <Text style={{ fontFamily: 'Avenir-Heavy', fontSize: 18 }}>
             Create Walk
           </Text>
         </Button>
       </View>
+      <Text>Current Distance: {distance} mi</Text>
       <Modal
         animationType="slide"
         transparent={false}
         visible={isCreateModalVisible}
-        onRequestClose={() => {
-          console.log("onRequestClose");
-        }}
+        // onRequestClose={() => {
+        //   console.log('onRequestClose');
+        // }}
       >
         <View style={{ marginTop: 22 }}>
           <View>
             <Text
               style={{
-                fontFamily: "Avenir-Heavy",
+                fontFamily: 'Avenir-Heavy',
                 marginTop: 150,
                 marginBottom: 40,
-                textAlign: "center",
-                fontSize: 20
+                textAlign: 'center',
+                fontSize: 20,
               }}
             >
               Add some information about your stroll.
@@ -218,10 +242,10 @@ function CreateWalk(props) {
               </Item>
               <View
                 style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  marginTop: 50
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  marginTop: 50,
                 }}
               >
                 <Button
@@ -230,7 +254,7 @@ function CreateWalk(props) {
                   onPress={handleSubmit}
                   style={{ margin: 10, borderRadius: 20 }}
                 >
-                  <Text style={{ fontFamily: "Avenir-Heavy" }}>
+                  <Text style={{ fontFamily: 'Avenir-Heavy' }}>
                     Create and Save Walk
                   </Text>
                 </Button>
@@ -240,13 +264,13 @@ function CreateWalk(props) {
                   onPress={handleStart}
                   style={{ margin: 10, borderRadius: 20 }}
                 >
-                  <Text style={{ fontFamily: "Avenir-Heavy" }}>
+                  <Text style={{ fontFamily: 'Avenir-Heavy' }}>
                     Create and Start Walk
                   </Text>
                 </Button>
               </View>
               <View
-                style={{ alignItems: "flex-start", justifyContent: "center" }}
+                style={{ alignItems: 'flex-start', justifyContent: 'center' }}
               >
                 <Button
                   small
@@ -254,13 +278,13 @@ function CreateWalk(props) {
                   style={{
                     margin: 20,
                     width: 100,
-                    justifyContent: "center",
+                    justifyContent: 'center',
 
-                    borderRadius: 20
+                    borderRadius: 20,
                   }}
                   onPress={handleCancel}
                 >
-                  <Text style={{ fontFamily: "Avenir-Heavy" }}>Cancel</Text>
+                  <Text style={{ fontFamily: 'Avenir-Heavy' }}>Cancel</Text>
                 </Button>
               </View>
             </Form>
@@ -270,9 +294,11 @@ function CreateWalk(props) {
     </SafeAreaView>
   );
 }
+
 CreateWalk.navigationOptions = {
   title: 'Create Walk',
 };
+
 const mapDispatch = dispatch => {
   return {
     getAllWalks: () => {

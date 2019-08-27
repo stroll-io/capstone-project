@@ -144,7 +144,10 @@ class SavedWalks extends React.Component {
                                 fontFamily: 'Avenir-Heavy',
                               }}
                             >
-                              Walked: {walk.saved_walks.createdAt}
+                              Walked:{' '}
+                              {new Date(
+                                walk.saved_walks.createdAt
+                              ).toDateString()}
                             </Text>
                             <Button
                               onPress={() => this.handleWalkNavigation(walk.id)}
