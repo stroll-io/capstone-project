@@ -139,7 +139,7 @@ function ExploreMap(props) {
                 mode="dropdown"
                 iosIcon={<Icon name="arrow-down" />}
                 iosHeader="Filter"
-                placeholder="Filter by tag"
+                placeholder="Filter by Tag"
                 style={{ width: undefined }}
                 onValueChange={handlePicker}
               >
