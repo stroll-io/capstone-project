@@ -121,7 +121,7 @@ const WalkInfo = (props) => {
                 : null}
             </MapView>
           </View>
-          <View style={{ marginTop: 5, flex: 1 }}>
+          <View style={{ marginTop: 5, flex: 1, marginLeft: 10 }}>
             <Text>
               {distance} miles {duration} minutes
             </Text>
@@ -135,10 +135,14 @@ const WalkInfo = (props) => {
               flexDirection: "row",
               justifyContent: "center",
               marginTop: 50,
-              flex: 1
+              flex: 1,
             }}
           >
-            <Button large primary onPress={handleWalk} style={{ margin: 20 }}>
+            <Button
+              large
+              onPress={handleWalk}
+              style={{ margin: 20, backgroundColor: "#417dc1" }}
+            >
               <Text>Start Walk</Text>
             </Button>
           </View>

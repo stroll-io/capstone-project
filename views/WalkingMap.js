@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, SafeAreaView, Modal, ScrollView } from 'react-native';
+import { View, SafeAreaView, Modal, ScrollView, ActivityIndicator } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { connect } from 'react-redux';
 import { Button, Text } from 'native-base';
@@ -106,7 +106,7 @@ function WalkingMap(props) {
     setDirectionsVisible(false);
   }
 
-  const htmlStyles = { p: { fontSize: 30, margin: 3} };
+  const htmlStyles = { p: { fontSize: 30 } };
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
@@ -142,22 +142,39 @@ function WalkingMap(props) {
         transparent={false}
         visible={areDirectionsVisible}
       >
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, marginLeft: 10 }}>
           <Button
             warning
             medium
             onPress={closeDirections}
-            style={{ position: "absolute", marginTop: 50, zIndex: 1000 }}
+            style={{
+              position: "absolute",
+              bottom: 50,
+              left: 145,
+              zIndex: 1000
+            }}
           >
             <Text>Close</Text>
           </Button>
-          <ScrollView style={{ marginTop: 100, marginBottom: 40, flex: 1, zIndex: 1 }}>
-            <HTML
-              html={directions}
-              scalePageToFit={false}
-              tagsStyles={htmlStyles}
-            ></HTML>
-          </ScrollView>
+          {directions ? (
+            <ScrollView
+              style={{ marginTop: 70, marginBottom: 100, flex: 1, zIndex: 1 }}
+            >
+              <HTML
+                html={directions}
+                scalePageToFit={false}
+                tagsStyles={htmlStyles}
+              ></HTML>
+            </ScrollView>
+          ) : (
+            <View>
+              <ActivityIndicator
+                style={{marginTop:300}}
+                size="large"
+                color="#417dc1"
+              ></ActivityIndicator>
+            </View>
+          )}
         </View>
       </Modal>
       <MapView
@@ -209,7 +226,7 @@ function WalkingMap(props) {
         style={{
           display: "flex",
           position: "absolute",
-          bottom: 40,
+          bottom: 30,
           left: 110,
           flexDirection: "row",
           justifyContent: "center"
