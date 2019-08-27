@@ -27,7 +27,7 @@ class SavedWalks extends React.Component {
     this.props.setActiveWalk(walkId);
     setTimeout(() => {
       this.props.navigation.navigate('Walking Map');
-    }, 200);
+    }, 600);
   }
 
   handleWalkInfo(walkId) {

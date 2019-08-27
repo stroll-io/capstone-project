@@ -53,7 +53,7 @@ const WalkInfo = (props) => {
   const handleWalk = () => {
     setTimeout(() => {
       props.navigation.navigate("Walking Map");
-    }, 1000);
+    }, 600);
   };
 
   if (props.activeWalk.start) {
@@ -152,7 +152,11 @@ const WalkInfo = (props) => {
   } else {
     return (
       <View>
-        <ActivityIndicator size="large" color="#417dc1"></ActivityIndicator>
+        <ActivityIndicator
+          style={{ marginTop: 300 }}
+          size="large"
+          color="#417dc1"
+        ></ActivityIndicator>
       </View>
     );
   }
