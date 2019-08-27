@@ -184,7 +184,6 @@ const WalkInfo = props => {
                 fontSize: 14,
                 fontFamily: 'Avenir-Heavy',
                 marginTop: 30,
-                flex: 1,
               }}
             >
               Description: {props.activeWalk.description}
