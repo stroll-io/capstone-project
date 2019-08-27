@@ -1,23 +1,20 @@
-import React, { useEffect, useState } from "react";
-import { View, SafeAreaView } from "react-native";
-import MapView, {Marker} from "react-native-maps";
-import { Button, Text } from "native-base";
-import { connect } from "react-redux";
-import MapViewDirections from "react-native-maps-directions";
-import { googleSecret } from "../secrets";
+import React, { useEffect, useState } from 'react';
+import { View, SafeAreaView } from 'react-native';
+import MapView, { Marker } from 'react-native-maps';
+import { Button, Text } from 'native-base';
+import { connect } from 'react-redux';
+import MapViewDirections from 'react-native-maps-directions';
+import { googleSecret } from '../secrets';
+import { SimpleLineIcons } from 'react-native-vector-icons';
 
-
-
-
-const WalkInfo = (props) => {
-    const [navPoints, setNavPoints] = useState([])
-    const [distance, setDistance] = useState(0);
-    const [duration, setDuration] = useState(0);
-    const [start, setStart] = useState({
-      latitude: 41.884061,
-      longitude: -87.633389
-    });
-
+const WalkInfo = props => {
+  const [navPoints, setNavPoints] = useState([]);
+  const [distance, setDistance] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [start, setStart] = useState({
+    latitude: 41.884061,
+    longitude: -87.633389,
+  });
 
   useEffect(() => {
     const navArr = [];
@@ -25,17 +22,16 @@ const WalkInfo = (props) => {
       props.activeWalk.navPoints.forEach(navPoint => {
         navArr.push({
           latitude: navPoint.location.coordinates[0],
-          longitude: navPoint.location.coordinates[1]
+          longitude: navPoint.location.coordinates[1],
         });
       });
       setNavPoints(navArr);
     }
-    if(props.activeWalk.start) {
+    if (props.activeWalk.start) {
       setStart(props.activeWalk.start);
       animateCamera(props.activeWalk);
     }
   }, [props.activeWalk]);
-
 
   const handleOnReady = e => {
     const roundedDuration = parseFloat(e.duration).toFixed(1);
@@ -44,40 +40,75 @@ const WalkInfo = (props) => {
     animateCamera(props.activeWalk);
   };
 
-  const animateCamera = (activeWalk) => {
+  const animateCamera = activeWalk => {
     this.map.animateCamera({
       center: {
         latitude: activeWalk.start.coordinates[0],
-        longitude: activeWalk.start.coordinates[1]
-      }
-    }
-    )
-  }
+        longitude: activeWalk.start.coordinates[1],
+      },
+    });
+  };
 
   const handleWalk = () => {
     setTimeout(() => {
-      props.navigation.navigate("Walking Map");
+      props.navigation.navigate('Walking Map');
     }, 1000);
   };
 
   if (props.activeWalk.start) {
+    const tag =
+      props.activeWalk.category[0].toUpperCase() +
+      props.activeWalk.category.slice(1);
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
         <View style={{ marginTop: 20, flex: 1 }}>
-          <View>
+          <View style={{ alignContent: 'center', justifyContent: 'center' }}>
             <Text
               style={{
-                fontWeight: "bold",
+                fontFamily: 'Avenir-Heavy',
+                fontWeight: 'bold',
                 fontSize: 30,
-                textAlign: "center",
-                marginBottom: 5
+                textAlign: 'center',
+                marginBottom: 5,
               }}
             >
               {props.activeWalk.name}
             </Text>
-            <Text style={{ textAlign: "center", marginBottom: 5 }}>
-              Type: {props.activeWalk.category}
-            </Text>
+            <View
+              style={{
+                width: '35%',
+                borderRadius: 20,
+                backgroundColor: '#FFA614',
+                alignContent: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <View
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignContent: 'center',
+                  justifyContent: 'space-evenly',
+                  padding: 5,
+                }}
+              >
+                <View>
+                  <SimpleLineIcons name="tag" size={25} color="white" />
+                </View>
+                <Text
+                  style={{
+                    alignSelf: 'center',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    color: 'white',
+                    fontSize: 14,
+                    fontFamily: 'Avenir-Heavy',
+                  }}
+                >
+                  {tag}
+                </Text>
+              </View>
+            </View>
           </View>
           <View style={{ flex: 3 }}>
             <MapView
@@ -90,7 +121,7 @@ const WalkInfo = (props) => {
                 latitude: 41.884061,
                 longitude: -87.633389,
                 latitudeDelta: 0.02,
-                longitudeDelta: 0.02
+                longitudeDelta: 0.02,
               }}
               scrollEnabled={false}
             >
@@ -117,7 +148,7 @@ const WalkInfo = (props) => {
                         description={attraction.description}
                         coordinate={{
                           longitude: attraction.location.coordinates[1],
-                          latitude: attraction.location.coordinates[0]
+                          latitude: attraction.location.coordinates[0],
                         }}
                       />
                     );
@@ -126,27 +157,50 @@ const WalkInfo = (props) => {
             </MapView>
           </View>
           <View style={{ marginTop: 5, flex: 1 }}>
-            <Text>
-              {distance} miles {duration} minutes
+            <Text style={{ fontFamily: 'Avenir-Heavy' }}>
+              Total Distance: {distance} miles
             </Text>
-            <Text style={{ marginTop: 30, flex: 1 }}>
-              {props.activeWalk.description}
+            <Text style={{ fontFamily: 'Avenir-Heavy' }}>
+              Average Time: {duration} minutes
+            </Text>
+            <Text
+              style={{ fontFamily: 'Avenir-Heavy', marginTop: 30, flex: 1 }}
+            >
+              Description: {props.activeWalk.description}
             </Text>
           </View>
           <View
             style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "center",
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'center',
               marginTop: 50,
-              flex: 1
+              flex: 1,
             }}
           >
-            {/* <Button large warning onPress={handleCancel} style={{ margin: 20 }}>
-              <Text>Back</Text>
-            </Button> */}
-            <Button large primary onPress={handleWalk} style={{ margin: 20 }}>
-              <Text>Start Walk</Text>
+            <Button
+              onPress={handleWalk}
+              style={{
+                justifyContent: 'center',
+                alignContent: 'center',
+                width: '28%',
+                borderRadius: 20,
+                backgroundColor: '#417dc1',
+              }}
+            >
+              <View style={{ marginLeft: 8, marginRight: 5 }}>
+                <SimpleLineIcons name="cursor" size={20} color="white" />
+              </View>
+              <Text
+                style={{
+                  alignContent: 'center',
+                  color: 'white',
+                  fontSize: 14,
+                  fontFamily: 'Avenir-Heavy',
+                }}
+              >
+                Start!
+              </Text>
             </Button>
           </View>
         </View>
@@ -157,19 +211,15 @@ const WalkInfo = (props) => {
       <View>
         <Text>Loading</Text>
       </View>
-    )
+    );
   }
-
-}
+};
 
 const mapState = state => {
   return {
     activeWalk: state.activeWalk,
-    attractions: state.attractions
+    attractions: state.attractions,
   };
 };
 
-
-export default connect(
-  mapState
-)(WalkInfo);
+export default connect(mapState)(WalkInfo);

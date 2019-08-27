@@ -72,10 +72,12 @@ function AttractionsMap(props) {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
       <Modal animationType="slide" transparent={false} visible={isModalVisible}>
-        <Text style={{ marginTop: 50 }}>Here is some text in the modal</Text>
-        <Button large info onPress={closeModal}>
-          <Text>This closes the modal</Text>
-        </Button>
+        <View style={{ margin: 50 }}>
+          <Text style={{ marginTop: 50 }}>Here is some text in the modal</Text>
+          <Button large info onPress={closeModal}>
+            <Text>This closes the modal</Text>
+          </Button>
+        </View>
       </Modal>
       <MapView
         //initial region should be stateful based on users current location

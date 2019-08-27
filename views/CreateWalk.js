@@ -82,10 +82,12 @@ function CreateWalk(props) {
         transparent={false}
         visible={isQuestionModalVisible}
       >
-        <Text style={{ marginTop: 50 }}>Here is some text in the modal</Text>
-        <Button large info onPress={closeQuestionModal}>
-          <Text>This closes the modal</Text>
-        </Button>
+        <View style={{ margin: 50 }}>
+          <Text style={{ marginTop: 50 }}>Here is some text in the modal</Text>
+          <Button large info onPress={closeQuestionModal}>
+            <Text>This closes the modal</Text>
+          </Button>
+        </View>
       </Modal>
       <View style={{ flex: 1 }}>
         <View style={{ display: 'flex', flexDirection: 'row' }}>
