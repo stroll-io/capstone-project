@@ -165,7 +165,7 @@ function CreateWalk(props) {
                 paddingTop: 10,
               }}
             >
-              Tap the map to add points to your walk
+              Tap to add points to your walk
             </Text>
           </View>
           <View
