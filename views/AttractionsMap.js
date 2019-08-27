@@ -22,26 +22,6 @@ function AttractionsMap(props) {
   const closeModal = () => {
     setIsModalVisible(false);
   };
-  // const handleBack = () => {
-  //   setIsModalVisible(false);
-  //   setTitle('');
-  //   setDescription('');
-  //   setIsPinBeingAdded(false);
-  //   setCoord(null);
-  // };
-
-  // const handleSubmit = async () => {
-  //   props.addPin({
-  //     coordinate: coord,
-  //     title,
-  //     description,
-  //   });
-  //   setIsPinBeingAdded(false);
-  //   setIsModalVisible(false);
-  //   setCoord(null);
-  //   setTitle('');
-  //   setDescription('');
-  // };
 
   // let filter = 'Filter by tag';
   const handlePicker = e => {
@@ -72,13 +52,39 @@ function AttractionsMap(props) {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
       <Modal animationType="slide" transparent={false} visible={isModalVisible}>
-        <Text style={{ marginTop: 50 }}>Here is some text in the modal</Text>
-        <Button large info onPress={closeModal}>
-          <Text>This closes the modal</Text>
-        </Button>
+        <View style={{ display: 'flex', flexDirection: 'column', margin: 50 }}>
+          <View>
+            <Text
+              style={{
+                fontSize: 18,
+                fontFamily: 'Avenir-Heavy',
+                justifyContent: 'center',
+                marginTop: 50,
+              }}
+            >
+              Here is some text in the modal
+            </Text>
+          </View>
+          <View style={{ justifyContent: 'center' }}>
+            <Button
+              style={{ justifyContent: 'center', borderRadius: 20 }}
+              onPress={closeModal}
+            >
+              <Text
+                style={{
+                  textAlign: 'center',
+                  fontSize: 16,
+                  color: 'white',
+                  fontFamily: 'Avenir-Heavy',
+                }}
+              >
+                Close
+              </Text>
+            </Button>
+          </View>
+        </View>
       </Modal>
       <MapView
-        //initial region should be stateful based on users current location
         provider="google"
         showsUserLocation={true}
         style={{ flex: 1 }}
@@ -88,16 +94,6 @@ function AttractionsMap(props) {
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
-        // onPress={e => {
-        //   const newCoord = {
-        //     latitude: e.nativeEvent.coordinate.latitude,
-        //     longitude: e.nativeEvent.coordinate.longitude,
-        //   };
-        //   setCoord(newCoord);
-        //   if (isPinBeingAdded) {
-        //     setIsModalVisible(true);
-        //   }
-        // }}
       >
         <View
           style={{
@@ -115,7 +111,7 @@ function AttractionsMap(props) {
                 style={{ width: undefined }}
                 onValueChange={handlePicker}
               >
-                <Picker.Item label="All Tags" value="none" />
+                <Picker.Item label="All Tags" value="All Tags" />
                 <Picker.Item label="Architecture" value="architecture" />
                 <Picker.Item label="Art and Museums" value="art and museums" />
                 <Picker.Item label="Historical" value="historical" />

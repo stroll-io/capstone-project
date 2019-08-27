@@ -1,4 +1,4 @@
-const NavPoint = require('./server/db/models/navPoint');
+const NavPoint = require('../server/db/models/navPoint');
 
 const archiWalkCoords = [
   [41.879353, -87.636712],

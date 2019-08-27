@@ -65,7 +65,7 @@ class AllWalks extends React.Component {
     this.props.setActiveWalk(walkId);
     setTimeout(() => {
       this.props.navigation.navigate('Walking Map');
-    }, 200);
+    }, 600);
   }
 
   handleWalkInfo(walkId) {
@@ -85,12 +85,45 @@ class AllWalks extends React.Component {
           animationType="slide"
           transparent={false}
           visible={this.state.isModalVisible}
-          style={{ height: 300, justifyContent: 'flex-end' }}
+          style={{
+            height: 300,
+            alignContent: 'center',
+            justifyContent: 'center',
+          }}
         >
-          <Text style={{ marginTop: 50 }}>Here is some text in the modal</Text>
-          <Button large info onPress={this.closeModal}>
-            <Text>This closes the modal</Text>
-          </Button>
+          <View
+            style={{ display: 'flex', flexDirection: 'column', margin: 50 }}
+          >
+            <View>
+              <Text
+                style={{
+                  fontSize: 18,
+                  fontFamily: 'Avenir-Heavy',
+                  justifyContent: 'center',
+                  marginTop: 50,
+                }}
+              >
+                Here is some text in the modal
+              </Text>
+            </View>
+            <View style={{ justifyContent: 'center' }}>
+              <Button
+                style={{ justifyContent: 'center', borderRadius: 20 }}
+                onPress={this.closeModal}
+              >
+                <Text
+                  style={{
+                    textAlign: 'center',
+                    fontSize: 16,
+                    color: 'white',
+                    fontFamily: 'Avenir-Heavy',
+                  }}
+                >
+                  Close
+                </Text>
+              </Button>
+            </View>
+          </View>
         </Modal>
         <Container>
           <Content>
@@ -213,7 +246,7 @@ class AllWalks extends React.Component {
                             style={{
                               width: '10%',
                               height: 38,
-                              backgroundColor: 'tomato',
+                              backgroundColor: '#859F3C',
                               borderRadius: 100,
                               justifyContent: 'center',
                             }}
@@ -277,6 +310,7 @@ class AllWalks extends React.Component {
                           </View>
                         </View>
                         <View
+                          key={walk.id}
                           className="buttonPanel"
                           style={{
                             display: 'flex',
@@ -431,6 +465,7 @@ AllWalks.propTypes = {
   getAllWalks: propTypes.func,
   getWalksByTag: propTypes.func,
   setActiveWalk: propTypes.func,
+  addSavedWalk: propTypes.func,
 };
 
 export default connect(
