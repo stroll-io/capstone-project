@@ -5,7 +5,7 @@ import { Button, Text } from 'native-base';
 import { connect } from 'react-redux';
 import MapViewDirections from 'react-native-maps-directions';
 import { googleSecret } from '../secrets';
-
+import { SimpleLineIcons } from 'react-native-vector-icons';
 const WalkInfo = props => {
   const [navPoints, setNavPoints] = useState([]);
   const [distance, setDistance] = useState(0);
