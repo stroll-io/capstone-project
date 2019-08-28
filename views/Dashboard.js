@@ -292,7 +292,9 @@ class Dashboard extends React.Component {
                   <SimpleLineIcons name="info" size={25} color="black" />
                 </View>
               </View>
-              <View style={{ justifyContent: 'center' }}>
+              <View
+                style={{ alignContent: 'center', justifyContent: 'center' }}
+              >
                 <Button
                   style={{
                     width: '50%',
@@ -312,6 +314,9 @@ class Dashboard extends React.Component {
                   >
                     Get strollin'
                   </Text>
+                  <View>
+                    <AntDesign name="arrowright" size={20} color="white" />
+                  </View>
                 </Button>
               </View>
             </View>

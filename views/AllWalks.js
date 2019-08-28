@@ -196,14 +196,14 @@ class AllWalks extends React.Component {
                     </Item>
                   </Form>
                 </View>
-                <View style={{ width: '18%', margin: 5 }}>
+                {/* <View style={{ width: '18%', margin: 5 }}>
                   <AntDesign
                     name="questioncircleo"
                     size={30}
                     color="black"
                     onPress={this.openModal}
                   />
-                </View>
+                </View> */}
               </View>
               {this.props.walks.length ? (
                 this.props.walks.map(walk => {
@@ -259,6 +259,9 @@ class AllWalks extends React.Component {
                                 color: 'white',
                                 fontSize: 18,
                                 fontFamily: 'Avenir-Heavy',
+                              }}
+                              onPress={() => {
+                                this.handleWalkInfo(walk.id);
                               }}
                             >
                               {walk.name}
