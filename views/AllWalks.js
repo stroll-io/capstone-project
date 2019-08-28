@@ -148,11 +148,11 @@ class AllWalks extends React.Component {
                       margin: 5,
                       borderColor: 'black',
                       borderWidth: 2,
-                      borderRadius: 20,
-                      width: '50%',
+                      borderRadius: 25,
+                      width: '55%',
                     }}
                   >
-                    <Item picker>
+                    <Item picker style={{borderColor: "transparent"}}>
                       <Picker
                         mode="dropdown"
                         iosIcon={<Icon name="arrow-down" />}
