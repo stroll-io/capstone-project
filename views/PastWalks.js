@@ -16,6 +16,7 @@ class PastWalks extends React.Component {
     this.handleWalkNavigation = this.handleWalkNavigation.bind(this);
     this.totalDistanceReducer = this.totalDistanceReducer.bind(this);
     this.handleSaveWalk = this.handleSaveWalk.bind(this);
+    this.handleImageRender = this.handleImageRender.bind(this);
   }
   static navigationOptions = {
     title: 'Past Walks',
@@ -46,6 +47,25 @@ class PastWalks extends React.Component {
 
   handleSaveWalk(userId, walkId) {
     this.props.addSavedWalk(userId, walkId);
+  }
+
+  handleImageRender(category) {
+    switch (category) {
+      case 'architecture':
+        return require('../public/thumbnails/architecture.png');
+      case 'dog':
+        return require('../public/thumbnails/dog.png');
+      case 'fountain':
+        return require('../public/thumbnails/fountain.png');
+      case 'historical':
+        return require('../public/thumbnails/historical.png');
+      case 'nature':
+        return require('../public/thumbnails/nature.png');
+      case 'scenic':
+        return require('../public/thumbnails/scenic.png');
+      default:
+        return require('../public/sky.png');
+    }
   }
 
   render() {
@@ -182,7 +202,7 @@ class PastWalks extends React.Component {
                         </View>
                         <View>
                           <Image
-                            source={require('../public/thumbnails/leaf.png')}
+                            source={this.handleImageRender(walk.category)}
                             style={{
                               display: 'flex',
                               height: 80,
