@@ -32,7 +32,7 @@ Get strollin'!
 ## Backend
 Our database was created using PostgreSQL and Sequelize. One unique feature was figuring out how to connect navigation points to a walk. Navigation points are saved in the database similar to a doubly linked list so that each navigation point points to the next navigation point. This structure makes it easy to retrieve and display a walk's navigation points in the correct order. 
 
-![image of database schema](https://imgur.com/IkpkWP4)
+![Imgur database image](https://i.imgur.com/IkpkWP4.png)
 
 ## Frontend
 Our mobile app was created using React Native and Expo. The app was styled with CSS, React Native styled components and the NativeBase styling library. 
