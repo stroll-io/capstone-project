@@ -1,5 +1,5 @@
 # stroll
-Stroll is a React Native mobile app that allows you to create and find walks in your area. Walks focus on attractions and points of interested and can be filtered by category. Some of these categories include historical walks, architectural walks, scenic walks, and more. Stroll sits on the React Native Maps and Google Directions API to create a slick and intuitive user experience. 
+Stroll is a React Native mobile app that allows you to create and find walks in your area. Walks focus on attractions and points of interested and can be filtered by category. Some of these categories include historical walks, architectural walks, scenic walks, and more. Stroll sits on the React Native Maps and Google Directions APIs to create a slick and intuitive user experience. 
 
 ## Installation
 Start by installing [Expo](https://expo.io/learn) on your mobile device. 
@@ -17,6 +17,19 @@ Download and initialize [ngrok](https://ngrok.com/). ngrok will allow you to sec
 const ngrokSecret = '[YOUR NGROK SERVER]'
 ```
 
+Create a new database called "capstone"
+```bash
+psql
+createdb capstone
+```
+You must initialize the postGIS extension in the database in order to store geolocation data. If you have postgreSQL 11.5 or higher, postGIS should be an extension that was included in your download.
+```bash
+\c capstone
+CREATE EXTENSION postgis;
+SELECT postgis_full_version();
+```
+The above command should show you the version of postGIS in your database if the extension has been added successfully.
+
 To initialize your server:
 ```bash
 npm run start-dev
@@ -25,6 +38,7 @@ To initialize Expo:
 ```bash
 npm start
 ```
+
 To login, enter the email (test@test.com) and password (test). 
 
 Get strollin'!
