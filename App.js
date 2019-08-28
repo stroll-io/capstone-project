@@ -8,6 +8,7 @@ import Login from './views/Login';
 import Register from './views/Register';
 import HomeContainer from './views/Home';
 import DashboardContainer from './views/Dashboard';
+import { Asset } from 'expo-asset';
 
 const StackNavigator = createStackNavigator(
   {

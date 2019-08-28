@@ -255,6 +255,9 @@ class AllWalks extends React.Component {
                                 fontSize: 18,
                                 fontFamily: 'Avenir-Heavy',
                               }}
+                              onPress={() => {
+                                this.handleWalkInfo(walk.id);
+                              }}
                             >
                               {walk.name}
                             </Text>
