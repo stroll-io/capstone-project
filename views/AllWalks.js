@@ -24,6 +24,7 @@ class AllWalks extends React.Component {
     super();
     this.state = {
       isModalVisible: false,
+      pickerPlaceholder: 'Filter by tag'
     };
     this.handlePicker = this.handlePicker.bind(this);
     this.handleWalkNavigation = this.handleWalkNavigation.bind(this);
@@ -54,7 +55,11 @@ class AllWalks extends React.Component {
   }
 
   handlePicker(e) {
-    if (e === 'View All') {
+    this.setState({...this.state,
+      pickerPlaceholder: e
+    })
+    e = e.toLowerCase()
+    if (e === 'view all') {
       this.props.getAllWalks();
     } else {
       this.props.getWalksByTag(e);
@@ -152,21 +157,21 @@ class AllWalks extends React.Component {
                         mode="dropdown"
                         iosIcon={<Icon name="arrow-down" />}
                         iosHeader="Filter"
-                        placeholder="Filter by tag"
+                        placeholder={this.state.pickerPlaceholder}
                         style={{
                           height: 30,
                           width: undefined,
                         }}
                         onValueChange={this.handlePicker}
                       >
-                        <Picker.Item label="View All" value="none" />
-                        <Picker.Item label="Nature" value="nature" />
-                        <Picker.Item label="Scenic" value="scenic" />
+                        <Picker.Item label="View All" value="View All" />
+                        <Picker.Item label="Nature" value="Nature" />
+                        <Picker.Item label="Scenic" value="Scenic" />
                         <Picker.Item
                           label="Architecture"
-                          value="architecture"
+                          value="Architecture"
                         />
-                        <Picker.Item label="Historical" value="historical" />
+                        <Picker.Item label="Historical" value="Historical" />
                       </Picker>
                     </Item>
                   </Form>
