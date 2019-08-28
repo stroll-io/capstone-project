@@ -73,12 +73,15 @@ function WalkingMap(props) {
 
   const handleOnReady = e => {
     setDestination(e.coordinates[e.coordinates.length - 1]);
-    this.map.animateCamera({
-      center: {
-        latitude: e.coordinates[0].latitude,
-        longitude: e.coordinates[0].longitude,
-      },
-    });
+    setTimeout(function() {
+      this.map.animateCamera({
+        center: {
+          latitude: e.coordinates[0].latitude,
+          longitude: e.coordinates[0].longitude
+        }
+      })
+    }, 200)
+
     getDirections();
   };
 
@@ -120,30 +123,57 @@ function WalkingMap(props) {
   const htmlStyles = { p: { fontSize: 30 } };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
       <Modal animationType="slide" transparent={false} visible={isWalkComplete}>
         <View style={{ marginTop: 250 }}>
           <Text
             style={{
-              textAlign: 'center',
-              fontFamily: 'Avenir-Heavy',
+              textAlign: "center",
+              fontFamily: "Avenir-Heavy"
             }}
           >
             Congratulations, you completed your walk!
           </Text>
           <View
             style={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'center',
-              marginTop: 50,
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+              marginTop: 50
             }}
           >
-            <Button large primary onPress={handleSave} style={{ margin: 20 }}>
-              <Text style={{ fontFamily: 'Avenir-Heavy' }}>Save</Text>
+            <Button
+              large
+              onPress={handleSave}
+              style={{
+                margin: 20,
+                backgroundColor: "tomato",
+                borderRadius: 20
+              }}
+            >
+              <Text
+                style={{
+                  fontFamily: "Avenir-Heavy"
+                }}
+              >
+                Save
+              </Text>
             </Button>
-            <Button large success onPress={handleHome} style={{ margin: 20 }}>
-              <Text style={{ fontFamily: 'Avenir-Heavy' }}>
+            <Button
+              large
+              success
+              onPress={handleHome}
+              style={{
+                backgroundColor: "#417dc1",
+                borderRadius: 20,
+                margin: 20
+              }}
+            >
+              <Text
+                style={{
+                  fontFamily: "Avenir-Heavy"
+                }}
+              >
                 Go to Dashboard
               </Text>
             </Button>
@@ -161,14 +191,14 @@ function WalkingMap(props) {
             onPress={closeDirections}
             style={{
               borderRadius: 20,
-              position: 'absolute',
+              position: "absolute",
               bottom: 50,
               left: 145,
               zIndex: 1000,
-              backgroundColor: 'tomato',
+              backgroundColor: "tomato"
             }}
           >
-            <Text style={{ fontFamily: 'Avenir-Heavy' }}>Close</Text>
+            <Text style={{ fontFamily: "Avenir-Heavy" }}>Close</Text>
           </Button>
           {directions ? (
             <ScrollView
@@ -203,7 +233,7 @@ function WalkingMap(props) {
           latitude: 41.895442,
           longitude: -87.638957,
           latitudeDelta: 0.01,
-          longitudeDelta: 0.01,
+          longitudeDelta: 0.01
         }}
       >
         <MapViewDirections
@@ -226,31 +256,31 @@ function WalkingMap(props) {
                   description={coord.description}
                   coordinate={{
                     longitude: coord.location.coordinates[1],
-                    latitude: coord.location.coordinates[0],
+                    latitude: coord.location.coordinates[0]
                   }}
                 />
               );
             })
           : null}
         {navPoints.length ? (
-          <Marker title={'Start'} coordinate={navPoints[0]} pinColor="green" />
+          <Marker title={"Start"} coordinate={navPoints[0]} pinColor="green" />
         ) : null}
       </MapView>
       <View
         style={{
-          display: 'flex',
-          position: 'absolute',
+          display: "flex",
+          position: "absolute",
           bottom: 30,
           left: 110,
-          flexDirection: 'row',
-          justifyContent: 'center',
+          flexDirection: "row",
+          justifyContent: "center"
         }}
       >
         <Button
           onPress={handleDirections}
-          style={{ backgroundColor: '#417dc1', borderRadius: 20, margin: 20 }}
+          style={{ backgroundColor: "#417dc1", borderRadius: 20, margin: 20 }}
         >
-          <Text style={{ fontFamily: 'Avenir-Heavy' }}>Directions</Text>
+          <Text style={{ fontFamily: "Avenir-Heavy" }}>Directions</Text>
         </Button>
       </View>
     </SafeAreaView>
