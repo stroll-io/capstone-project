@@ -61,16 +61,6 @@ class HomeScreen extends React.Component {
                 Click here to register!
               </Text>
             </Button>
-            <Button
-              style={{
-                backgroundColor: '#003e19',
-                borderRadius: '20px',
-                marginTop: 20,
-              }}
-              onPress={() => this.props.navigation.navigate('Dashboard')}
-            >
-              <Text style={{ fontFamily: 'Avenir-Heavy' }}>Dashboard</Text>
-            </Button>
           </View>
         </View>
       </SafeAreaView>
