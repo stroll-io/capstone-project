@@ -1,52 +1,36 @@
-import React, { useEffect } from 'react';
-import { View, SafeAreaView } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, SafeAreaView, Modal, Text } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { connect } from 'react-redux';
-import { Form, Item, Picker, Icon } from 'native-base';
-import { AntDesign } from 'react-native-vector-icons';
+import { Form, Item, Picker, Icon, Button } from 'native-base';
+import { AntDesign, SimpleLineIcons } from 'react-native-vector-icons';
 import {
   getAllAttractionsThunk,
   getAttractionsByTagThunk,
 } from '../store/attractions';
 
 function AttractionsMap(props) {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [pickerPlaceholder, setPickerPlaceholder] = useState('Filter by tag');
   useEffect(() => {
     props.getAllAttractions();
   }, []);
 
-  const logLocationChange = e => {
-    // console.log('location changed')
+  const openModal = () => {
+    setIsModalVisible(true);
   };
 
-  // const handleBack = () => {
-  //   setIsModalVisible(false);
-  //   setTitle('');
-  //   setDescription('');
-  //   setIsPinBeingAdded(false);
-  //   setCoord(null);
-  // };
+  const closeModal = () => {
+    setIsModalVisible(false);
+  };
 
-  // const handleSubmit = async () => {
-  //   props.addPin({
-  //     coordinate: coord,
-  //     title,
-  //     description,
-  //   });
-  //   setIsPinBeingAdded(false);
-  //   setIsModalVisible(false);
-  //   setCoord(null);
-  //   setTitle('');
-  //   setDescription('');
-  // };
-
-  // let filter = 'Filter by tag';
   const handlePicker = e => {
-    if (e === 'All Tags') {
-      // filter = 'All Tags';
+    setPickerPlaceholder(e);
+    e = e.toLowerCase();
+    if (e === 'all attractions') {
       props.getAllAttractions();
     } else {
       props.getAttractionsByTag(e);
-      // filter = 'e[0].toUpperCase() + e.slice(1)';
     }
   };
 
@@ -67,10 +51,122 @@ function AttractionsMap(props) {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
+      <Modal animationType="slide" transparent={false} visible={isModalVisible}>
+        <View style={{ display: 'flex', flexDirection: 'column', margin: 50 }}>
+          <View>
+            <Text
+              style={{
+                fontSize: 18,
+                fontFamily: 'Avenir-Heavy',
+                justifyContent: 'center',
+                marginTop: 50,
+              }}
+            >
+              Filter by tag to see the types of attractions nearby.
+            </Text>
+            <View
+              style={{ display: 'flex', flexDirection: 'row', marginTop: 10 }}
+            >
+              <SimpleLineIcons
+                name="location-pin"
+                size={25}
+                color="#478FCD"
+                style={{ padding: 5 }}
+              />
+              <Text
+                style={{
+                  fontSize: 18,
+                  fontFamily: 'Avenir-Heavy',
+                  paddingTop: 5,
+                }}
+              >
+                Architecture
+              </Text>
+            </View>
+            <View
+              style={{ display: 'flex', flexDirection: 'row', marginTop: 10 }}
+            >
+              <SimpleLineIcons
+                name="location-pin"
+                size={25}
+                color="#5fAD46"
+                style={{ padding: 5 }}
+              />
+              <Text
+                style={{
+                  fontSize: 18,
+                  fontFamily: 'Avenir-Heavy',
+                  paddingTop: 5,
+                }}
+              >
+                Nature
+              </Text>
+            </View>
+            <View
+              style={{ display: 'flex', flexDirection: 'row', marginTop: 10 }}
+            >
+              <SimpleLineIcons
+                name="location-pin"
+                size={25}
+                color="violet"
+                style={{ padding: 5 }}
+              />
+              <Text
+                style={{
+                  fontSize: 18,
+                  fontFamily: 'Avenir-Heavy',
+                  paddingTop: 5,
+                }}
+              >
+                Art and Museums
+              </Text>
+            </View>
+            <View
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                marginTop: 10,
+                marginBottom: 20,
+              }}
+            >
+              <SimpleLineIcons
+                name="location-pin"
+                size={25}
+                color="tomato"
+                style={{ padding: 5 }}
+              />
+              <Text
+                style={{
+                  fontSize: 18,
+                  fontFamily: 'Avenir-Heavy',
+                  paddingTop: 5,
+                }}
+              >
+                Historical
+              </Text>
+            </View>
+          </View>
+          <View style={{ justifyContent: 'center' }}>
+            <Button
+              style={{ justifyContent: 'center', borderRadius: 20 }}
+              onPress={closeModal}
+            >
+              <Text
+                style={{
+                  textAlign: 'center',
+                  fontSize: 16,
+                  color: 'white',
+                  fontFamily: 'Avenir-Heavy',
+                }}
+              >
+                Close
+              </Text>
+            </Button>
+          </View>
+        </View>
+      </Modal>
       <MapView
-        //initial region should be stateful based on users current location
         provider="google"
-        onUserLocationChange={logLocationChange()}
         showsUserLocation={true}
         style={{ flex: 1 }}
         initialRegion={{
@@ -79,16 +175,6 @@ function AttractionsMap(props) {
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
-        // onPress={e => {
-        //   const newCoord = {
-        //     latitude: e.nativeEvent.coordinate.latitude,
-        //     longitude: e.nativeEvent.coordinate.longitude,
-        //   };
-        //   setCoord(newCoord);
-        //   if (isPinBeingAdded) {
-        //     setIsModalVisible(true);
-        //   }
-        // }}
       >
         <View
           style={{
@@ -102,16 +188,15 @@ function AttractionsMap(props) {
                 mode="dropdown"
                 iosIcon={<Icon name="arrow-down" />}
                 iosHeader="Filter"
-                placeholder="Filter by Tag"
+                placeholder={pickerPlaceholder}
                 style={{ width: undefined }}
                 onValueChange={handlePicker}
               >
-                <Picker.Item label="All Tags" value="none" />
+                <Picker.Item label="All Tags" value="All Tags" />
                 <Picker.Item label="Architecture" value="architecture" />
                 <Picker.Item label="Art and Museums" value="art and museums" />
                 <Picker.Item label="Historical" value="historical" />
                 <Picker.Item label="Nature" value="nature" />
-                <Picker.Item label="Scenic" value="scenic" />
               </Picker>
             </Item>
           </Form>
@@ -122,12 +207,13 @@ function AttractionsMap(props) {
             style={{
               position: 'absolute',
               backgroundColor: 'white',
-              width: 300,
+              width: 325,
               paddingTop: 8,
-              paddingBottom: 8,
-              paddingLeft: 190,
-              left: 150,
+              paddingBottom: 7,
+              paddingLeft: 250,
+              left: 90,
             }}
+            onPress={openModal}
           />
         </View>
 

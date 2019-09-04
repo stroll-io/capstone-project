@@ -144,17 +144,6 @@ class Dashboard extends React.Component {
                     <AntDesign name="questioncircleo" size={25} color="black" />
                   </View>
                 </View>
-                {/* <View>
-                  <Text
-                    style={{
-                      textAlign: 'right',
-                      fontSize: 14,
-                      fontFamily: 'Avenir-Heavy',
-                    }}
-                  >
-                    (Below each header)
-                  </Text>
-                </View> */}
               </View>
               <View
                 style={{
@@ -303,13 +292,18 @@ class Dashboard extends React.Component {
                   <SimpleLineIcons name="info" size={25} color="black" />
                 </View>
               </View>
-              <View style={{ alignContent: 'center' }}>
+              <View
+                style={{ alignContent: 'center', justifyContent: 'center' }}
+              >
                 <Button
                   style={{
                     width: '50%',
                     backgroundColor: '#859F3C',
                     borderRadius: '20px',
+                    marginTop: 10,
                     marginBottom: 20,
+                    justifyContent: 'center',
+                    alignSelf: 'center',
                   }}
                   onPress={() =>
                     this.props.navigation.navigate('Recommended Walks')
@@ -318,8 +312,11 @@ class Dashboard extends React.Component {
                   <Text
                     style={{ textAlign: 'center', fontFamily: 'Avenir-Heavy' }}
                   >
-                    Get strollin'!
+                    Get strollin'
                   </Text>
+                  <View>
+                    <AntDesign name="arrowright" size={20} color="white" />
+                  </View>
                 </Button>
               </View>
             </View>

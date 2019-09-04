@@ -1,158 +1,112 @@
 import React, { useState, useEffect } from 'react';
-import { View, SafeAreaView, Modal, Image } from 'react-native';
+import { View, SafeAreaView, Modal } from 'react-native';
 import MapView, { Marker, Callout } from 'react-native-maps';
 import { Button, Text } from 'native-base';
 import { connect } from 'react-redux';
 import { Form, Item, Picker, Icon } from 'native-base';
 import { getAllWalksThunk, getWalksByTagThunk } from '../store/walks';
 import { setActiveWalkThunk } from '../store/activeWalk';
-import MapViewDirections from 'react-native-maps-directions';
-import { googleSecret } from '../secrets';
 import { getAttractionsThunk } from '../store/attractions';
-import { AntDesign } from 'react-native-vector-icons';
+import { AntDesign, SimpleLineIcons } from 'react-native-vector-icons';
 
 function ExploreMap(props) {
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-  const [coordinate, setCoordinate] = useState({
-    latitude: 41.88407,
-    longitude: -87.630634,
-  });
-  const [category, setCategory] = useState('');
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [currentMarker, setCurrentMarker] = useState(null);
-  const [id, setId] = useState(null);
-  const [navPoints, setNavPoints] = useState([]);
-  const [isMapReady, setIsMapReady] = useState(false);
-  const [isDirectionsReady, setIsDirectionsReady] = useState(false);
-  const [distance, setDistance] = useState(0);
-  const [duration, setDuration] = useState(0);
+  const [pickerPlaceholder, setPickerPlaceholder] = useState('Filter by tag');
 
   if (!props.activeWalk.navPoints) {
     props.activeWalk.navPoints = [];
   }
   useEffect(() => {
     props.getAllWalks();
-    const navArr = [];
-    if (props.activeWalk.navPoints) {
-      props.activeWalk.navPoints.forEach(navPoint => {
-        navArr.push({
-          latitude: navPoint.location.coordinates[0],
-          longitude: navPoint.location.coordinates[1],
-        });
-      });
-      setNavPoints(navArr);
-    }
   }, [props.activeWalk.navPoints]);
 
-  const handleCancel = () => {
-    setIsModalVisible(false);
-    currentMarker.hideCallout();
-  };
-
-  const handleWalk = () => {
-    props.setActiveWalk(id);
-    setTimeout(() => {
-      setIsModalVisible(false);
-      props.navigation.navigate('Walking Map');
-    }, 1000);
-  };
-
   const handlePicker = e => {
-    if (e === 'none') {
+    setPickerPlaceholder(e);
+    e = e.toLowerCase();
+    if (e === 'all walks') {
       props.getAllWalks();
     } else {
       props.getWalksByTag(e);
     }
   };
 
-  const handleOnMapReady = e => {
-    if (!isMapReady) setIsMapReady(true);
+  const openModal = () => {
+    setIsModalVisible(true);
   };
 
-  const handleOnReady = e => {
-    const roundedDuration = parseFloat(e.duration).toFixed(2);
-    setDistance(e.distance / 1.609);
-    setDuration(roundedDuration);
-    if (!isDirectionsReady) setIsDirectionsReady(true);
+  const closeModal = () => {
+    setIsModalVisible(false);
+  };
+
+  const pinColor = walk => {
+    if (walk.category === 'architecture') {
+      return '#478FCD';
+    }
+    if (walk.category === 'nature') {
+      return '#5fAD46';
+    }
+    if (walk.category === 'Street art') {
+      return 'violet';
+    }
+    if (walk.category === 'historical') {
+      return 'tomato';
+    }
+    if (walk.category === 'Scenic"') {
+      return 'blue';
+    }
+    if (walk.category === 'Dog') {
+      return 'orange';
+    }
+    if (walk.category === 'Hiking') {
+      return 'brown';
+    }
   };
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
-      <Modal
-        animationType="slide"
-        transparent={false}
-        visible={isModalVisible}
-        onRequestClose={() => {
-          console.log('onRequestClose');
-        }}
-      >
-        <View style={{ marginTop: 75, flex: 1 }}>
-          <View>
+      <Modal animationType="slide" transparent={false} visible={isModalVisible}>
+        <View
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            margin: 50,
+            marginTop: 100,
+          }}
+        >
+          <View style={{ display: 'flex', flexDirection: 'row' }}>
+            <SimpleLineIcons name="map" size={25} />
             <Text
               style={{
-                fontWeight: 'bold',
-                fontSize: 30,
-                textAlign: 'center',
-                marginBottom: 5,
+                fontSize: 18,
+                fontFamily: 'Avenir-Heavy',
+                justifyContent: 'center',
+                marginLeft: 10,
               }}
             >
-              {name}
-            </Text>
-            <Text style={{ textAlign: 'center', marginBottom: 5 }}>
-              Type: {category}
+              Filter by tag to see the types of walks nearby. Tap on a walk to
+              learn more about it.
             </Text>
           </View>
-          <View style={{ flex: 3 }}>
-            <MapView
-              provider="google"
-              style={{ flex: 1 }}
-              initialRegion={{
-                latitude: coordinate.latitude,
-                longitude: coordinate.longitude,
-                latitudeDelta: 0.01,
-                longitudeDelta: 0.01,
-              }}
-              scrollEnabled={false}
-              onMapReady={handleOnMapReady}
-            />
-            {navPoints.length ? (
-              <MapViewDirections
-                origin={navPoints[0]}
-                waypoints={navPoints.length > 2 ? navPoints.slice(1, -1) : null}
-                destination={navPoints[navPoints.length - 1]}
-                apikey={googleSecret}
-                strokeWidth={6}
-                strokeColor="green"
-                onReady={handleOnReady}
-                mode="WALKING"
-              />
-            ) : null}
-          </View>
-          <Text style={{ margin: 20, flex: 1 }}>
-            {distance} miles {duration} minutes
-          </Text>
-          <Text style={{ margin: 20, flex: 1 }}>{description}</Text>
-          <View
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'center',
-              marginTop: 50,
-              flex: 1,
-            }}
-          >
-            <Button large warning onPress={handleCancel} style={{ margin: 20 }}>
-              <Text>Back</Text>
-            </Button>
-            <Button large primary onPress={handleWalk} style={{ margin: 20 }}>
-              <Text>Start Walk</Text>
+          <View style={{ justifyContent: 'center', marginTop: 30 }}>
+            <Button
+              style={{ justifyContent: 'center', borderRadius: 20 }}
+              onPress={closeModal}
+            >
+              <Text
+                style={{
+                  textAlign: 'center',
+                  fontSize: 16,
+                  color: 'white',
+                  fontFamily: 'Avenir-Heavy',
+                }}
+              >
+                Close
+              </Text>
             </Button>
           </View>
         </View>
       </Modal>
       <MapView
-        //initial region should be stateful based on users current location
         provider="google"
         showsUserLocation={true}
         style={{ flex: 1 }}
@@ -170,18 +124,18 @@ function ExploreMap(props) {
                 mode="dropdown"
                 iosIcon={<Icon name="arrow-down" />}
                 iosHeader="Filter"
-                placeholder="Filter by tag"
+                placeholder={pickerPlaceholder}
                 style={{ width: undefined }}
                 onValueChange={handlePicker}
               >
-                <Picker.Item label="none" value="none" />
-                <Picker.Item label="Nature" value="nature" />
-                <Picker.Item label="Scenic" value="scenic" />
-                <Picker.Item label="Architecture" value="architecture" />
-                <Picker.Item label="Dog" value="dog" />
-                <Picker.Item label="Historical" value="historical" />
-                <Picker.Item label="Hiking" value="hiking" />
-                <Picker.Item label="Street art" value="street art" />
+                <Picker.Item label="All Walks" value="All Walks" />
+                <Picker.Item label="Nature" value="Nature" />
+                <Picker.Item label="Scenic" value="Scenic" />
+                <Picker.Item label="Architecture" value="Architecture" />
+                <Picker.Item label="Dog" value="Dog" />
+                <Picker.Item label="Historical" value="Historical" />
+                <Picker.Item label="Hiking" value="Hiking" />
+                <Picker.Item label="Street art" value="Street Art" />
               </Picker>
             </Item>
           </Form>
@@ -192,12 +146,13 @@ function ExploreMap(props) {
             style={{
               position: 'absolute',
               backgroundColor: 'white',
-              width: 300,
+              width: 325,
               paddingTop: 8,
-              paddingBottom: 8,
-              paddingLeft: 190,
-              left: 150,
+              paddingBottom: 7,
+              paddingLeft: 250,
+              left: 90,
             }}
+            onPress={openModal}
           />
         </View>
         <View />
@@ -210,18 +165,17 @@ function ExploreMap(props) {
                   }}
                   key={walk.name}
                   title={walk.name}
-                  pinColor="#006aff"
                   description={walk.description}
                   onPress={() => {
                     props.setActiveWalk(walk.id);
                     props.getAllAttractions(walk.id);
                     props.navigation.navigate('WalkInfo');
-                    setCurrentMarker(this.marker);
                   }}
                   coordinate={{
                     longitude: walk.start.coordinates[1],
                     latitude: walk.start.coordinates[0],
                   }}
+                  pinColor={pinColor(walk)}
                 >
                   <Callout>
                     <View>

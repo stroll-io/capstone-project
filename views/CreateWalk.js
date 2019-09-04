@@ -7,14 +7,18 @@ import { ngrokSecret } from '../secrets';
 import { connect } from 'react-redux';
 import { getAllWalksThunk } from '../store/walks';
 import { setActiveWalkThunk } from '../store/activeWalk';
-import { AntDesign } from 'react-native-vector-icons';
+import { AntDesign, SimpleLineIcons } from 'react-native-vector-icons';
+import MapViewDirections from 'react-native-maps-directions';
+import { googleSecret } from '../secrets';
 
 function CreateWalk(props) {
   const [coords, setCoords] = useState([]);
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isCreateModalVisible, setIsCreateModalVisible] = useState(false);
   const [walkTitle, setWalkTitle] = useState('');
   const [walkDescription, setWalkDescription] = useState('');
+  const [distance, setDistance] = useState(0);
   const [walkTag, setWalkTag] = useState('');
+  const [isQuestionModalVisible, setIsQuestionModalVisible] = useState(false);
 
   const handleUndo = () => {
     const coordsCopy = coords.slice();
@@ -23,11 +27,11 @@ function CreateWalk(props) {
   };
 
   const handleCreate = () => {
-    setIsModalVisible(true);
+    setIsCreateModalVisible(true);
   };
 
   const handleCancel = () => {
-    setIsModalVisible(false);
+    setIsCreateModalVisible(false);
     setWalkTitle('');
     setWalkDescription('');
   };
@@ -38,9 +42,10 @@ function CreateWalk(props) {
       walkTitle,
       walkDescription,
       walkTag,
+      distance,
     });
     props.navigation.navigate('Explore');
-    setIsModalVisible(false);
+    setIsCreateModalVisible(false);
   };
 
   const handleStart = async () => {
@@ -49,48 +54,144 @@ function CreateWalk(props) {
       walkTitle,
       walkDescription,
       walkTag,
+      distance,
     });
     props.setActiveWalkThunk(data.id);
     setTimeout(() => {
       props.navigation.navigate('Walking Map');
-      setIsModalVisible(false);
+      setIsCreateModalVisible(false);
     }, 200);
+  };
+
+  const openQuestionModal = () => {
+    setIsQuestionModalVisible(true);
+  };
+
+  const closeQuestionModal = () => {
+    setIsQuestionModalVisible(false);
+  };
+
+  const handleOnReady = event => {
+    setDistance((event.distance * 0.621371).toFixed(2));
   };
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
+      <Modal
+        animationType="slide"
+        transparent={false}
+        visible={isQuestionModalVisible}
+      >
+        <View
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            margin: 50,
+            marginTop: 100,
+          }}
+        >
+          <View style={{ display: 'flex', flexDirection: 'row' }}>
+            <Text
+              style={{
+                justifyContent: 'center',
+                fontSize: 18,
+                fontFamily: 'Avenir-Heavy',
+                paddingLeft: 10,
+              }}
+            >
+              To create a walk, start by touching the map where you would like
+              to put down a pin.{' '}
+            </Text>
+            <SimpleLineIcons
+              name="location-pin"
+              size={25}
+              color="tomato"
+              style={{ paddingTop: 43, paddingLeft: 5 }}
+            />
+          </View>
+          <View>
+            <Text
+              style={{
+                fontSize: 18,
+                fontFamily: 'Avenir-Heavy',
+                justifyContent: 'center',
+                marginTop: 10,
+                marginBottom: 20,
+                paddingLeft: 10,
+              }}
+            >
+              Each pin acts as a point of navigation or interest along the walk.
+            </Text>
+          </View>
+          <View style={{ justifyContent: 'center' }}>
+            <Button
+              style={{ justifyContent: 'center', borderRadius: 20 }}
+              onPress={closeQuestionModal}
+            >
+              <Text
+                style={{
+                  textAlign: 'center',
+                  fontSize: 16,
+                  color: 'white',
+                  fontFamily: 'Avenir-Heavy',
+                }}
+              >
+                Close
+              </Text>
+            </Button>
+          </View>
+        </View>
+      </Modal>
       <View style={{ flex: 1 }}>
-        <View style={{ display: 'flex', flexDirection: 'row' }}>
-          <View style={{ width: '80%' }}>
+        <View
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+          }}
+        >
+          <View
+            style={{
+              width: '88%',
+              justifyContent: 'center',
+              alignContent: 'center',
+            }}
+          >
             <Text
               style={{
                 fontFamily: 'Avenir-Heavy',
-                fontSize: 16,
+                fontSize: 18,
                 textAlign: 'center',
-                marginTop: 10,
-                marginBottom: 10,
+                paddingTop: 10,
               }}
             >
-              Tap the map to add points to your walk
+              Tap to add points to your walk
             </Text>
           </View>
-          <View style={{ width: '20%', justifyContent: 'center' }}>
+          <View
+            style={{
+              width: '12%',
+              justifyContent: 'center',
+              alignContent: 'center',
+            }}
+          >
             <AntDesign
               name="questioncircleo"
-              size={25}
+              size={27}
               color="black"
               style={{
                 position: 'absolute',
                 backgroundColor: 'white',
-                padding: 10,
+                paddingTop: 10,
               }}
+              onPress={openQuestionModal}
             />
           </View>
         </View>
       </View>
       <MapView
         provider="google"
-        style={{ flex: 18 }}
+        style={{ flex: 12 }}
         initialRegion={{
           latitude: 41.895442,
           longitude: -87.638957,
@@ -105,6 +206,16 @@ function CreateWalk(props) {
           setCoords([...coords, newCord]);
         }}
       >
+        <MapViewDirections
+          origin={coords[0]}
+          waypoints={coords.length > 2 ? coords.slice(1, -1) : null}
+          destination={coords[coords.length - 1]}
+          apikey={googleSecret}
+          strokeWidth={4}
+          strokeColor="blue"
+          onReady={handleOnReady}
+          mode="WALKING"
+        />
         {coords.length
           ? coords.map(coord => {
               return (
@@ -123,7 +234,7 @@ function CreateWalk(props) {
         style={{
           display: 'flex',
           position: 'absolute',
-          bottom: 40,
+          bottom: 60,
           left: 50,
           flexDirection: 'row',
           justifyContent: 'center',
@@ -141,13 +252,20 @@ function CreateWalk(props) {
           </Text>
         </Button>
       </View>
+      <Text
+        style={{
+          paddingTop: 10,
+          paddingBottom: 5,
+          textAlign: 'center',
+          fontFamily: 'Avenir-Heavy',
+        }}
+      >
+        Current Distance: {distance} mi
+      </Text>
       <Modal
         animationType="slide"
         transparent={false}
-        visible={isModalVisible}
-        onRequestClose={() => {
-          console.log('onRequestClose');
-        }}
+        visible={isCreateModalVisible}
       >
         <View style={{ marginTop: 22 }}>
           <View>
@@ -254,9 +372,11 @@ function CreateWalk(props) {
     </SafeAreaView>
   );
 }
+
 CreateWalk.navigationOptions = {
   title: 'Create Walk',
 };
+
 const mapDispatch = dispatch => {
   return {
     getAllWalks: () => {

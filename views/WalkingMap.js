@@ -1,6 +1,11 @@
-/* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
-import { View, SafeAreaView, Modal } from 'react-native';
+import {
+  View,
+  SafeAreaView,
+  Modal,
+  ScrollView,
+  ActivityIndicator,
+} from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { connect } from 'react-redux';
 import { Button, Text } from 'native-base';
@@ -11,13 +16,16 @@ import { addPastWalkThunk } from '../store/pastWalks';
 import MapViewDirections from 'react-native-maps-directions';
 import { googleSecret } from '../secrets';
 import * as Haptics from 'expo-haptics';
+import axios from 'axios';
+import HTML from 'react-native-render-html';
 
 function WalkingMap(props) {
   const [isWalkComplete, setIsWalkComplete] = useState(false);
-  const [walkData, setWalkData] = useState(false);
   const [destination, setDestination] = useState(null);
   const [userLocation, setUserLocation] = useState(null);
   const [hapticHasTriggered, setHapticHasTriggered] = useState(false);
+  const [areDirectionsVisible, setDirectionsVisible] = useState(false);
+  const [directions, setDirections] = useState('');
 
   useEffect(() => {
     props.getAttractions(props.activeWalk.id);
@@ -39,24 +47,45 @@ function WalkingMap(props) {
     props.navigation.navigate('Dashboard');
   };
 
+  const getDirections = async () => {
+    let formattedNavPoints = [];
+    for (let i = 0; i < navPoints.length; i++) {
+      let currentPoint = `${navPoints[i].latitude}, ${navPoints[i].longitude}`;
+      formattedNavPoints.push(currentPoint);
+    }
+
+    let directionsArr = [];
+
+    for (let i = 0; i < formattedNavPoints.length - 1; i++) {
+      const res = await axios.get(
+        `https://maps.googleapis.com/maps/api/directions/json?origin=${
+          formattedNavPoints[i]
+        }&destination=${
+          formattedNavPoints[i + 1]
+        }&mode=walking&key=${googleSecret}`
+      );
+      res.data.routes[0].legs[0].steps.forEach(step => {
+        directionsArr.push(step.html_instructions);
+      });
+    }
+    setDirections(directionsArr.join('<br>'));
+  };
+
   const handleOnReady = e => {
-    setWalkData(e);
     setDestination(e.coordinates[e.coordinates.length - 1]);
-    this.map.animateCamera({
-      center: {
-        latitude: e.coordinates[0].latitude,
-        longitude: e.coordinates[0].longitude,
-      },
-    });
+    setTimeout(function() {
+      this.map.animateCamera({
+        center: {
+          latitude: e.coordinates[0].latitude,
+          longitude: e.coordinates[0].longitude
+        }
+      })
+    }, 200)
+
+    getDirections();
   };
 
   const handleUserLocationChange = async e => {
-    // this.map.animateCamera({
-    //   center: {
-    //     latitude: e.nativeEvent.coordinate.latitude,
-    //     longitude: e.nativeEvent.coordinate.longitude
-    //   }
-    // });
     setUserLocation({
       latitude: e.nativeEvent.coordinate.latitude,
       longitude: e.nativeEvent.coordinate.longitude,
@@ -82,67 +111,129 @@ function WalkingMap(props) {
       }
     }
   };
+
+  const handleDirections = () => {
+    setDirectionsVisible(true);
+  };
+
+  const closeDirections = () => {
+    setDirectionsVisible(false);
+  };
+
+  const htmlStyles = { p: { fontSize: 30 } };
+
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
-      <Modal
-        animationType="slide"
-        transparent={false}
-        visible={isWalkComplete}
-        onRequestClose={() => {
-          console.log('onRequestClose');
-        }}
-      >
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
+      <Modal animationType="slide" transparent={false} visible={isWalkComplete}>
         <View style={{ marginTop: 250 }}>
           <Text
             style={{
-              fontWeight: 'bold',
-              fontSize: 30,
-              textAlign: 'center',
+              textAlign: "center",
+              fontFamily: "Avenir-Heavy"
             }}
           >
             Congratulations, you completed your walk!
           </Text>
           <View
             style={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'center',
-              marginTop: 50,
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+              marginTop: 50
             }}
           >
-            <Button large primary onPress={handleSave} style={{ margin: 20 }}>
-              <Text>Save</Text>
+            <Button
+              large
+              onPress={handleSave}
+              style={{
+                margin: 20,
+                backgroundColor: "tomato",
+                borderRadius: 20
+              }}
+            >
+              <Text
+                style={{
+                  fontFamily: "Avenir-Heavy"
+                }}
+              >
+                Save
+              </Text>
             </Button>
-            <Button large success onPress={handleHome} style={{ margin: 20 }}>
-              <Text>Go to Dashboard</Text>
+            <Button
+              large
+              success
+              onPress={handleHome}
+              style={{
+                backgroundColor: "#417dc1",
+                borderRadius: 20,
+                margin: 20
+              }}
+            >
+              <Text
+                style={{
+                  fontFamily: "Avenir-Heavy"
+                }}
+              >
+                Go to Dashboard
+              </Text>
             </Button>
           </View>
         </View>
       </Modal>
+      <Modal
+        animationType="slide"
+        transparent={false}
+        visible={areDirectionsVisible}
+      >
+        <View style={{ flex: 1, marginLeft: 10 }}>
+          <Button
+            medium
+            onPress={closeDirections}
+            style={{
+              borderRadius: 20,
+              position: "absolute",
+              bottom: 50,
+              left: 145,
+              zIndex: 1000,
+              backgroundColor: "tomato"
+            }}
+          >
+            <Text style={{ fontFamily: "Avenir-Heavy" }}>Close</Text>
+          </Button>
+          {directions ? (
+            <ScrollView
+              style={{ marginTop: 70, marginBottom: 100, flex: 1, zIndex: 1 }}
+            >
+              <HTML
+                html={directions}
+                scalePageToFit={false}
+                tagsStyles={htmlStyles}
+              ></HTML>
+            </ScrollView>
+          ) : (
+            <View>
+              <ActivityIndicator
+                style={{ marginTop: 300 }}
+                size="large"
+                color="#417dc1"
+              ></ActivityIndicator>
+            </View>
+          )}
+        </View>
+      </Modal>
       <MapView
-        //initial region should be stateful based on users current location
         provider="google"
         ref={_map => {
           this.map = _map;
         }}
         onUserLocationChange={handleUserLocationChange}
-        //e.nativeEvent is like this {target: 215, coordinate {
-        // accuracy: 65
-        // altitude: 182.97296142578125
-        // altitudeAccuracy: 10
-        // latitude: 41.89551621857361
-        // longitude: -87.63895419445778
-        // speed: -1
-        // timestamp: 588017852300.918
-        // }
-        // }
         showsUserLocation={true}
         style={{ flex: 1 }}
         initialRegion={{
           latitude: 41.895442,
           longitude: -87.638957,
           latitudeDelta: 0.01,
-          longitudeDelta: 0.01,
+          longitudeDelta: 0.01
         }}
       >
         <MapViewDirections
@@ -165,26 +256,33 @@ function WalkingMap(props) {
                   description={coord.description}
                   coordinate={{
                     longitude: coord.location.coordinates[1],
-                    latitude: coord.location.coordinates[0],
+                    latitude: coord.location.coordinates[0]
                   }}
                 />
               );
             })
           : null}
         {navPoints.length ? (
-          <Marker title={'Start'} coordinate={navPoints[0]} pinColor="green" />
+          <Marker title={"Start"} coordinate={navPoints[0]} pinColor="green" />
         ) : null}
       </MapView>
       <View
         style={{
-          display: 'flex',
-          position: 'absolute',
-          bottom: 40,
-          left: 50,
-          flexDirection: 'row',
-          justifyContent: 'center',
+          display: "flex",
+          position: "absolute",
+          bottom: 30,
+          left: 110,
+          flexDirection: "row",
+          justifyContent: "center"
         }}
-      />
+      >
+        <Button
+          onPress={handleDirections}
+          style={{ backgroundColor: "#417dc1", borderRadius: 20, margin: 20 }}
+        >
+          <Text style={{ fontFamily: "Avenir-Heavy" }}>Directions</Text>
+        </Button>
+      </View>
     </SafeAreaView>
   );
 }

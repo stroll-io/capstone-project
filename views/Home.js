@@ -4,8 +4,6 @@ import { Text, Button } from 'native-base';
 import { createSwitchNavigator, createAppContainer } from 'react-navigation';
 import Login from './Login';
 import Register from './Register';
-import PastWalks from './PastWalks';
-import SavedWalks from './SavedWalks';
 import DashboardContainer from './Dashboard';
 
 class HomeScreen extends React.Component {
@@ -62,16 +60,6 @@ class HomeScreen extends React.Component {
               <Text style={{ fontFamily: 'Avenir-Heavy' }}>
                 Click here to register!
               </Text>
-            </Button>
-            <Button
-              style={{
-                backgroundColor: '#003e19',
-                borderRadius: '20px',
-                marginTop: 20,
-              }}
-              onPress={() => this.props.navigation.navigate('Dashboard')}
-            >
-              <Text style={{ fontFamily: 'Avenir-Heavy' }}>Dashboard</Text>
             </Button>
           </View>
         </View>
