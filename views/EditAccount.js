@@ -1,6 +1,5 @@
-import axios from 'axios';
 import { connect } from 'react-redux';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   Container,
   Content,
@@ -20,7 +19,6 @@ const EditAccount = props => {
   const handleSubmit = async event => {
     if (event) {
       event.preventDefault();
-      //TODO figure out where to put the reqbody object
       await props.fetchUpdatedUser(props.user.id, nameInput, emailInput);
     }
   };
