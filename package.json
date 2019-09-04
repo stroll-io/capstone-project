@@ -26,6 +26,7 @@
     "eslint-config-fullstack": "^6.0.0",
     "eslint-plugin-react": "^7.14.3",
     "expo": "^34.0.4",
+    "expo-asset": "^6.0.0",
     "expo-camera": "^6.0.0",
     "expo-cli": "^3.0.10",
     "expo-font": "^6.0.1",

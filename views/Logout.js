@@ -21,19 +21,19 @@ class Logout extends React.Component {
   }
 }
 
-const LogoutNavigator = createSwitchNavigator(
-  {
-    Logout: Logout,
-    Home: HomeScreen,
-  },
-  {
-    initialRouteName: 'Logout',
-    headerStyle: {
-      headerMode: 'none',
-    },
-  }
-);
+// const LogoutNavigator = createSwitchNavigator(
+//   {
+//     Logout: Logout,
+//     Home: HomeScreen,
+//   },
+//   {
+//     initialRouteName: 'Logout',
+//     headerStyle: {
+//       headerMode: 'none',
+//     },
+//   }
+// );
 
-const LogoutContainer = createAppContainer(LogoutNavigator);
+// const LogoutContainer = createAppContainer(LogoutNavigator);
 
 export default Logout;

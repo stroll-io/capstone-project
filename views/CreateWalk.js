@@ -266,9 +266,6 @@ function CreateWalk(props) {
         animationType="slide"
         transparent={false}
         visible={isCreateModalVisible}
-        // onRequestClose={() => {
-        //   console.log('onRequestClose');
-        // }}
       >
         <View style={{ marginTop: 22 }}>
           <View>

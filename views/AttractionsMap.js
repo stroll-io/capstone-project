@@ -24,16 +24,13 @@ function AttractionsMap(props) {
     setIsModalVisible(false);
   };
 
-  // let filter = 'Filter by tag';
   const handlePicker = e => {
     setPickerPlaceholder(e);
     e = e.toLowerCase();
     if (e === 'all attractions') {
-      // filter = 'All Tags';
       props.getAllAttractions();
     } else {
       props.getAttractionsByTag(e);
-      // filter = 'e[0].toUpperCase() + e.slice(1)';
     }
   };
 
