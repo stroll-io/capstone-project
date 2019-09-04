@@ -57,18 +57,30 @@ Our mobile app was created using React Native and Expo. The app was styled with 
 
 ## Built With
 [React Native](https://facebook.github.io/react-native/) - mobile frontend framework
+
 [Expo](https://expo.io/) - toolchain built around React Native
+
 [NativeBase](https://nativebase.io) - UI component library for React Native
+
 [React Navigation](https://reactnavigation.org/) - library managing the app navigation
+
 [React Native Maps API](https://www.npmjs.com/package/react-native-maps) - maps API
-[Google Directions API] (https://cloud.google.com/maps-platform/routes/?utm_source=google&utm_medium=cpc&utm_campaign=FY18-Q2-global-demandgen-paidsearchonnetworkhouseads-cs-maps_contactsal_saf&utm_content=text-ad-none-none-DEV_c-CRE_289050149694-ADGP_Hybrid+%7C+AW+SEM+%7C+SKWS+~+Directions+API-KWID_43700035908081168-kwd-445998650286-userloc_9021715&utm_term=KW_%2Bdirections+%2Bapi-ST_%2Bdirections+%2Bapi&gclid=EAIaIQobChMIovLy6IK45AIViJ-fCh2EAAFHEAAYASAAEgLuCPD_BwE) - directions API
+
+[Google Directions API](https://cloud.google.com/maps-platform/routes/?utm_source=google&utm_medium=cpc&utm_campaign=FY18-Q2-global-demandgen-paidsearchonnetworkhouseads-cs-maps_contactsal_saf&utm_content=text-ad-none-none-DEV_c-CRE_289050149694-ADGP_Hybrid+%7C+AW+SEM+%7C+SKWS+~+Directions+API-KWID_43700035908081168-kwd-445998650286-userloc_9021715&utm_term=KW_%2Bdirections+%2Bapi-ST_%2Bdirections+%2Bapi&gclid=EAIaIQobChMIovLy6IK45AIViJ-fCh2EAAFHEAAYASAAEgLuCPD_BwE) - directions API
+
 [React Native Maps Directions](https://www.npmjs.com/package/react-native-maps-directions) - directions component for React Native Maps
+
 [Express](https://expressjs.com/) - web framework for node.js
+
 [Sequelize](https://www.npmjs.com/package/sequelize) - ORM
+
 [PostGIS](https://postgis.net/) - extension for PostgreSQL for geolocation data
+
 [PostgreSQL](https://www.postgresql.org/) - open source object-relational database
 
 ## Authors
 [Michelle Hoang](https://github.com/michelle-hoang)
+
 [Ben Jenkins](https://github.com/benpjenkins)
+
 [Madison Carr](https://github.com/madisoncarr)
