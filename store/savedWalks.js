@@ -36,6 +36,10 @@ export default function savedWalksReducer(savedState = [], action) {
           return aWalk.id === action.walk.id;
         })
       ) {
+        /*
+          Because the state is unchanged here, it isn't neccessary to clone the array.
+          Could `return savedState`
+        */
         return [...savedState];
       } else {
         return [...savedState, action.walk];
