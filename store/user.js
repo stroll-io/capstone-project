@@ -71,6 +71,11 @@ export const fetchUpdatedUser = (userId, name, email) => {
 };
 
 export default function(state = defaultUser, action) {
+  /*
+      This reducer could be shortened to only one action type `SET_USER`.
+      All three cases completely replace the state object, so they could all
+      use the same action type.
+  */
   switch (action.type) {
     case CREATE_USER:
       return action.user;
