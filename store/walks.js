@@ -14,6 +14,15 @@ const getWalksByTag = walks => ({
   walks,
 })
 
+/*
+  Consider more conscious naming of thunk creators/actions.
+  
+  Here the name of the thunk creator is paired with the name of the corresponding action.
+  
+  consider:
+  
+  `getAllWalksThunk' and `GOT_WALKS` (or `SET_WALKS`).
+*/
 
 export const getAllWalksThunk = () => async dispatch => {
   try {

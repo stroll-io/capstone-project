@@ -44,6 +44,10 @@ export const getAttractionsThunk = walkId => async dispatch => {
 };
 
 export default function(state = [], action) {
+  /*
+    This could be rewritten with a single action type, it is not neccessary at the reducer
+    to know the original reason the attractions list is updating. Just that it is.
+  */
   switch (action.type) {
     case GET_ATTRACTIONS:
       return action.attractions;
