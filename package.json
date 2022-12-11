@@ -33,7 +33,7 @@
     "expo-haptics": "^6.0.0",
     "expo-location": "^6.0.0",
     "expo-permissions": "^6.0.0",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "express-session": "^1.16.2",
     "font": "0.0.4",
     "morgan": "^1.9.1",
